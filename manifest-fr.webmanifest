@@ -1,0 +1,21 @@
+{
+  "name": "V3KTOR · Cartographier le soi",
+  "short_name": "V3KTOR",
+  "description": "Un instrument de calibration affective. Gratuit. Sans compte. Vos données restent sur votre appareil.",
+  "start_url": "/v3ktor_fr.html",
+  "scope": "/",
+  "id": "/v3ktor_fr.html",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "portrait",
+  "background_color": "#050508",
+  "theme_color": "#050508",
+  "lang": "fr",
+  "dir": "ltr",
+  "categories": ["health", "lifestyle", "utilities"],
+  "icons": [
+    { "src": "/icon192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon512maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
