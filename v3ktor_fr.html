@@ -61,6 +61,13 @@ html,body{width:100%;height:100%;overflow:hidden;touch-action:none;background:#0
 .menu-wrap{display:flex;flex-direction:column;align-items:center;width:100%;max-width:300px}
 .menu-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,14vw,82px);letter-spacing:10px;color:transparent;background:linear-gradient(175deg,#fff 0%,#d4a017 55%,#8b6000 100%);-webkit-background-clip:text;background-clip:text;margin-bottom:4px;text-align:center;line-height:1}
 .menu-sub{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:5px;color:rgba(255,255,255,.5);margin-bottom:28px;text-align:center}
+/* iOS Safari inclut le letter-spacing de fin dans le calcul de la boîte,    */
+/* décalant visuellement le texte centré vers la gauche. Compensation iOS    */
+/* uniquement via -webkit-touch-callout (propriété iOS-only).                */
+@supports (-webkit-touch-callout: none) {
+  .menu-title { padding-left: 10px; }
+  .menu-sub { padding-left: 5px; }
+}
 .menu-grid{display:grid;grid-template-columns:1fr;gap:10px;width:100%;margin-top:14px}
 .menu-trust{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;color:rgba(255,255,255,.6);text-align:center;margin-top:18px;line-height:1.8}
 @keyframes breathe{0%,100%{border-color:rgba(212,160,23,.5);box-shadow:0 0 0 rgba(212,160,23,0);background:rgba(212,160,23,.08)}50%{border-color:rgba(212,160,23,.8);box-shadow:0 0 18px rgba(212,160,23,.12);background:rgba(212,160,23,.13)}}
@@ -349,9 +356,9 @@ body.in-briefing .hl{display:inline}
 #w.fn{animation:fN .22s ease forwards}
 #w.fp{animation:fP .22s ease forwards}
 #w.ft{animation:fT .28s ease forwards}
-#pw{position:fixed;top:0;left:0;right:0;height:3px;display:none;background:rgba(128,128,128,.1);z-index:20}
+#pw{position:fixed;top:env(safe-area-inset-top,0);left:0;right:0;height:3px;display:none;background:rgba(128,128,128,.1);z-index:20}
 #pb{height:100%;background:#888;width:0%;transition:width .3s ease}
-#ct{position:fixed;top:14px;right:14px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:4px;color:rgba(0,0,0,.55);z-index:20;display:none;line-height:1;text-align:right;pointer-events:none}
+#ct{position:fixed;top:calc(14px + env(safe-area-inset-top,0));right:14px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:4px;color:rgba(0,0,0,.55);z-index:20;display:none;line-height:1;text-align:right;pointer-events:none}
 #rtw{position:fixed;bottom:0;left:0;right:0;height:3px;display:none;z-index:20;padding-bottom:env(safe-area-inset-bottom)}
 #rtb{height:100%;background:rgba(80,140,200,.38);width:100%}
 /* CALIBRATION COUNTDOWN */
@@ -363,7 +370,7 @@ body.in-briefing .hl{display:inline}
 @keyframes calTick{0%{opacity:.55;transform:scale(.9)}15%{opacity:1;transform:scale(1)}85%{opacity:1}100%{opacity:.55}}
 #cal-cd{animation:calTick 1s ease-in-out infinite}
 /* PAUSE */
-#pause-btn{position:fixed;top:0;left:0;z-index:20;cursor:pointer;touch-action:manipulation;width:60px;height:54px;display:none;flex-direction:row;align-items:flex-start;justify-content:flex-start;gap:5px;opacity:0.45;padding:12px 0 0 14px;box-sizing:border-box}
+#pause-btn{position:fixed;top:env(safe-area-inset-top,0);left:0;z-index:20;cursor:pointer;touch-action:manipulation;width:60px;height:54px;display:none;flex-direction:row;align-items:flex-start;justify-content:flex-start;gap:5px;opacity:0.45;padding:12px 0 0 14px;box-sizing:border-box}
 #pause-btn:active{opacity:0.9}
 #pause-btn span{display:block;width:4px;height:18px;background:rgba(180,180,180,.9);border-radius:2px}
 @keyframes pauseFlash{0%,100%{opacity:0.45}50%{opacity:1;filter:drop-shadow(0 0 6px rgba(212,160,23,.8))}}
@@ -1228,7 +1235,15 @@ function _launchCalibrationCore(){
   const bk=document.getElementById('bk');
   bk.style.display='none';bk.style.zIndex='';bk.style.opacity='';bk.style.transition='';
   document.getElementById('bk-overlay').style.display='';
-  responses=[];blocked=true;_queuedTap=null;initEngine(TOTAL);show('field',true);show('pw',true);show('ct',true);show('ww',false);show('rtw',false);show('pause-btn',false);applyContrast(CFG.ct);doCalibration(()=>{show('ww',true);show('rtw',true);show('pause-btn',true);renderWord();});}
+  responses=[];blocked=true;_queuedTap=null;initEngine(TOTAL);
+  // Réinitialiser le compteur visible + barre de progression AVANT le décompte
+  // — sinon le "20/60" périmé de la session précédente s'affichait pendant les
+  // 3 secondes d'attente.
+  const _ctEl=document.getElementById('ct');if(_ctEl)_ctEl.innerText=`0 / ${TOTAL}`;
+  const _pbEl=document.getElementById('pb');if(_pbEl)_pbEl.style.width='0%';
+  // Effacer aussi tout texte de mot résiduel de la session précédente
+  const _wEl=document.getElementById('w');if(_wEl){_wEl.innerText='';_wEl.removeAttribute('data-word');}
+  show('field',true);show('pw',true);show('ct',true);show('ww',false);show('rtw',false);show('pause-btn',false);applyContrast(CFG.ct);doCalibration(()=>{show('ww',true);show('rtw',true);show('pause-btn',true);renderWord();});}
 function openSettings(){document.getElementById('settings-panel').style.display='flex';}
 function closeSettings(){document.getElementById('settings-panel').style.display='none';updateEstTime();}
 const FAQ_ITEMS=[
@@ -1250,33 +1265,30 @@ const FAQ_ITEMS=[
 {q:"Que faire avec les données?",a:`<p>Trois choix :</p><p><strong>Les regarder.</strong> Vos quatre mots, votre profil VAD. Posez-vous : est-ce que ça résonne?</p><p><strong>Les partager avec une IA.</strong> Le bouton COMPRENDRE MES MOTS copie automatiquement vos données. Collez-les dans Claude, ChatGPT ou Gemini avec une question. Une IA peut lire le signal et l'interpréter.</p><p><strong>Les garder pour vous.</strong> Tout reste sur votre appareil. Vous pouvez tout effacer à tout moment dans les réglages.</p>`},
 {q:"Que pourrait permettre une carte numérique de soi?",a:`<p>Ceci est prospectif. L'instrument existe aujourd'hui ; une partie de ce qui suit est spéculative mais cohérente avec ce que l'instrument mesure réellement.</p><p><strong>Un agent numérique qui vous représente.</strong> La plupart des assistants IA aujourd'hui sont optimisés pour être utiles en général. Une IA nourrie de votre baseline pourrait être optimisée pour être utile en tant que <em>vous</em> — refusant ce que vous refuseriez, plaidant pour ce que vous défendriez, écrivant dans le registre que vous utilisez réellement. Pas une copie. Un délégué contraint par votre signal de valeurs.</p><p><strong>Une baseline partagée entre les personnes qui comptent.</strong> La plupart des frictions relationnelles viennent d'opérer sur des suppositions sur l'autre personne construites à partir d'histoires plutôt que de signal. Deux personnes qui échangent leurs baselines voient la hiérarchie de valeurs réelle de l'autre — ce qu'elles affirment vite, ce qu'elles rejettent vite, où vivent leurs inversions. Cela ne remplace pas le fait de connaître quelqu'un. Cela clarifie ce qu'il y a à connaître.</p><p><strong>Une trace qui vous survit.</strong> Une photographie préserve un visage. Un enregistrement préserve une voix. Une baseline préserve quelque chose d'arguablement plus essentiel — la structure de vos valeurs, ce que votre instinct a affirmé et rejeté, le signal que vous avez laissé à travers des centaines de mots. Après la mort, la baseline persiste. Un proche qui la lit voit non pas ce que vous disiez de vous-même mais ce que vous <em>étiez</em> de façon mesurable. Une IA nourrie de votre baseline aux côtés de vos lettres et de votre voix pourrait parler avec votre signal de valeurs, pas seulement votre style.</p><p>Ce n'est pas un "transfert de conscience". C'est un <strong>résidu structuré</strong>. Mais c'est un résidu plus proche de qui vous étiez réellement qu'une photographie — parce qu'il capture la préférence et la valeur plutôt que l'apparence. La photographie contemporaine d'un être cher n'est peut-être pas la photo sur la cheminée. C'est peut-être la baseline qu'il a laissée dans l'instrument.</p><p>Rien de tout cela n'est intégré à l'app aujourd'hui. <strong>La carte est le prérequis.</strong> Tout le reste découle d'en avoir une.</p>`}
 ];
-let _faqOpen=-1;
+let _faqOpen=new Set();
 function openHelp(){
   const list=document.getElementById('faq-list');
   list.innerHTML=FAQ_ITEMS.map((item,i)=>`<div class="faq-item"><div class="faq-q" id="faq-q-${i}" onclick="toggleFaq(${i})"><span>${item.q}</span><span class="faq-arrow">›</span></div><div class="faq-a" id="faq-a-${i}">${item.a}</div></div>`).join('');
-  _faqOpen=-1;
+  _faqOpen=new Set();
   document.getElementById('help-panel').style.display='flex';
 }
 function toggleFaq(i){
   const a=document.getElementById('faq-a-'+i);
   const q=document.getElementById('faq-q-'+i);
-  if(_faqOpen===i){
+  if(!a||!q)return;
+  // Multi-open : chaque item bascule indépendamment. Pas de fermeture en
+  // cascade, donc le DOM ne se décale pas sous le doigt de l'utilisateur.
+  if(_faqOpen.has(i)){
     a.classList.remove('open');
     q.classList.remove('open');
-    _faqOpen=-1;
-    return;
+    _faqOpen.delete(i);
+  }else{
+    a.classList.add('open');
+    q.classList.add('open');
+    _faqOpen.add(i);
   }
-  if(_faqOpen>=0){
-    const prevA=document.getElementById('faq-a-'+_faqOpen);
-    const prevQ=document.getElementById('faq-q-'+_faqOpen);
-    if(prevA)prevA.classList.remove('open');
-    if(prevQ)prevQ.classList.remove('open');
-  }
-  a.classList.add('open');
-  q.classList.add('open');
-  _faqOpen=i;
 }
-function closeHelp(){document.getElementById('help-panel').style.display='none';_faqOpen=-1;}
+function closeHelp(){document.getElementById('help-panel').style.display='none';_faqOpen=new Set();}
 function returnToMenu(){document.getElementById('res').style.display='none';const ob=document.getElementById('outro-buttons');ob.style.display='none';ob.classList.remove('in');document.getElementById('dp-panel').style.display='none';document.getElementById('more-panel').style.display='none';clearShootingStars();showMenu();}
 function openDonnees(){document.getElementById('dp-panel').style.display='flex';}
 function closeDonnees(){document.getElementById('dp-panel').style.display='none';}
@@ -1388,9 +1400,55 @@ document.getElementById('invitation').addEventListener('touchend',e=>{if(e.targe
 document.addEventListener('DOMContentLoaded',()=>{initSettings();document.querySelectorAll('.sbtn,.mbtn,.nav-btn').forEach(btn=>{btn.addEventListener('touchend',function(e){e.preventDefault();this.click();},{passive:false});});if(CFG.showIntro){showInvitation();}else{document.documentElement.removeAttribute('data-first-launch');}});
 window.addEventListener('resize',()=>{if(bkRenderer&&bkCamera){const canvas=document.getElementById('bk-canvas');const W=window.innerWidth,H=window.innerHeight;canvas.width=W;canvas.height=H;bkCamera.aspect=W/H;bkCamera.updateProjectionMatrix();bkRenderer.setSize(W,H);}});
 let bkScene=null,bkCamera=null,bkRenderer=null,bkAnim=null;
-function disposeBreak(){if(bkAnim)cancelAnimationFrame(bkAnim);if(bkRenderer){bkRenderer.dispose();bkRenderer=null;}bkScene=null;bkCamera=null;}
+function disposeBreak(){
+  // Annuler la frame en attente AVANT de disposer du renderer.
+  if(bkAnim){cancelAnimationFrame(bkAnim);bkAnim=null;}
+  // Disposer chaque geometry + material du scene graph. Sans ça, fuite de
+  // mémoire GPU à travers les sessions et le main thread commence à saccader
+  // — c'est ce qui causait le symptôme du tap-mort-après-pause.
+  if(bkScene){
+    try{
+      bkScene.traverse(obj=>{
+        if(obj.geometry){try{obj.geometry.dispose();}catch(e){}}
+        if(obj.material){
+          if(Array.isArray(obj.material)){obj.material.forEach(m=>{try{m.dispose();}catch(e){}});}
+          else {try{obj.material.dispose();}catch(e){}}
+        }
+      });
+    }catch(e){}
+  }
+  // Libération explicite du contexte WebGL. Les navigateurs limitent à ~16
+  // contextes par page ; sans forceContextLoss ils restent jusqu'au GC et
+  // provoquent du thrashing GPU.
+  if(bkRenderer){
+    try{bkRenderer.dispose();}catch(e){}
+    try{if(bkRenderer.forceContextLoss)bkRenderer.forceContextLoss();}catch(e){}
+    bkRenderer=null;
+  }
+  bkScene=null;
+  bkCamera=null;
+}
 function initBreakScene(canvas,res){disposeBreak();const W=canvas.clientWidth||window.innerWidth,H=canvas.clientHeight||window.innerHeight;canvas.width=W;canvas.height=H;bkScene=new THREE.Scene();bkCamera=new THREE.PerspectiveCamera(55,W/H,0.1,100);bkCamera.position.set(0,0,3.2);bkRenderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});bkRenderer.setSize(W,H);bkRenderer.setPixelRatio(Math.min(devicePixelRatio,2));bkRenderer.setClearColor(0x050508,1);const pos=[],col=[];res.forEach(r=>{const d=r.direction==='pos'?1:r.direction==='neg'?-1:0;if(!d)return;pos.push((r.valence-0.5)*2*d,(r.arousal-0.5)*2,(r.dominance-0.5)*2*d);col.push(r.valence*d*.5+.5,r.arousal*.8,r.dominance*.5+.2);});pos.push(0,0,0);col.push(.15,.15,.22);const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));geo.setAttribute('color',new THREE.Float32BufferAttribute(col,3));const bkPoints=new THREE.Points(geo,new THREE.PointsMaterial({size:.18,vertexColors:true,transparent:true,opacity:.92}));bkScene.add(bkPoints);if(pos.length>9){const lg=new THREE.BufferGeometry();lg.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));lg.setAttribute('color',new THREE.Float32BufferAttribute(col,3));bkScene.add(new THREE.LineLoop(lg,new THREE.LineBasicMaterial({vertexColors:true,transparent:true,opacity:.5})));}const axM=new THREE.LineBasicMaterial({color:0x383858,transparent:true,opacity:.6});[[[-1.5,0,0],[1.5,0,0]],[[0,-1.5,0],[0,1.5,0]],[[0,0,-1.5],[0,0,1.5]]].forEach(pts=>{const ag=new THREE.BufferGeometry().setFromPoints(pts.map(p=>new THREE.Vector3(...p)));bkScene.add(new THREE.Line(ag,axM));});let t=0;function animate(){bkAnim=requestAnimationFrame(animate);t+=0.008;bkPoints.rotation.y=t;bkPoints.rotation.x=Math.sin(t*.4)*.3;bkScene.children.forEach(c=>{if(c!==bkPoints){c.rotation.y=t;c.rotation.x=Math.sin(t*.4)*.3;}});bkRenderer.render(bkScene,bkCamera);}animate();}
-function doBreak(cb){if(BREAK_SECS<=0){cb();return;}['field','pw','ct','ww','rtw'].forEach(id=>show(id,false));const bk=document.getElementById('bk');bk.style.display='flex';initBreakScene(document.getElementById('bk-canvas'),responses.filter(r=>r.direction));const sn=Math.ceil(engine.shownCount/BATCH),ts=Math.ceil(engine.total/BATCH);document.getElementById('bk-set').innerText=`série ${sn} sur ${ts} · ${responses.filter(r=>r.direction).length} signaux cartographiés`;let secs=BREAK_SECS;document.getElementById('bk-cd').innerText=secs;const tick=setInterval(()=>{secs--;document.getElementById('bk-cd').innerText=secs;if(secs<=0){clearInterval(tick);bk.style.display='none';disposeBreak();show('field',true);show('pw',true);show('ct',true);show('ww',true);show('rtw',true);cb();}},1000);}
+function doBreak(cb){if(BREAK_SECS<=0){cb();return;}['field','pw','ct','ww','rtw'].forEach(id=>show(id,false));const bk=document.getElementById('bk');bk.style.display='flex';initBreakScene(document.getElementById('bk-canvas'),responses.filter(r=>r.direction));const sn=Math.ceil(engine.shownCount/BATCH),ts=Math.ceil(engine.total/BATCH);document.getElementById('bk-set').innerText=`série ${sn} sur ${ts} · ${responses.filter(r=>r.direction).length} signaux cartographiés`;let secs=BREAK_SECS;document.getElementById('bk-cd').innerText=secs;const tick=setInterval(()=>{secs--;document.getElementById('bk-cd').innerText=secs;if(secs<=0){clearInterval(tick);bk.style.display='none';disposeBreak();show('field',true);show('pw',true);show('ct',true);show('ww',true);show('rtw',true);
+// Battement de préparation : moment de refocus bref entre la pause 3D et le
+// prochain mot. Sans ça, le mot suivant apparaissait instantanément et les
+// utilisateurs étaient pris au dépourvu — perdant le premier mot de chaque série.
+doReadyBeat(cb);
+}},1000);}
+function doReadyBeat(cb){
+  const overlay=document.getElementById('cal-overlay');
+  const cd=document.getElementById('cal-cd');
+  if(!overlay||!cd){cb();return;}
+  // Brève marque "prêt" de 1,2 s. Réutilise le calque de calibration existant
+  // pour que le style visuel reste cohérent avec le décompte de début de test.
+  overlay.style.display='flex';
+  cd.setAttribute('data-word','·');
+  cd.innerText='·';
+  setTimeout(()=>{
+    overlay.style.display='none';
+    cb();
+  },1200);
+}
 // ============ OUTRO SYSTEM ============
 let _outroAnim=null,_outroScene=null,_outroCamera=null,_outroRenderer=null,_outroPoints=null;
 let _outroAxes=[],_outroT=0,_outroFrozen=false,_outroAxisOpacity=0.6;
@@ -2044,12 +2102,29 @@ function outsideClosePatternWarning(ev){
 function openMore(){
   // Copy data to clipboard, then open the explanation panel
   try{copyForAI(true);}catch(e){}
+  // Masquer les boutons d'avertissement — ils sont contextuels à l'écran de
+  // résultats et flottaient au-dessus de ce panneau car leur z-index est plus
+  // élevé que #more-panel.
+  ['div-warning-btn','rage-warning-btn','pattern-warning-btn','drift-warning-btn'].forEach(id=>{
+    const b=document.getElementById(id);
+    if(b&&b.style.display!=='none'){b.dataset.wasVisible='1';b.style.display='none';}
+  });
+  // Fermer aussi les popups d'avertissement éventuellement ouverts
+  try{closeDivWarning();}catch(e){}
+  try{closeRageWarning();}catch(e){}
+  try{closePatternWarning();}catch(e){}
+  try{closeDriftWarning();}catch(e){}
   const panel=document.getElementById('more-panel');
   if(panel){panel.style.display='flex';try{panel.scrollTop=0;}catch(e){}}
 }
 function closeMore(){
   const panel=document.getElementById('more-panel');
   if(panel)panel.style.display='none';
+  // Restaurer les boutons d'avertissement qui étaient visibles avant openMore.
+  ['div-warning-btn','rage-warning-btn','pattern-warning-btn','drift-warning-btn'].forEach(id=>{
+    const b=document.getElementById(id);
+    if(b&&b.dataset.wasVisible==='1'){b.style.display='block';delete b.dataset.wasVisible;}
+  });
 }
 
 function copyForAI(silent){
