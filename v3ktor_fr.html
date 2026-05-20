@@ -26,17 +26,6 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#050508">
 <title>V3KTOR · Cartographier le Soi</title>
-
-<!-- PWA : installable, hors-ligne, comportement d'app réelle -->
-<link rel="manifest" href="/manifest-fr.webmanifest">
-<link rel="icon" type="image/png" sizes="192x192" href="/icon192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="/icon512.png">
-<link rel="apple-touch-icon" href="/icon180.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="V3KTOR">
-<meta name="application-name" content="V3KTOR">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 // Pre-paint: hide menu if the intro will play this launch
@@ -55,24 +44,12 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;500;700&family=Cormorant+Garamond:wght@300&display=swap');
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;user-select:none}
 html,body{width:100%;height:100%;overflow:hidden;touch-action:none;background:#050508}
-/* Cormorant Garamond defaults to OldStyle figures, which renders "3" below */
-/* baseline (subscript-like) — that's why V3KTOR looked weird in body text. */
-/* Force lining (full-height) figures everywhere. Monospace fonts already   */
-/* use lining figures so this is a no-op for them.                          */
-html,body,input,button,textarea{font-variant-numeric:lining-nums;-webkit-font-feature-settings:"lnum" 1;font-feature-settings:"lnum" 1}
 .sc{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;z-index:100;transition:opacity .4s ease}
 .sc.hid{opacity:0;pointer-events:none}
 #menu{background:#050508}
 .menu-wrap{display:flex;flex-direction:column;align-items:center;width:100%;max-width:300px}
 .menu-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,14vw,82px);letter-spacing:10px;color:transparent;background:linear-gradient(175deg,#fff 0%,#d4a017 55%,#8b6000 100%);-webkit-background-clip:text;background-clip:text;margin-bottom:4px;text-align:center;line-height:1}
 .menu-sub{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:5px;color:rgba(255,255,255,.5);margin-bottom:28px;text-align:center}
-/* iOS Safari inclut le letter-spacing de fin dans le calcul de la boîte,    */
-/* décalant visuellement le texte centré vers la gauche. Compensation iOS    */
-/* uniquement via -webkit-touch-callout (propriété iOS-only).                */
-@supports (-webkit-touch-callout: none) {
-  .menu-title { padding-left: 10px; }
-  .menu-sub { padding-left: 5px; }
-}
 .menu-grid{display:grid;grid-template-columns:1fr;gap:10px;width:100%;margin-top:14px}
 .menu-trust{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;color:rgba(255,255,255,.6);text-align:center;margin-top:18px;line-height:1.8}
 @keyframes breathe{0%,100%{border-color:rgba(212,160,23,.5);box-shadow:0 0 0 rgba(212,160,23,0);background:rgba(212,160,23,.08)}50%{border-color:rgba(212,160,23,.8);box-shadow:0 0 18px rgba(212,160,23,.12);background:rgba(212,160,23,.13)}}
@@ -85,7 +62,7 @@ html,body,input,button,textarea{font-variant-numeric:lining-nums;-webkit-font-fe
 .mood-btn:active{background:rgba(212,160,23,.2);border-color:rgba(212,160,23,.75);color:#d4a017}
 .mood-skip{margin-top:8px;background:transparent;border:none;color:rgba(255,255,255,.55);padding:12px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:4px;cursor:pointer;touch-action:manipulation}
 .mood-skip:active{color:rgba(255,255,255,.85)}
-.sbtn{background:rgba(212,160,23,.08);border:2px solid rgba(212,160,23,.5);color:#d4a017;padding:13px 36px;font-family:'Bebas Neue',sans-serif;font-size:21px;letter-spacing:8px;cursor:pointer;border-radius:2px;-webkit-appearance:none;touch-action:manipulation;width:100%}
+.sbtn{background:rgba(212,160,23,.08);border:2px solid rgba(212,160,23,.5);animation:breathe 3.6s ease-in-out infinite;color:#d4a017;padding:13px 36px;font-family:'Bebas Neue',sans-serif;font-size:21px;letter-spacing:8px;cursor:pointer;border-radius:2px;-webkit-appearance:none;touch-action:manipulation;width:100%}
 .sbtn:active{background:rgba(212,160,23,.2);animation:none}
 .mbtn{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.68);padding:12px 8px;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:6px;cursor:pointer;border-radius:2px;-webkit-appearance:none;touch-action:manipulation;transition:background .15s,color .15s,border-color .15s;width:100%}
 .mbtn:active{background:rgba(255,255,255,.08);color:rgba(255,255,255,.9);border-color:rgba(255,255,255,.35)}
@@ -100,8 +77,8 @@ html[data-first-launch="1"] #menu{display:none!important}
 #invitation{position:fixed;inset:0;background:#050508;z-index:160;display:none;flex-direction:column;align-items:center;overflow-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y;padding:54px 28px calc(80px + env(safe-area-inset-bottom));cursor:pointer}
 #invitation.show{display:flex}
 .inv-wrap{display:flex;flex-direction:column;align-items:flex-start;max-width:360px;width:100%}
-.inv-line{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease;width:100%;will-change:opacity,transform}
-.inv-line.in{opacity:1;transform:translateY(0)}
+.inv-line{opacity:0;transition:opacity .45s ease;width:100%;will-change:opacity}
+.inv-line.in{opacity:1}
 .inv-offer{font-family:'Bebas Neue',sans-serif;font-size:46px;letter-spacing:8px;color:rgba(212,160,23,.92);margin-bottom:16px;line-height:1}
 .inv-trust{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:2.5px;color:rgba(255,255,255,.58);line-height:1.85;margin-bottom:34px;text-transform:uppercase}
 .inv-body{font-family:'Cormorant Garamond',serif;font-size:19px;color:rgba(255,255,255,.86);line-height:1.7;margin-bottom:22px;letter-spacing:.2px}
@@ -123,7 +100,7 @@ html[data-first-launch="1"] #menu{display:none!important}
 .disc-crisis-text{font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:.5px;color:rgba(255,255,255,.85);line-height:1.75}
 .disc-consent{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;color:rgba(255,255,255,.55);line-height:1.7;margin-bottom:16px;width:100%}
 /* SETTINGS */
-.cfg{width:100%;max-width:300px;margin:0 auto 28px}
+.cfg{width:100%;max-width:300px;margin-bottom:28px}
 .cfg-row{margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid rgba(220,75,75,.2)}
 .cfg-row:last-of-type{border-bottom:none;padding-bottom:0;margin-bottom:0}
 .cfg-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:4px;color:rgba(255,255,255,.68);margin-bottom:8px;display:flex;justify-content:space-between}
@@ -145,6 +122,13 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 .cfg-box-stat-lbl{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:4px;color:rgba(255,255,255,.7)}
 .cfg-box-stat-val{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;color:#d4a017}
 /* EN SAVOIR PLUS — explanation + AI handoff */
+#more-panel{position:fixed;inset:0;background:#050508;z-index:200;display:none;flex-direction:column;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:52px 28px calc(60px + env(safe-area-inset-bottom))}
+.more-back{width:100%;margin-bottom:28px}
+.more-content{display:flex;flex-direction:column;flex:1;width:100%;max-width:460px;margin:0 auto;justify-content:center}
+.more-body{display:flex;flex-direction:column;gap:22px;margin-bottom:48px}
+.more-p{font-family:'Cormorant Garamond',serif;font-size:clamp(17px,4.5vw,20px);line-height:1.65;color:rgba(255,255,255,.78);letter-spacing:.3px;margin:0;text-align:left}
+.more-emph{color:rgba(212,160,23,.92)}
+.more-actions{display:flex;flex-direction:column;align-items:center;gap:11px;width:100%;max-width:340px;align-self:center}
 /* RACINE — longitudinal core view */
 #racine-panel{position:fixed;inset:0;background:#050508;z-index:200;display:none;flex-direction:column;overflow-y:auto;padding:52px 28px calc(80px + env(safe-area-inset-bottom))}
 .racine-back{width:100%;margin-bottom:28px}
@@ -203,11 +187,34 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 .dashboard-tab.active{color:#d4a017;border-bottom-color:#d4a017}
 .dashboard-view{width:100%}
 /* DIVERGENCE WARNING — shown on result screen when current session diverges from racine */
+#div-warning-btn{display:none;position:fixed;top:calc(20px + env(safe-area-inset-top));right:18px;width:38px;height:38px;border-radius:50%;background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.6);color:rgba(212,160,23,.95);font-size:18px;line-height:1;text-align:center;padding:0;cursor:pointer;z-index:250;animation:iconBreathe 2.2s ease-in-out infinite;touch-action:manipulation;-webkit-tap-highlight-color:transparent;font-family:'Helvetica Neue',Arial,sans-serif}
+#div-warning-btn:active{transform:scale(.94);background:rgba(212,160,23,.22)}
+body.has-rage-warning #div-warning-btn{right:64px}
+#rage-warning-btn{display:none;position:fixed;top:calc(20px + env(safe-area-inset-top));right:18px;width:38px;height:38px;border-radius:50%;background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.6);color:rgba(212,160,23,.95);font-size:18px;line-height:1;text-align:center;padding:0;cursor:pointer;z-index:250;animation:iconBreathe 2.2s ease-in-out infinite;touch-action:manipulation;-webkit-tap-highlight-color:transparent;font-family:'Helvetica Neue',Arial,sans-serif}
+#rage-warning-btn:active{transform:scale(.94);background:rgba(212,160,23,.22)}
+#rage-warning-popup{display:none;position:fixed;top:calc(70px + env(safe-area-inset-top));right:16px;left:16px;max-width:340px;margin-left:auto;background:rgba(15,15,18,.98);border:1px solid rgba(212,160,23,.55);border-radius:4px;padding:16px 18px 14px;z-index:260;opacity:0;transition:opacity .25s ease;box-shadow:0 8px 28px rgba(0,0,0,.5)}
+#rage-warning-popup.in{opacity:1}
+#pattern-warning-btn{display:none;position:fixed;top:calc(20px + env(safe-area-inset-top));right:18px;width:38px;height:38px;border-radius:50%;background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.6);color:rgba(212,160,23,.95);font-size:18px;line-height:1;text-align:center;padding:0;cursor:pointer;z-index:250;animation:iconBreathe 2.2s ease-in-out infinite;touch-action:manipulation;-webkit-tap-highlight-color:transparent;font-family:'Helvetica Neue',Arial,sans-serif}
+#pattern-warning-btn:active{transform:scale(.94);background:rgba(212,160,23,.22)}
+body.has-rage-warning #pattern-warning-btn{right:64px}
+body.has-pattern-warning #div-warning-btn{right:64px}
+body.has-rage-warning.has-pattern-warning #div-warning-btn{right:110px}
+#pattern-warning-popup{display:none;position:fixed;top:calc(70px + env(safe-area-inset-top));right:16px;left:16px;max-width:340px;margin-left:auto;background:rgba(15,15,18,.98);border:1px solid rgba(212,160,23,.55);border-radius:4px;padding:16px 18px 14px;z-index:260;opacity:0;transition:opacity .25s ease;box-shadow:0 8px 28px rgba(0,0,0,.5)}
+#pattern-warning-popup.in{opacity:1}
 #drift-warning-btn{display:none;position:fixed;top:calc(20px + env(safe-area-inset-top));right:18px;width:38px;height:38px;border-radius:50%;background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.6);color:rgba(212,160,23,.95);font-size:18px;line-height:1;text-align:center;padding:0;cursor:pointer;z-index:250;animation:iconBreathe 2.2s ease-in-out infinite;touch-action:manipulation;-webkit-tap-highlight-color:transparent;font-family:'Helvetica Neue',Arial,sans-serif}
 #drift-warning-btn:active{transform:scale(.94);background:rgba(212,160,23,.22)}
+body.has-rage-warning #drift-warning-btn{right:64px}
+body.has-pattern-warning #drift-warning-btn{right:64px}
+body.has-rage-warning.has-pattern-warning #drift-warning-btn{right:110px}
+body.has-div-warning #drift-warning-btn{right:64px}
+body.has-rage-warning.has-div-warning #drift-warning-btn{right:110px}
+body.has-pattern-warning.has-div-warning #drift-warning-btn{right:110px}
+body.has-rage-warning.has-pattern-warning.has-div-warning #drift-warning-btn{right:156px}
 #drift-warning-popup{display:none;position:fixed;top:calc(70px + env(safe-area-inset-top));right:16px;left:16px;max-width:340px;margin-left:auto;background:rgba(15,15,18,.98);border:1px solid rgba(212,160,23,.55);border-radius:4px;padding:16px 18px 14px;z-index:260;opacity:0;transition:opacity .25s ease;box-shadow:0 8px 28px rgba(0,0,0,.5)}
 #drift-warning-popup.in{opacity:1}
 @keyframes iconBreathe{0%,100%{box-shadow:0 0 0 rgba(212,160,23,0);background:rgba(212,160,23,.08);border-color:rgba(212,160,23,.5)}50%{box-shadow:0 0 14px rgba(212,160,23,.4);background:rgba(212,160,23,.2);border-color:rgba(212,160,23,.9)}}
+#div-warning-popup{display:none;position:fixed;top:calc(70px + env(safe-area-inset-top));right:16px;left:16px;max-width:340px;margin-left:auto;background:rgba(15,15,18,.98);border:1px solid rgba(212,160,23,.55);border-radius:4px;padding:16px 18px 14px;z-index:260;opacity:0;transition:opacity .25s ease;box-shadow:0 8px 28px rgba(0,0,0,.5)}
+#div-warning-popup.in{opacity:1}
 .dw-popup-close{position:absolute;top:4px;right:6px;background:transparent;border:none;color:rgba(255,255,255,.55);font-size:22px;line-height:1;padding:6px 10px;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .dw-popup-close:active{color:rgba(255,255,255,.95)}
 .dw-popup-title{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:4px;color:rgba(212,160,23,.95);margin-bottom:8px;padding-right:22px}
@@ -216,6 +223,10 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 .shoot-star{position:fixed;width:8px;height:8px;background:rgba(255,255,255,.98);border-radius:50%;box-shadow:0 0 12px 3px rgba(212,160,23,.95),0 0 28px 6px rgba(212,160,23,.55),0 0 56px 14px rgba(212,160,23,.22);pointer-events:none;z-index:260;margin:-4px 0 0 -4px;will-change:left,top,opacity}
 .shoot-trail{position:fixed;height:2px;background:linear-gradient(to right,transparent 0%,rgba(212,160,23,.25) 40%,rgba(212,160,23,.65) 78%,rgba(255,255,255,.95) 100%);pointer-events:none;z-index:259;opacity:0;margin-top:-1px;transform-origin:0 50%;will-change:opacity,width;filter:blur(.5px)}
 .shoot-trail.in{opacity:1}
+@keyframes wordImpact{0%{opacity:0;transform:scale(1.35);filter:brightness(2.2)}30%{opacity:1;transform:scale(.94);filter:brightness(1.6)}55%{transform:scale(1.04);filter:brightness(1.15)}100%{opacity:1;transform:scale(1);filter:brightness(1)}}
+.core-word.land{animation:wordImpact .55s cubic-bezier(.2,.7,.3,1) forwards}
+#outro-buttons{position:fixed;left:0;right:0;bottom:calc(20px + env(safe-area-inset-bottom));display:none;flex-direction:column;align-items:center;gap:11px;z-index:200;padding:0 24px;opacity:0;transition:opacity .8s ease}
+#outro-buttons.in{opacity:1}
 .outro-btn{font-family:'Bebas Neue',sans-serif;letter-spacing:6px;text-align:center;border-radius:2px;cursor:pointer;touch-action:manipulation;transition:background .15s,color .15s,border-color .15s;width:100%;max-width:340px}
 .outro-btn-primary{font-size:clamp(17px,5vw,21px);letter-spacing:clamp(3px,1.2vw,5px);color:#050508;background:rgba(212,160,23,.92);border:1px solid rgba(212,160,23,.95);padding:16px 18px;box-shadow:0 0 0 3px rgba(5,5,8,1)}
 .outro-btn-primary:active{background:rgba(212,160,23,1);transform:scale(.99);box-shadow:0 0 0 3px rgba(5,5,8,1)}
@@ -223,6 +234,8 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 .outro-btn-secondary:active{background:rgba(255,255,255,.05);color:rgba(255,255,255,.95)}
 .outro-btn-tertiary{font-size:14px;color:rgba(255,255,255,.62);background:transparent;border:none;padding:8px 14px;letter-spacing:5px;margin-top:2px}
 .outro-btn-tertiary:active{color:rgba(255,255,255,.85)}
+.outro-explainer{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.5px;color:rgba(255,255,255,.55);text-align:center;line-height:1.75;max-width:360px;margin-bottom:18px;padding:14px 8px 0;position:relative}
+.outro-explainer::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:38px;height:1px;background:rgba(212,160,23,.45)}
 #session-mood-compare{display:none;flex-direction:column;width:100%;max-width:360px;margin-bottom:14px;padding:11px 13px;background:rgba(212,160,23,.04);border:1px solid rgba(212,160,23,.22);border-radius:3px;font-family:'JetBrains Mono',monospace;box-sizing:border-box}
 #session-mood-compare.show{display:flex}
 .smc-head{font-size:10px;letter-spacing:2.5px;color:rgba(212,160,23,.88);text-align:center;margin-bottom:9px;padding-bottom:7px;border-bottom:1px solid rgba(212,160,23,.18);text-transform:uppercase;line-height:1.5}
@@ -269,8 +282,6 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 .hi-detail-cfl{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:rgba(212,160,23,.7);line-height:1.9}
 .copy-btn{width:100%;background:rgba(212,160,23,.06);border:1px solid rgba(212,160,23,.3);color:rgba(212,160,23,.8);padding:10px;font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:6px;cursor:pointer;border-radius:2px;-webkit-appearance:none;margin-top:10px;touch-action:manipulation}
 .copy-btn:active{background:rgba(212,160,23,.15)}
-.del-btn{width:100%;background:transparent;border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.45);padding:8px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;cursor:pointer;border-radius:2px;-webkit-appearance:none;margin-top:8px;touch-action:manipulation;text-transform:uppercase}
-.del-btn:active{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.22);color:rgba(255,255,255,.7)}
 .copy-confirm{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:rgba(212,160,23,.65);text-align:center;margin-top:6px;display:none}
 .no-sessions{font-family:'Cormorant Garamond',serif;font-size:17px;color:rgba(255,255,255,.62);text-align:center;margin-top:40px;line-height:1.8}
 /* BRIEFING */
@@ -304,7 +315,7 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 #brief-start:active{background:rgba(212,160,23,1);transform:translate(-50%,-50%) scale(.98);animation:none;box-shadow:0 0 0 3px rgba(5,5,8,1)}
 @keyframes briefCtaPulse{0%,100%{box-shadow:0 0 0 3px rgba(5,5,8,1),0 0 0 rgba(212,160,23,0)}50%{box-shadow:0 0 0 3px rgba(5,5,8,1),0 0 28px rgba(212,160,23,.55)}}
 #brief-start.in{opacity:1}
-#brief-progress{position:fixed;bottom:calc(28px + env(safe-area-inset-bottom));left:0;right:0;display:flex;justify-content:center;gap:8px;z-index:32;opacity:0;transition:opacity .4s ease;pointer-events:none}
+#brief-progress{position:fixed;bottom:calc(28px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:32;opacity:0;transition:opacity .4s ease}
 #brief-progress.show{opacity:1}
 .brief-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.18);transition:background .3s ease}
 .brief-dot.active{background:rgba(212,160,23,.85)}
@@ -327,24 +338,21 @@ body.in-briefing .hl{display:inline}
 #w.fn{animation:fN .22s ease forwards}
 #w.fp{animation:fP .22s ease forwards}
 #w.ft{animation:fT .28s ease forwards}
-#pw{position:fixed;top:env(safe-area-inset-top,0);left:0;right:0;height:3px;display:none;background:rgba(128,128,128,.1);z-index:20}
+#pw{position:fixed;top:0;left:0;right:0;height:3px;display:none;background:rgba(128,128,128,.1);z-index:20}
 #pb{height:100%;background:#888;width:0%;transition:width .3s ease}
-#ct{position:fixed;top:calc(14px + env(safe-area-inset-top,0));right:14px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:4px;color:rgba(0,0,0,.55);z-index:20;display:none;line-height:1;text-align:right;pointer-events:none}
+#ct{position:fixed;top:14px;right:14px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:4px;color:rgba(0,0,0,.55);z-index:20;display:none;line-height:1;text-align:right;pointer-events:none}
 #rtw{position:fixed;bottom:0;left:0;right:0;height:3px;display:none;z-index:20;padding-bottom:env(safe-area-inset-bottom)}
 #rtb{height:100%;background:rgba(80,140,200,.38);width:100%}
-/* CALIBRATION COUNTDOWN — pas de rendu split-color ici. Le « · » et le décompte
-   3-2-1 étaient rendus avec les mêmes pseudo-éléments clip-path que les mots,
-   et iOS Safari laissait une frame de résidu composité au centre de l'écran sur
-   le premier mot après chaque pause (le « cube mi-blanc » que Josefa voyait).
-   On passe en rendu simple : fond sombre uni, texte blanc plein. Plus de
-   superposition possible. */
-#cal-overlay{position:fixed;inset:0;display:none;z-index:15;align-items:center;justify-content:center;flex-direction:column;pointer-events:none;background:#050508}
+/* CALIBRATION COUNTDOWN */
+#cal-overlay{position:fixed;inset:0;display:none;z-index:15;align-items:center;justify-content:center;flex-direction:column;pointer-events:none}
 #cal-wrap{display:flex;flex-direction:column;align-items:center}
-#cal-cd{font-family:'Bebas Neue',sans-serif;font-size:clamp(120px,32vw,170px);color:#fff;line-height:1;text-align:center;display:flex;align-items:center;justify-content:center;min-width:1ch}
+#cal-cd{font-family:'Bebas Neue',sans-serif;font-size:clamp(120px,32vw,170px);color:transparent;position:relative;line-height:1;text-align:center;display:flex;align-items:center;justify-content:center;min-width:1ch}
+#cal-cd::before{content:attr(data-word);position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;clip-path:inset(0 50% 0 0);pointer-events:none}
+#cal-cd::after{content:attr(data-word);position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#050508;clip-path:inset(0 0 0 50%);pointer-events:none}
 @keyframes calTick{0%{opacity:.55;transform:scale(.9)}15%{opacity:1;transform:scale(1)}85%{opacity:1}100%{opacity:.55}}
 #cal-cd{animation:calTick 1s ease-in-out infinite}
 /* PAUSE */
-#pause-btn{position:fixed;top:env(safe-area-inset-top,0);left:0;z-index:20;cursor:pointer;touch-action:manipulation;width:60px;height:54px;display:none;flex-direction:row;align-items:flex-start;justify-content:flex-start;gap:5px;opacity:0.45;padding:12px 0 0 14px;box-sizing:border-box}
+#pause-btn{position:fixed;top:0;left:0;z-index:20;cursor:pointer;touch-action:manipulation;width:60px;height:54px;display:none;flex-direction:row;align-items:flex-start;justify-content:flex-start;gap:5px;opacity:0.45;padding:12px 0 0 14px;box-sizing:border-box}
 #pause-btn:active{opacity:0.9}
 #pause-btn span{display:block;width:4px;height:18px;background:rgba(180,180,180,.9);border-radius:2px}
 @keyframes pauseFlash{0%,100%{opacity:0.45}50%{opacity:1;filter:drop-shadow(0 0 6px rgba(212,160,23,.8))}}
@@ -356,6 +364,7 @@ body.in-briefing .hl{display:inline}
 .pause-btn-item.ghost{border-color:rgba(255,255,255,.18);color:rgba(255,255,255,.55)}
 .pause-btn-item.ghost:active{background:rgba(255,255,255,.06);color:rgba(255,255,255,.85)}
 #bk{position:fixed;inset:0;background:#050508;display:none;flex-direction:column;align-items:center;justify-content:center;z-index:50}
+#bk-canvas{position:absolute;inset:0;width:100%;height:100%}
 #bk-overlay{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;pointer-events:none}
 #bk-cd{font-family:'Bebas Neue',sans-serif;font-size:72px;letter-spacing:4px;color:rgba(255,255,255,.92);line-height:1;text-align:center;text-shadow:0 0 32px rgba(212,160,23,.25)}
 #bk-set{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:4px;color:rgba(255,255,255,.55);margin-top:12px;text-align:center}
@@ -365,8 +374,9 @@ body.in-briefing .hl{display:inline}
 @keyframes wordIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .lbl-text{padding-bottom:7px;border-bottom:2px solid}
 .lbl-gold{color:#d4a017;border-color:rgba(212,160,23,.65)}
-.res-complete{font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,7vw,40px);letter-spacing:clamp(6px,2vw,10px);color:rgba(212,160,23,.85);text-align:center;line-height:1.2;opacity:0;display:none;transition:opacity .6s ease}
-.dp-actions{display:flex;flex-direction:column;gap:11px;width:100%;max-width:340px;margin:36px auto 0;align-items:stretch}
+.core-block{display:flex;flex-direction:column;align-items:center;gap:2px;margin-bottom:32px;width:100%}
+.core-word{font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,11vw,74px);letter-spacing:clamp(4px,2vw,10px);color:#ffffff;line-height:1.05;text-align:center;opacity:0}
+.hinge-wrap{display:flex;flex-direction:column;align-items:center;margin-bottom:32px;width:100%}
 .hinge-word{font-family:'Cormorant Garamond',serif;font-size:clamp(20px,5vw,28px);color:rgba(212,160,23,.78);letter-spacing:6px;opacity:0;animation:wordIn .9s ease forwards}
 #dp-panel{position:fixed;inset:0;background:#050508;z-index:300;display:none;flex-direction:column;overflow-y:auto;padding:48px 24px 80px}
 .wi{display:flex;align-items:center;padding:7px 10px;border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:11px;gap:0}
@@ -413,7 +423,7 @@ body.in-briefing .hl{display:inline}
 
     <div class="inv-body inv-line">Les valeurs des mots s'alignent sur les normes affectives françaises publiées (Monnier &amp; Syssau, 2014 · NRC VAD, Mohammad, 2018). Le temps de réponse comme signal d'automaticité émotionnelle s'appuie sur la décision lexicale (Balota et al., 2007) et le paradigme IAT (Greenwald et al., 1998).</div>
 
-    <div class="inv-body inv-line">À la fin : vos réflexes, hésitations, conflits, et un profil VAD. Vous pouvez coller ces données dans <strong>Claude, ChatGPT ou Gemini</strong> pour une lecture.</div>
+    <div class="inv-body inv-line">À la fin : quatre mots, un profil VAD, vos signaux de conflit. Vous pouvez coller ces données dans <strong>Claude, ChatGPT ou Gemini</strong> pour une lecture.</div>
 
     <div class="inv-body inv-line">V3KTOR n'est pas un outil clinique. C'est un <strong>cadre scientifique reconnu, appliqué à un usage personnel</strong>.</div>
 
@@ -508,11 +518,11 @@ body.in-briefing .hl{display:inline}
       </div>
       <div class="cfg-row">
         <div class="cfg-label"><span>DURÉE DE PAUSE</span><span class="cfg-val" id="bd-val">5s</span></div>
-        <input type="range" id="bd-range" min="0" max="10" step="5" value="5" oninput="onSlider('bd',this.value)">
+        <input type="range" id="bd-range" min="0" max="30" step="5" value="5" oninput="onSlider('bd',this.value)">
       </div>
       <div class="cfg-row">
         <div class="cfg-label"><span>TEMPS DE RÉPONSE MAX</span><span class="cfg-val" id="rt-val">2000ms</span></div>
-        <input type="range" id="rt-range" min="1200" max="2000" step="100" value="2000" oninput="onSlider('rt',this.value)">
+        <input type="range" id="rt-range" min="1200" max="2500" step="100" value="2000" oninput="onSlider('rt',this.value)">
         <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,.62);margin-top:8px;line-height:1.6">Recommandé : 2000ms pour la première session. 1200–1500ms pour les utilisateurs réguliers. En dessous, la fenêtre de signal devient trop étroite pour capter le réflexe.</div>
       </div>
       <div class="toggle-row" style="margin-top:14px">
@@ -532,6 +542,11 @@ body.in-briefing .hl{display:inline}
       <input type="range" id="ct-range" min="0" max="100" step="5" value="50" oninput="onSlider('ct',this.value)">
       <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,.55);margin-top:8px;line-height:1.6">Augmentez si votre écran semble trop sombre.</div>
     </div>
+    <div class="toggle-row">
+      <span class="toggle-lbl">ANIMATIONS</span>
+      <button class="toggle-btn on" id="anim-toggle" onclick="toggleAnimations()"></button>
+    </div>
+    <div id="anim-note" style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,.6);margin-top:8px;line-height:1.8;display:none">Les animations 3D sont désactivées. Les résultats apparaîtront directement.</div>
 
     <div class="cfg-section-lbl">PRÉFÉRENCES</div>
     <div class="toggle-row">
@@ -544,15 +559,6 @@ body.in-briefing .hl{display:inline}
       <button class="toggle-btn on" id="intro-toggle" onclick="toggleShowIntro()"></button>
     </div>
     <div id="intro-note" style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,.6);margin-top:8px;line-height:1.8;display:none">L'introduction et le tutoriel seront ignorés. Le test commencera directement après le décompte.</div>
-
-    <div class="cfg-section-lbl">DONNÉES</div>
-    <div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:2px;color:rgba(255,255,255,.62);margin-bottom:14px;line-height:1.7">Vos sessions, votre baseline et vos paramètres vivent sur cet appareil. <strong style="color:rgba(212,160,23,.85);font-weight:400">Exportez</strong> pour garder une copie portable. <strong style="color:rgba(212,160,23,.85);font-weight:400">Importez</strong> pour restaurer sur un autre appareil — ou après un effacement.</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-      <button class="mbtn" onclick="exportData()">EXPORTER</button>
-      <button class="mbtn" onclick="importData()">IMPORTER</button>
-    </div>
-    <input type="file" id="import-file" accept=".json,application/json" style="display:none" onchange="handleImportFile(event)">
-    <div id="data-msg" style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:2.5px;color:rgba(212,160,23,.85);margin-top:12px;line-height:1.7;display:none;text-transform:uppercase"></div>
 
   </div>
 </div>
@@ -632,13 +638,46 @@ body.in-briefing .hl{display:inline}
 </div>
 
 <div id="bk">
+  <canvas id="bk-canvas"></canvas>
   <div id="bk-overlay"><div id="bk-cd">10</div><div id="bk-set"></div></div>
 </div>
 
 <div id="res">
   <div class="res-main">
-    <div class="res-complete" id="res-complete">SESSION COMPLÈTE</div>
+    <div class="core-block" id="core-block"></div>
+    <div class="hinge-wrap" id="hinge-wrap" style="display:none"><div class="hinge-word" id="hinge-word"></div></div>
   </div>
+</div>
+
+<div id="outro-buttons">
+  <div id="session-mood-compare"></div>
+  <div class="outro-explainer">Vos quatre signaux les plus rapides. Ce que votre instinct affirme sans hésiter.</div>
+  <button class="outro-btn outro-btn-primary" onclick="openMore()">COMPRENDRE MES MOTS</button>
+  <button class="outro-btn outro-btn-tertiary" onclick="returnToMenu()">MENU</button>
+</div>
+
+<!-- Divergence warning: flashing icon + tooltip popup -->
+<button id="div-warning-btn" type="button" onclick="openDivWarning(event)" aria-label="Lecture inhabituelle">⚠</button>
+<div id="div-warning-popup" role="dialog" aria-labelledby="dw-popup-title">
+  <button class="dw-popup-close" type="button" onclick="closeDivWarning()" aria-label="Fermer">×</button>
+  <div class="dw-popup-title" id="dw-popup-title">LECTURE INHABITUELLE</div>
+  <div class="dw-popup-body">Cette session diverge de votre baseline. La plupart des divergences sont du bruit — stress, sommeil, situation, une histoire que vous maintenez contre votre propre réflexe. La carte n'a pas changé. Quelque chose a poussé contre elle. Demandez quoi.</div>
+</div>
+
+<!-- Rage-tap warning: shown if responses under 200ms were rejected -->
+<button id="rage-warning-btn" type="button" onclick="openRageWarning(event)" aria-label="Réponses rejetées">⚠</button>
+<div id="rage-warning-popup" role="dialog" aria-labelledby="rw-popup-title">
+  <button class="dw-popup-close" type="button" onclick="closeRageWarning()" aria-label="Fermer">×</button>
+  <div class="dw-popup-title" id="rw-popup-title">RÉPONSES REJETÉES</div>
+  <div class="dw-popup-body" id="rw-popup-body"></div>
+</div>
+
+<!-- Pattern warning: shown if user tapped multiple anchor words against their typical valence -->
+<button id="pattern-warning-btn" type="button" onclick="openPatternWarning(event)" aria-label="Pattern inhabituel">⚠</button>
+<div id="pattern-warning-popup" role="dialog" aria-labelledby="pw-popup-title">
+  <button class="dw-popup-close" type="button" onclick="closePatternWarning()" aria-label="Fermer">×</button>
+  <div class="dw-popup-title" id="pw-popup-title">PATTERN INHABITUEL</div>
+  <div class="dw-popup-body" id="pw-popup-body"></div>
 </div>
 
 <!-- Reflex-drift warning: shown if user's median RT has drifted away from the engine's thresholds -->
@@ -651,31 +690,47 @@ body.in-briefing .hl{display:inline}
 
 <div id="copy-toast"></div>
 
-<div id="dp-panel">
-  <div class="dp-title">VOS RÉSULTATS</div>
-  <div id="session-mood-compare"></div>
-  <div id="dp-content"></div>
-  <div class="dp-note">Toutes les données restent sur votre appareil.<br>Rien n'est transmis nulle part.</div>
-  <div class="dp-actions">
-    <button class="outro-btn outro-btn-primary" onclick="copyForAI()">COPIER LES DONNÉES</button>
-    <button class="outro-btn outro-btn-tertiary" onclick="returnToMenu()">TERMINÉ</button>
+<!-- EN SAVOIR PLUS — explanation + clipboard handoff -->
+<div id="more-panel">
+  <button class="mbtn more-back" onclick="closeMore()">RETOUR</button>
+  <div class="more-content">
+    <div class="more-body">
+      <p class="more-p">Pendant ce court test, votre instinct a laissé une quantité importante de données.</p>
+      <p class="more-p">Les quatre mots que vous venez de voir sont ceux auxquels vous avez répondu le plus vite. Ils représentent un signal — pas un diagnostic. Ils ne racontent qu'une partie de l'histoire.</p>
+      <p class="more-p">Ceci est <strong>une lecture</strong>. Votre carte est dans l'onglet <strong>BASELINE</strong> du dashboard — elle s'affine avec chaque session et filtre les lectures isolées pour révéler ce qui est réellement stable en vous.</p>
+      <p class="more-p"><span class="more-emph">Le reste vient d'être copié dans votre presse-papiers.</span> Collez-le dans Claude, ChatGPT ou Gemini pour une analyse approfondie. L'histoire complète est là.</p>
+    </div>
+    <div class="more-actions">
+      <button class="outro-btn outro-btn-primary" onclick="openDonnees()">VOIR LES DÉTAILS</button>
+      <button class="outro-btn outro-btn-tertiary" onclick="returnToMenu()">MENU</button>
+    </div>
   </div>
+</div>
+
+<div id="dp-panel">
+  <div style="display:flex;gap:10px;margin-bottom:24px">
+    <button class="mbtn" onclick="closeDonnees()">RETOUR</button>
+    <button class="mbtn" onclick="returnToMenu()">MENU</button>
+  </div>
+  <div class="dp-title">VOS RÉSULTATS COMPLETS</div>
+  <div id="dp-content"></div>
+  <div class="dp-note">Toutes les données restent sur votre appareil.<br>Rien n'est transmis nulle part.<br>La forme vous appartient.</div>
 </div>
 
 <script>
 const POOL=[
-  ['amour',0.95,0.65,0.62,'relational'],['famille',0.78,0.52,0.52,'relational'],['mère',0.8,0.52,0.55,'relational'],['père',0.72,0.48,0.62,'relational'],['ami',0.85,0.5,0.52,'relational'],['enfant',0.82,0.55,0.45,'relational'],['frère',0.8,0.5,0.52,'relational'],['sœur',0.82,0.5,0.48,'relational'],['confiance',0.85,0.38,0.62,'relational'],['lien',0.78,0.42,0.55,'relational'],['foyer',0.85,0.38,0.55,'relational'],['chaleur',0.85,0.42,0.52,'relational'],['tendresse',0.85,0.38,0.45,'relational'],['loyauté',0.78,0.5,0.58,'relational'],['présence',0.72,0.38,0.52,'relational'],['solidarité',0.78,0.5,0.58,'relational'],['fidèle',0.8,0.42,0.58,'relational'],['maison',0.85,0.38,0.55,'relational'],['enfance',0.72,0.45,0.45,'relational'],['baiser',0.88,0.62,0.55,'relational'],['couple',0.75,0.48,0.55,'relational'],['partage',0.82,0.42,0.58,'relational'],['union',0.82,0.45,0.62,'relational'],['soutien',0.82,0.38,0.58,'relational'],['parole',0.72,0.42,0.55,'relational'],['écoute',0.82,0.28,0.52,'relational'],['regard',0.65,0.38,0.52,'relational'],['sourire',0.92,0.55,0.6,'relational'],['caresse',0.88,0.5,0.55,'relational'],['promesse',0.72,0.48,0.58,'relational'],['accueil',0.85,0.38,0.58,'relational'],['gratitude',0.88,0.42,0.55,'relational'],['douceur',0.88,0.22,0.52,'relational'],['respect',0.82,0.38,0.62,'relational'],['gentil',0.85,0.35,0.52,'relational'],['câlin',0.9,0.45,0.5,'relational'],['voisin',0.62,0.32,0.52,'relational'],['allié',0.78,0.45,0.62,'relational'],['fraternité',0.82,0.48,0.6,'relational'],['attaché',0.72,0.42,0.48,'relational'],['intime',0.78,0.45,0.52,'relational'],['fidélité',0.82,0.42,0.6,'relational'],['complice',0.78,0.48,0.58,'relational'],['adopter',0.75,0.45,0.62,'relational'],['chérir',0.88,0.42,0.55,'relational'],['partager',0.82,0.42,0.58,'relational'],['ancrer',0.75,0.32,0.65,'relational'],['amant',0.82,0.62,0.55,'relational'],['mentor',0.72,0.42,0.62,'relational'],
-  ['mort',0.08,0.7,0.32,'grief'],['deuil',0.1,0.5,0.22,'grief'],['perte',0.12,0.62,0.25,'grief'],['douleur',0.05,0.78,0.22,'grief'],['larmes',0.15,0.62,0.18,'grief'],['honte',0.08,0.68,0.15,'grief'],['trahison',0.05,0.78,0.28,'grief'],['absence',0.15,0.4,0.2,'grief'],['regret',0.15,0.48,0.18,'grief'],['souffrance',0.05,0.75,0.15,'grief'],['coupable',0.08,0.65,0.15,'grief'],['brisé',0.08,0.65,0.18,'grief'],['manque',0.15,0.52,0.22,'grief'],['abandon',0.05,0.65,0.15,'grief'],['tombe',0.1,0.42,0.25,'grief'],['rupture',0.08,0.68,0.22,'grief'],['échouer',0.12,0.62,0.18,'grief'],['secret',0.32,0.52,0.35,'grief'],['blessure',0.08,0.65,0.18,'grief'],['pleurs',0.1,0.62,0.15,'grief'],['fatigue',0.15,0.42,0.2,'grief'],['naufrage',0.05,0.65,0.15,'grief'],['brûlure',0.05,0.72,0.18,'grief'],['fardeau',0.08,0.55,0.15,'grief'],['défaite',0.08,0.62,0.12,'grief'],['effondré',0.05,0.68,0.1,'grief'],['chagrin',0.08,0.58,0.15,'grief'],['détresse',0.05,0.72,0.12,'grief'],['noyé',0.05,0.65,0.1,'grief'],['blessé',0.08,0.62,0.15,'grief'],['oublier',0.15,0.45,0.2,'grief'],['mourir',0.05,0.72,0.22,'grief'],['épuisé',0.08,0.52,0.12,'grief'],['hanté',0.05,0.68,0.12,'grief'],['ravagé',0.05,0.72,0.12,'grief'],['dévasté',0.05,0.7,0.1,'grief'],['écrasé',0.05,0.68,0.1,'grief'],['engloutir',0.05,0.7,0.12,'grief'],['tristesse',0.15,0.42,0.18,'grief'],['mélancolie',0.25,0.4,0.22,'grief'],['nostalgie',0.3,0.4,0.25,'grief'],
-  ['seul',0.28,0.42,0.42,'alone'],['vide',0.12,0.38,0.18,'alone'],['oublié',0.08,0.48,0.15,'alone'],['rejeté',0.05,0.68,0.12,'alone'],['perdu',0.12,0.52,0.2,'alone'],['exil',0.15,0.52,0.28,'alone'],['silence',0.32,0.22,0.38,'alone'],['froid',0.22,0.38,0.35,'alone'],['ombre',0.22,0.45,0.3,'alone'],['invisible',0.12,0.42,0.15,'alone'],['isolé',0.12,0.42,0.22,'alone'],['étranger',0.28,0.45,0.32,'alone'],['exclu',0.05,0.55,0.15,'alone'],['fuir',0.15,0.68,0.25,'alone'],['différent',0.42,0.45,0.42,'alone'],['partir',0.32,0.55,0.45,'alone'],['vague',0.32,0.28,0.28,'alone'],['brume',0.28,0.22,0.25,'alone'],['muet',0.18,0.28,0.22,'alone'],['distant',0.22,0.32,0.32,'alone'],['figé',0.15,0.38,0.18,'alone'],['glacé',0.12,0.45,0.22,'alone'],['enfermé',0.05,0.62,0.12,'alone'],['reculer',0.22,0.48,0.28,'alone'],['flotter',0.38,0.28,0.28,'alone'],['coupé',0.12,0.45,0.18,'alone'],['effacé',0.1,0.32,0.12,'alone'],['déraciné',0.08,0.55,0.12,'alone'],['égaré',0.1,0.52,0.15,'alone'],['exilé',0.1,0.48,0.18,'alone'],['inaperçu',0.22,0.32,0.22,'alone'],['négligé',0.15,0.48,0.22,'alone'],['délaissé',0.12,0.52,0.18,'alone'],
-  ['âme',0.72,0.48,0.55,'transcendence'],['foi',0.72,0.52,0.52,'transcendence'],['dieu',0.7,0.58,0.7,'transcendence'],['lumière',0.82,0.55,0.58,'transcendence'],['espoir',0.88,0.55,0.52,'transcendence'],['paix',0.92,0.22,0.58,'transcendence'],['pardon',0.82,0.42,0.52,'transcendence'],['grâce',0.88,0.38,0.55,'transcendence'],['miracle',0.88,0.62,0.52,'transcendence'],['prière',0.72,0.42,0.5,'transcendence'],['joie',0.98,0.72,0.62,'transcendence'],['renaissance',0.82,0.65,0.58,'transcendence'],['vivant',0.88,0.62,0.65,'transcendence'],['apaisé',0.85,0.18,0.58,'transcendence'],['univers',0.72,0.55,0.62,'transcendence'],['éternel',0.72,0.42,0.65,'transcendence'],['infini',0.75,0.48,0.62,'transcendence'],['sacré',0.78,0.48,0.68,'transcendence'],['céleste',0.82,0.42,0.6,'transcendence'],['divin',0.82,0.48,0.68,'transcendence'],['éveillé',0.78,0.52,0.65,'transcendence'],['serein',0.88,0.18,0.62,'transcendence'],['élever',0.82,0.52,0.68,'transcendence'],['pur',0.8,0.38,0.62,'transcendence'],['rayonner',0.88,0.55,0.65,'transcendence'],['sublime',0.88,0.55,0.65,'transcendence'],['méditer',0.78,0.22,0.62,'transcendence'],['illuminer',0.88,0.55,0.65,'transcendence'],['bénir',0.85,0.42,0.65,'transcendence'],['offrir',0.82,0.45,0.6,'transcendence'],['recevoir',0.75,0.42,0.52,'transcendence'],['accepter',0.72,0.32,0.58,'transcendence'],['contempler',0.78,0.28,0.58,'transcendence'],['méditation',0.78,0.22,0.58,'transcendence'],['unité',0.75,0.42,0.55,'transcendence'],['recueillement',0.68,0.22,0.52,'transcendence'],['extase',0.88,0.72,0.55,'transcendence'],['rituel',0.7,0.42,0.55,'transcendence'],
-  ['peur',0.05,0.88,0.15,'dark'],['haine',0.05,0.82,0.52,'dark'],['désespoir',0.05,0.65,0.1,'dark'],['chaos',0.2,0.82,0.32,'dark'],['terreur',0.05,0.92,0.12,'dark'],['néant',0.12,0.42,0.18,'dark'],['violence',0.05,0.85,0.4,'dark'],['poison',0.05,0.68,0.2,'dark'],['doute',0.22,0.55,0.25,'dark'],['mensonge',0.05,0.72,0.28,'dark'],['colère',0.15,0.82,0.48,'dark'],['angoisse',0.05,0.75,0.12,'dark'],['dette',0.12,0.58,0.18,'dark'],['injustice',0.08,0.75,0.35,'dark'],['piège',0.05,0.72,0.15,'dark'],['rage',0.05,0.88,0.42,'dark'],['masque',0.18,0.52,0.35,'dark'],['noirceur',0.05,0.52,0.15,'dark'],['tourment',0.05,0.72,0.12,'dark'],['abîme',0.08,0.62,0.15,'dark'],['fuite',0.12,0.68,0.22,'dark'],['chute',0.08,0.72,0.15,'dark'],['ruine',0.05,0.62,0.12,'dark'],['perdre',0.08,0.65,0.15,'dark'],['venin',0.05,0.68,0.18,'dark'],['délire',0.12,0.82,0.25,'dark'],['gouffre',0.05,0.65,0.12,'dark'],['ténèbre',0.05,0.55,0.15,'dark'],['nausée',0.05,0.72,0.12,'dark'],['horreur',0.05,0.85,0.12,'dark'],['calvaire',0.05,0.68,0.12,'dark'],['déchirer',0.05,0.78,0.18,'dark'],['anxiété',0.18,0.78,0.22,'dark'],['panique',0.15,0.92,0.18,'dark'],['jalousie',0.18,0.68,0.32,'dark'],['amertume',0.15,0.45,0.32,'dark'],['mépris',0.12,0.55,0.55,'dark'],
-  ['vérité',0.78,0.52,0.65,'light'],['sagesse',0.88,0.35,0.72,'light'],['clarté',0.82,0.38,0.65,'light'],['lucide',0.78,0.42,0.65,'light'],['ancré',0.78,0.32,0.65,'light'],['conscience',0.72,0.48,0.62,'light'],['honnête',0.82,0.42,0.62,'light'],['authentique',0.82,0.45,0.62,'light'],['présent',0.75,0.4,0.55,'light'],['résolu',0.75,0.38,0.65,'light'],['réussite',0.85,0.62,0.68,'light'],['fierté',0.82,0.58,0.68,'light'],['léger',0.78,0.38,0.58,'light'],['rêver',0.82,0.55,0.52,'light'],['équilibre',0.82,0.28,0.65,'light'],['ouvert',0.78,0.42,0.6,'light'],['stable',0.78,0.22,0.65,'light'],['calme',0.82,0.15,0.62,'light'],['avancer',0.78,0.52,0.65,'light'],['grandir',0.82,0.52,0.65,'light'],['simple',0.72,0.28,0.58,'light'],['solide',0.78,0.32,0.68,'light'],['guider',0.78,0.42,0.68,'light'],['tracer',0.72,0.42,0.65,'light'],['mériter',0.78,0.42,0.62,'light'],['bâtir',0.78,0.52,0.68,'light'],['évoluer',0.78,0.48,0.62,'light'],['fleurir',0.85,0.52,0.6,'light'],['accomplir',0.85,0.55,0.68,'light'],['réussir',0.88,0.62,0.72,'light'],['épanouir',0.88,0.52,0.65,'light'],['apprendre',0.8,0.48,0.62,'light'],['inspirer',0.85,0.55,0.65,'light'],['vision',0.72,0.42,0.62,'light'],['intuition',0.78,0.45,0.65,'light'],['mémoire',0.72,0.38,0.55,'light'],['profondeur',0.72,0.32,0.58,'light'],
-  ['cage',0.05,0.65,0.12,'power_dark'],['chaîne',0.05,0.62,0.15,'power_dark'],['tyrannie',0.05,0.75,0.2,'power_dark'],['contrôle',0.32,0.55,0.75,'power_dark'],['pouvoir',0.38,0.55,0.78,'power_dark'],['dominer',0.22,0.68,0.78,'power_dark'],['prison',0.05,0.65,0.12,'power_dark'],['subir',0.12,0.58,0.15,'power_dark'],['punir',0.05,0.72,0.55,'power_dark'],['forcer',0.08,0.72,0.68,'power_dark'],['briser',0.05,0.78,0.42,'power_dark'],['piéger',0.05,0.65,0.45,'power_dark'],['imposer',0.12,0.62,0.72,'power_dark'],['étouffer',0.05,0.72,0.35,'power_dark'],['menacer',0.05,0.78,0.48,'power_dark'],['régner',0.28,0.55,0.82,'power_dark'],['soumettre',0.08,0.65,0.45,'power_dark'],['opprimer',0.05,0.72,0.35,'power_dark'],['trahir',0.05,0.78,0.38,'power_dark'],['manipuler',0.05,0.65,0.52,'power_dark'],['séduire',0.35,0.65,0.55,'power_dark'],['envahir',0.05,0.78,0.48,'power_dark'],['corrompre',0.05,0.68,0.35,'power_dark'],['détruire',0.05,0.82,0.42,'power_dark'],['exploiter',0.05,0.65,0.48,'power_dark'],['paralyser',0.05,0.65,0.35,'power_dark'],['emprisonner',0.05,0.68,0.28,'power_dark'],['humiliation',0.05,0.72,0.18,'power_dark'],['intimidation',0.08,0.72,0.32,'power_dark'],['censure',0.12,0.52,0.45,'power_dark'],['abuser',0.08,0.62,0.55,'power_dark'],
-  ['liberté',0.9,0.68,0.78,'power_light'],['courage',0.85,0.72,0.72,'power_light'],['force',0.75,0.62,0.75,'power_light'],['justice',0.78,0.58,0.65,'power_light'],['dignité',0.85,0.42,0.72,'power_light'],['volonté',0.68,0.58,0.72,'power_light'],['choix',0.78,0.52,0.68,'power_light'],['debout',0.7,0.58,0.65,'power_light'],['agir',0.75,0.62,0.72,'power_light'],['protéger',0.85,0.52,0.72,'power_light'],['décider',0.75,0.52,0.72,'power_light'],['oser',0.78,0.62,0.72,'power_light'],['refuser',0.58,0.55,0.68,'power_light'],['affirmer',0.75,0.52,0.72,'power_light'],['résister',0.68,0.65,0.68,'power_light'],['assumer',0.72,0.48,0.72,'power_light'],['choisir',0.78,0.48,0.72,'power_light'],['vaincre',0.78,0.72,0.78,'power_light'],['défendre',0.72,0.62,0.72,'power_light'],['construire',0.82,0.52,0.72,'power_light'],['éclairer',0.85,0.48,0.68,'power_light'],['soutenir',0.82,0.42,0.65,'power_light'],['transformer',0.78,0.58,0.68,'power_light'],['limite',0.65,0.48,0.72,'power_light'],['voix',0.75,0.52,0.65,'power_light'],['honneur',0.78,0.48,0.72,'power_light'],
-  ['sang',0.2,0.75,0.4,'primal'],['instinct',0.58,0.65,0.58,'primal'],['survie',0.5,0.78,0.58,'primal'],['souffle',0.7,0.48,0.52,'primal'],['sauvage',0.52,0.78,0.55,'primal'],['cicatrice',0.2,0.58,0.32,'primal'],['cri',0.18,0.82,0.35,'primal'],['dormir',0.72,0.22,0.42,'primal'],['faim',0.18,0.72,0.28,'primal'],['sueur',0.28,0.65,0.38,'primal'],['racine',0.68,0.38,0.58,'primal'],['ancêtre',0.62,0.42,0.55,'primal'],['bête',0.32,0.62,0.48,'primal'],['rugir',0.22,0.85,0.52,'primal'],['mordre',0.12,0.78,0.42,'primal'],['hurler',0.12,0.88,0.38,'primal'],['ramper',0.08,0.62,0.18,'primal'],['frapper',0.08,0.82,0.48,'primal'],['trembler',0.08,0.78,0.12,'primal'],['saisir',0.48,0.65,0.58,'primal'],['cœur',0.72,0.55,0.48,'primal'],['désir',0.72,0.78,0.55,'primal'],['soif',0.32,0.65,0.32,'primal'],['frissonner',0.42,0.58,0.28,'primal'],
-  ['feu',0.42,0.88,0.52,'nature'],['eau',0.72,0.55,0.42,'nature'],['terre',0.65,0.32,0.48,'nature'],['soleil',0.88,0.62,0.58,'nature'],['forêt',0.78,0.45,0.48,'nature'],['orage',0.28,0.85,0.38,'nature'],['lune',0.68,0.42,0.42,'nature'],['aube',0.82,0.5,0.5,'nature'],['mer',0.72,0.65,0.42,'nature'],['nuit',0.42,0.5,0.38,'nature'],['vent',0.62,0.52,0.38,'nature'],['pierre',0.58,0.28,0.55,'nature'],['neige',0.68,0.42,0.42,'nature'],['rivière',0.72,0.45,0.42,'nature'],['montagne',0.72,0.48,0.52,'nature'],['désert',0.28,0.42,0.32,'nature'],['rocher',0.58,0.32,0.55,'nature'],['feuille',0.68,0.28,0.38,'nature'],['branche',0.62,0.28,0.42,'nature'],['herbe',0.65,0.28,0.38,'nature'],['horizon',0.75,0.42,0.52,'nature'],['marée',0.62,0.58,0.35,'nature'],['torrent',0.38,0.78,0.38,'nature'],['falaise',0.42,0.62,0.45,'nature'],['glacier',0.55,0.38,0.45,'nature'],['jungle',0.45,0.72,0.42,'nature'],['volcan',0.28,0.88,0.38,'nature'],['aurore',0.82,0.52,0.52,'nature'],['crépuscule',0.62,0.42,0.42,'nature'],['tempête',0.22,0.88,0.32,'nature'],['éclair',0.42,0.82,0.42,'nature'],['ciel',0.78,0.28,0.45,'nature'],['étoile',0.88,0.42,0.42,'nature'],['lac',0.75,0.28,0.45,'nature'],['vallée',0.68,0.28,0.48,'nature'],['arbre',0.78,0.28,0.52,'nature'],['fleur',0.85,0.32,0.42,'nature'],['oiseau',0.75,0.42,0.45,'nature'],['printemps',0.85,0.45,0.48,'nature'],
-  ['naître',0.82,0.65,0.55,'transform'],['guérir',0.85,0.42,0.55,'transform'],['créer',0.88,0.65,0.65,'transform'],['changer',0.52,0.58,0.48,'transform'],['émerger',0.78,0.62,0.6,'transform'],['libérer',0.85,0.7,0.7,'transform'],['réparer',0.78,0.42,0.55,'transform'],['recommencer',0.72,0.58,0.58,'transform'],['renaître',0.85,0.65,0.62,'transform'],['mûrir',0.78,0.42,0.6,'transform'],['forger',0.75,0.58,0.68,'transform'],['sculpter',0.78,0.52,0.65,'transform'],['franchir',0.78,0.62,0.68,'transform'],['dépasser',0.78,0.58,0.68,'transform'],['rebâtir',0.78,0.52,0.65,'transform'],['renoncer',0.55,0.42,0.55,'transform'],['lâcher',0.65,0.42,0.55,'transform'],['purifier',0.8,0.42,0.62,'transform'],['distiller',0.75,0.35,0.62,'transform'],['métamorphose',0.65,0.62,0.55,'transform'],['fondre',0.55,0.42,0.45,'transform'],['polir',0.62,0.38,0.55,'transform'],
-  ['encore',0.55,0.38,0.5,'pivot'],['malgré',0.55,0.5,0.55,'pivot'],['ici',0.58,0.35,0.52,'pivot'],['témoin',0.5,0.38,0.5,'pivot'],['tenir',0.55,0.42,0.55,'pivot'],['rester',0.52,0.28,0.48,'pivot'],['seuil',0.52,0.5,0.48,'pivot'],['pourtant',0.55,0.42,0.52,'pivot'],['respirer',0.78,0.38,0.55,'pivot'],['enfin',0.72,0.48,0.58,'pivot'],['désormais',0.62,0.35,0.55,'pivot'],['dorénavant',0.62,0.35,0.55,'pivot'],['néanmoins',0.55,0.38,0.52,'pivot'],['finalement',0.62,0.38,0.55,'pivot'],['continuer',0.65,0.48,0.58,'pivot'],['survivre',0.6,0.65,0.55,'pivot'],['repartir',0.68,0.52,0.6,'pivot'],['porter',0.5,0.38,0.55,'pivot'],['garder',0.55,0.32,0.55,'pivot'],['accueillir',0.68,0.42,0.52,'pivot'],['marqué',0.45,0.42,0.45,'pivot'],['usé',0.42,0.32,0.42,'pivot'],['lueur',0.55,0.32,0.45,'pivot'],['attentif',0.58,0.42,0.55,'pivot'],['maintenir',0.55,0.42,0.58,'pivot'],['passer',0.52,0.42,0.5,'pivot'],['retour',0.62,0.45,0.5,'pivot'],['patience',0.65,0.22,0.55,'pivot'],['étape',0.55,0.38,0.55,'pivot'],['suspendu',0.48,0.42,0.42,'pivot'],
+  ['amour',0.95,0.65,0.62,'relational'],['famille',0.78,0.52,0.52,'relational'],['mère',0.8,0.52,0.55,'relational'],['père',0.72,0.48,0.62,'relational'],['ami',0.85,0.5,0.52,'relational'],['enfant',0.82,0.55,0.45,'relational'],['frère',0.8,0.5,0.52,'relational'],['sœur',0.82,0.5,0.48,'relational'],['confiance',0.85,0.38,0.62,'relational'],['lien',0.78,0.42,0.55,'relational'],['foyer',0.85,0.38,0.55,'relational'],['chaleur',0.85,0.42,0.52,'relational'],['tendresse',0.85,0.38,0.45,'relational'],['loyauté',0.78,0.5,0.58,'relational'],['présence',0.72,0.38,0.52,'relational'],['solidarité',0.78,0.5,0.58,'relational'],['fidèle',0.8,0.42,0.58,'relational'],['maison',0.85,0.38,0.55,'relational'],['enfance',0.72,0.45,0.45,'relational'],['baiser',0.88,0.62,0.55,'relational'],['couple',0.75,0.48,0.55,'relational'],['partage',0.82,0.42,0.58,'relational'],['union',0.82,0.45,0.62,'relational'],['soutien',0.82,0.38,0.58,'relational'],['parole',0.72,0.42,0.55,'relational'],['écoute',0.82,0.28,0.52,'relational'],['regard',0.65,0.38,0.52,'relational'],['sourire',0.92,0.55,0.6,'relational'],['caresse',0.88,0.5,0.55,'relational'],['promesse',0.72,0.48,0.58,'relational'],['accueil',0.85,0.38,0.58,'relational'],['gratitude',0.88,0.42,0.55,'relational'],['douceur',0.88,0.22,0.52,'relational'],['respect',0.82,0.38,0.62,'relational'],['gentil',0.85,0.35,0.52,'relational'],['câlin',0.9,0.45,0.5,'relational'],['voisin',0.62,0.32,0.52,'relational'],['allié',0.78,0.45,0.62,'relational'],['fraternité',0.82,0.48,0.6,'relational'],['attaché',0.72,0.42,0.48,'relational'],['intime',0.78,0.45,0.52,'relational'],['fidélité',0.82,0.42,0.6,'relational'],['complice',0.78,0.48,0.58,'relational'],['adopter',0.75,0.45,0.62,'relational'],['chérir',0.88,0.42,0.55,'relational'],['partager',0.82,0.42,0.58,'relational'],['ancrer',0.75,0.32,0.65,'relational'],
+  ['mort',0.08,0.7,0.32,'grief'],['deuil',0.1,0.5,0.22,'grief'],['perte',0.12,0.62,0.25,'grief'],['douleur',0.05,0.78,0.22,'grief'],['larmes',0.15,0.62,0.18,'grief'],['honte',0.08,0.68,0.15,'grief'],['trahison',0.05,0.78,0.28,'grief'],['absence',0.15,0.4,0.2,'grief'],['regret',0.15,0.48,0.18,'grief'],['souffrance',0.05,0.75,0.15,'grief'],['coupable',0.08,0.65,0.15,'grief'],['brisé',0.08,0.65,0.18,'grief'],['manque',0.15,0.52,0.22,'grief'],['abandon',0.05,0.65,0.15,'grief'],['tombe',0.1,0.42,0.25,'grief'],['rupture',0.08,0.68,0.22,'grief'],['échouer',0.12,0.62,0.18,'grief'],['secret',0.32,0.52,0.35,'grief'],['blessure',0.08,0.65,0.18,'grief'],['pleurs',0.1,0.62,0.15,'grief'],['fatigue',0.15,0.42,0.2,'grief'],['naufrage',0.05,0.65,0.15,'grief'],['brûlure',0.05,0.72,0.18,'grief'],['fardeau',0.08,0.55,0.15,'grief'],['défaite',0.08,0.62,0.12,'grief'],['effondré',0.05,0.68,0.1,'grief'],['chagrin',0.08,0.58,0.15,'grief'],['détresse',0.05,0.72,0.12,'grief'],['noyé',0.05,0.65,0.1,'grief'],['blessé',0.08,0.62,0.15,'grief'],['oublier',0.15,0.45,0.2,'grief'],['mourir',0.05,0.72,0.22,'grief'],['épuisé',0.08,0.52,0.12,'grief'],['hanté',0.05,0.68,0.12,'grief'],['ravagé',0.05,0.72,0.12,'grief'],['dévasté',0.05,0.7,0.1,'grief'],['écrasé',0.05,0.68,0.1,'grief'],['engloutir',0.05,0.7,0.12,'grief'],
+  ['seul',0.28,0.42,0.42,'alone'],['vide',0.12,0.38,0.18,'alone'],['oublié',0.08,0.48,0.15,'alone'],['rejeté',0.05,0.68,0.12,'alone'],['perdu',0.12,0.52,0.2,'alone'],['exil',0.15,0.52,0.28,'alone'],['silence',0.32,0.22,0.38,'alone'],['froid',0.22,0.38,0.35,'alone'],['ombre',0.22,0.45,0.3,'alone'],['invisible',0.12,0.42,0.15,'alone'],['isolé',0.12,0.42,0.22,'alone'],['étranger',0.28,0.45,0.32,'alone'],['exclu',0.05,0.55,0.15,'alone'],['fuir',0.15,0.68,0.25,'alone'],['différent',0.42,0.45,0.42,'alone'],['partir',0.32,0.55,0.45,'alone'],['vague',0.32,0.28,0.28,'alone'],['brume',0.28,0.22,0.25,'alone'],['muet',0.18,0.28,0.22,'alone'],['distant',0.22,0.32,0.32,'alone'],['figé',0.15,0.38,0.18,'alone'],['glacé',0.12,0.45,0.22,'alone'],['enfermé',0.05,0.62,0.12,'alone'],['reculer',0.22,0.48,0.28,'alone'],['flotter',0.38,0.28,0.28,'alone'],['coupé',0.12,0.45,0.18,'alone'],['effacé',0.1,0.32,0.12,'alone'],['déraciné',0.08,0.55,0.12,'alone'],['égaré',0.1,0.52,0.15,'alone'],['exilé',0.1,0.48,0.18,'alone'],
+  ['âme',0.72,0.48,0.55,'transcendence'],['foi',0.72,0.52,0.52,'transcendence'],['dieu',0.7,0.58,0.7,'transcendence'],['lumière',0.82,0.55,0.58,'transcendence'],['espoir',0.88,0.55,0.52,'transcendence'],['paix',0.92,0.22,0.58,'transcendence'],['pardon',0.82,0.42,0.52,'transcendence'],['grâce',0.88,0.38,0.55,'transcendence'],['miracle',0.88,0.62,0.52,'transcendence'],['prière',0.72,0.42,0.5,'transcendence'],['joie',0.98,0.72,0.62,'transcendence'],['renaissance',0.82,0.65,0.58,'transcendence'],['vivant',0.88,0.62,0.65,'transcendence'],['apaisé',0.85,0.18,0.58,'transcendence'],['univers',0.72,0.55,0.62,'transcendence'],['éternel',0.72,0.42,0.65,'transcendence'],['infini',0.75,0.48,0.62,'transcendence'],['sacré',0.78,0.48,0.68,'transcendence'],['céleste',0.82,0.42,0.6,'transcendence'],['divin',0.82,0.48,0.68,'transcendence'],['éveillé',0.78,0.52,0.65,'transcendence'],['serein',0.88,0.18,0.62,'transcendence'],['élever',0.82,0.52,0.68,'transcendence'],['pur',0.8,0.38,0.62,'transcendence'],['rayonner',0.88,0.55,0.65,'transcendence'],['sublime',0.88,0.55,0.65,'transcendence'],['méditer',0.78,0.22,0.62,'transcendence'],['illuminer',0.88,0.55,0.65,'transcendence'],['bénir',0.85,0.42,0.65,'transcendence'],['offrir',0.82,0.45,0.6,'transcendence'],['recevoir',0.75,0.42,0.52,'transcendence'],['accepter',0.72,0.32,0.58,'transcendence'],['contempler',0.78,0.28,0.58,'transcendence'],
+  ['peur',0.05,0.88,0.15,'dark'],['haine',0.05,0.82,0.52,'dark'],['désespoir',0.05,0.65,0.1,'dark'],['chaos',0.2,0.82,0.32,'dark'],['terreur',0.05,0.92,0.12,'dark'],['néant',0.12,0.42,0.18,'dark'],['violence',0.05,0.85,0.4,'dark'],['poison',0.05,0.68,0.2,'dark'],['doute',0.22,0.55,0.25,'dark'],['mensonge',0.05,0.72,0.28,'dark'],['colère',0.15,0.82,0.48,'dark'],['angoisse',0.05,0.75,0.12,'dark'],['dette',0.12,0.58,0.18,'dark'],['injustice',0.08,0.75,0.35,'dark'],['piège',0.05,0.72,0.15,'dark'],['rage',0.05,0.88,0.42,'dark'],['masque',0.18,0.52,0.35,'dark'],['noirceur',0.05,0.52,0.15,'dark'],['tourment',0.05,0.72,0.12,'dark'],['abîme',0.08,0.62,0.15,'dark'],['fuite',0.12,0.68,0.22,'dark'],['chute',0.08,0.72,0.15,'dark'],['ruine',0.05,0.62,0.12,'dark'],['perdre',0.08,0.65,0.15,'dark'],['venin',0.05,0.68,0.18,'dark'],['délire',0.12,0.82,0.25,'dark'],['gouffre',0.05,0.65,0.12,'dark'],['ténèbre',0.05,0.55,0.15,'dark'],['nausée',0.05,0.72,0.12,'dark'],['horreur',0.05,0.85,0.12,'dark'],['calvaire',0.05,0.68,0.12,'dark'],['déchirer',0.05,0.78,0.18,'dark'],
+  ['vérité',0.78,0.52,0.65,'light'],['sagesse',0.88,0.35,0.72,'light'],['clarté',0.82,0.38,0.65,'light'],['lucide',0.78,0.42,0.65,'light'],['ancré',0.78,0.32,0.65,'light'],['conscience',0.72,0.48,0.62,'light'],['honnête',0.82,0.42,0.62,'light'],['authentique',0.82,0.45,0.62,'light'],['présent',0.75,0.4,0.55,'light'],['résolu',0.75,0.38,0.65,'light'],['réussite',0.85,0.62,0.68,'light'],['fierté',0.82,0.58,0.68,'light'],['léger',0.78,0.38,0.58,'light'],['rêver',0.82,0.55,0.52,'light'],['équilibre',0.82,0.28,0.65,'light'],['ouvert',0.78,0.42,0.6,'light'],['stable',0.78,0.22,0.65,'light'],['calme',0.82,0.15,0.62,'light'],['avancer',0.78,0.52,0.65,'light'],['grandir',0.82,0.52,0.65,'light'],['simple',0.72,0.28,0.58,'light'],['solide',0.78,0.32,0.68,'light'],['guider',0.78,0.42,0.68,'light'],['tracer',0.72,0.42,0.65,'light'],['mériter',0.78,0.42,0.62,'light'],['bâtir',0.78,0.52,0.68,'light'],['évoluer',0.78,0.48,0.62,'light'],['fleurir',0.85,0.52,0.6,'light'],['accomplir',0.85,0.55,0.68,'light'],['réussir',0.88,0.62,0.72,'light'],['épanouir',0.88,0.52,0.65,'light'],['apprendre',0.8,0.48,0.62,'light'],['inspirer',0.85,0.55,0.65,'light'],
+  ['cage',0.05,0.65,0.12,'power_dark'],['chaîne',0.05,0.62,0.15,'power_dark'],['tyrannie',0.05,0.75,0.2,'power_dark'],['contrôle',0.32,0.55,0.75,'power_dark'],['pouvoir',0.38,0.55,0.78,'power_dark'],['dominer',0.22,0.68,0.78,'power_dark'],['prison',0.05,0.65,0.12,'power_dark'],['subir',0.12,0.58,0.15,'power_dark'],['punir',0.05,0.72,0.55,'power_dark'],['forcer',0.08,0.72,0.68,'power_dark'],['briser',0.05,0.78,0.42,'power_dark'],['piéger',0.05,0.65,0.45,'power_dark'],['imposer',0.12,0.62,0.72,'power_dark'],['étouffer',0.05,0.72,0.35,'power_dark'],['menacer',0.05,0.78,0.48,'power_dark'],['régner',0.28,0.55,0.82,'power_dark'],['soumettre',0.08,0.65,0.45,'power_dark'],['opprimer',0.05,0.72,0.35,'power_dark'],['trahir',0.05,0.78,0.38,'power_dark'],['manipuler',0.05,0.65,0.52,'power_dark'],['séduire',0.35,0.65,0.55,'power_dark'],['envahir',0.05,0.78,0.48,'power_dark'],['corrompre',0.05,0.68,0.35,'power_dark'],['détruire',0.05,0.82,0.42,'power_dark'],['exploiter',0.05,0.65,0.48,'power_dark'],['paralyser',0.05,0.65,0.35,'power_dark'],['emprisonner',0.05,0.68,0.28,'power_dark'],
+  ['liberté',0.9,0.68,0.78,'power_light'],['courage',0.85,0.72,0.72,'power_light'],['force',0.75,0.62,0.75,'power_light'],['justice',0.78,0.58,0.65,'power_light'],['dignité',0.85,0.42,0.72,'power_light'],['volonté',0.68,0.58,0.72,'power_light'],['choix',0.78,0.52,0.68,'power_light'],['debout',0.7,0.58,0.65,'power_light'],['agir',0.75,0.62,0.72,'power_light'],['protéger',0.85,0.52,0.72,'power_light'],['décider',0.75,0.52,0.72,'power_light'],['oser',0.78,0.62,0.72,'power_light'],['refuser',0.58,0.55,0.68,'power_light'],['affirmer',0.75,0.52,0.72,'power_light'],['résister',0.68,0.65,0.68,'power_light'],['assumer',0.72,0.48,0.72,'power_light'],['choisir',0.78,0.48,0.72,'power_light'],['vaincre',0.78,0.72,0.78,'power_light'],['défendre',0.72,0.62,0.72,'power_light'],['construire',0.82,0.52,0.72,'power_light'],['éclairer',0.85,0.48,0.68,'power_light'],['soutenir',0.82,0.42,0.65,'power_light'],['transformer',0.78,0.58,0.68,'power_light'],
+  ['sang',0.2,0.75,0.4,'primal'],['instinct',0.58,0.65,0.58,'primal'],['survie',0.5,0.78,0.58,'primal'],['souffle',0.7,0.48,0.52,'primal'],['sauvage',0.52,0.78,0.55,'primal'],['cicatrice',0.2,0.58,0.32,'primal'],['cri',0.18,0.82,0.35,'primal'],['dormir',0.72,0.22,0.42,'primal'],['faim',0.18,0.72,0.28,'primal'],['sueur',0.28,0.65,0.38,'primal'],['racine',0.68,0.38,0.58,'primal'],['ancêtre',0.62,0.42,0.55,'primal'],['bête',0.32,0.62,0.48,'primal'],['rugir',0.22,0.85,0.52,'primal'],['mordre',0.12,0.78,0.42,'primal'],['hurler',0.12,0.88,0.38,'primal'],['ramper',0.08,0.62,0.18,'primal'],['frapper',0.08,0.82,0.48,'primal'],['trembler',0.08,0.78,0.12,'primal'],['saisir',0.48,0.65,0.58,'primal'],
+  ['feu',0.42,0.88,0.52,'nature'],['eau',0.72,0.55,0.42,'nature'],['terre',0.65,0.32,0.48,'nature'],['soleil',0.88,0.62,0.58,'nature'],['forêt',0.78,0.45,0.48,'nature'],['orage',0.28,0.85,0.38,'nature'],['lune',0.68,0.42,0.42,'nature'],['aube',0.82,0.5,0.5,'nature'],['mer',0.72,0.65,0.42,'nature'],['nuit',0.42,0.5,0.38,'nature'],['vent',0.62,0.52,0.38,'nature'],['pierre',0.58,0.28,0.55,'nature'],['neige',0.68,0.42,0.42,'nature'],['rivière',0.72,0.45,0.42,'nature'],['montagne',0.72,0.48,0.52,'nature'],['désert',0.28,0.42,0.32,'nature'],['rocher',0.58,0.32,0.55,'nature'],['feuille',0.68,0.28,0.38,'nature'],['branche',0.62,0.28,0.42,'nature'],['herbe',0.65,0.28,0.38,'nature'],['horizon',0.75,0.42,0.52,'nature'],['marée',0.62,0.58,0.35,'nature'],['torrent',0.38,0.78,0.38,'nature'],['falaise',0.42,0.62,0.45,'nature'],['glacier',0.55,0.38,0.45,'nature'],['jungle',0.45,0.72,0.42,'nature'],['volcan',0.28,0.88,0.38,'nature'],['aurore',0.82,0.52,0.52,'nature'],['crépuscule',0.62,0.42,0.42,'nature'],['tempête',0.22,0.88,0.32,'nature'],['éclair',0.42,0.82,0.42,'nature'],
+  ['naître',0.82,0.65,0.55,'transform'],['guérir',0.85,0.42,0.55,'transform'],['créer',0.88,0.65,0.65,'transform'],['changer',0.52,0.58,0.48,'transform'],['émerger',0.78,0.62,0.6,'transform'],['libérer',0.85,0.7,0.7,'transform'],['réparer',0.78,0.42,0.55,'transform'],['recommencer',0.72,0.58,0.58,'transform'],['renaître',0.85,0.65,0.62,'transform'],['mûrir',0.78,0.42,0.6,'transform'],['forger',0.75,0.58,0.68,'transform'],['sculpter',0.78,0.52,0.65,'transform'],['franchir',0.78,0.62,0.68,'transform'],['dépasser',0.78,0.58,0.68,'transform'],['rebâtir',0.78,0.52,0.65,'transform'],['renoncer',0.55,0.42,0.55,'transform'],['lâcher',0.65,0.42,0.55,'transform'],['purifier',0.8,0.42,0.62,'transform'],['distiller',0.75,0.35,0.62,'transform'],
+  ['encore',0.55,0.38,0.5,'pivot'],['malgré',0.55,0.5,0.55,'pivot'],['ici',0.58,0.35,0.52,'pivot'],['témoin',0.5,0.38,0.5,'pivot'],['tenir',0.55,0.42,0.55,'pivot'],['rester',0.52,0.28,0.48,'pivot'],['seuil',0.52,0.5,0.48,'pivot'],['pourtant',0.55,0.42,0.52,'pivot'],['respirer',0.78,0.38,0.55,'pivot'],['enfin',0.72,0.48,0.58,'pivot'],['désormais',0.62,0.35,0.55,'pivot'],['dorénavant',0.62,0.35,0.55,'pivot'],['néanmoins',0.55,0.38,0.52,'pivot'],['finalement',0.62,0.38,0.55,'pivot'],['continuer',0.65,0.48,0.58,'pivot'],['survivre',0.6,0.65,0.55,'pivot'],['repartir',0.68,0.52,0.6,'pivot'],
 ];
 const _s=new Set();
 const POOL_CLEAN=POOL.filter(w=>{if(_s.has(w[0]))return false;_s.add(w[0]);return true;});
@@ -690,7 +745,7 @@ const DW={};['famille','violence','joie','peur'].forEach(n=>{DW[n]=POOL_CLEAN.fi
 const ADJ={relational:['grief','alone','transcendence','primal'],grief:['alone','transcendence','dark','transform'],alone:['grief','dark','power_dark','relational'],transcendence:['light','nature','transform','relational'],dark:['grief','alone','transform','nature'],light:['transcendence','transform','power_light'],power_dark:['alone','primal','dark'],power_light:['light','transform','primal'],primal:['nature','grief','transform'],nature:['transcendence','primal','light'],transform:['transcendence','light','nature'],pivot:['transcendence','transform','light']};
 const DARK_CATS=new Set(['grief','alone','dark','power_dark']);
 const LIGHT_CATS=new Set(['transcendence','light','power_light']);
-const PIVOT_PREFS={grief:['survivre','encore','rester'],alone:['témoin','ici','rester'],dark:['survivre','pourtant','encore'],power_dark:['malgré','seuil','tenir'],primal:['survivre','seuil','malgré']};
+const PIVOT_PREFS={grief:['braise','encore','rester'],alone:['témoin','ici','rester'],dark:['braise','pourtant','encore'],power_dark:['malgré','seuil','tenir'],primal:['braise','seuil','malgré']};
 const engine={byCluster:{},earnedWords:new Set(),shown:new Set(),queue:[],initialPool:[],initialIdx:0,clusterSignal:{},darkStreak:0,lightStreak:0,pivotOffered:false,pivotWord:null,pivotResponse:null,activeCluster:null,shownCount:0,total:60};
 function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
 function stratifiedShuffle(pool,total){const cats={};pool.forEach(w=>{if(!cats[w[4]])cats[w[4]]=[];cats[w[4]].push(w);});Object.keys(cats).forEach(k=>cats[k]=shuffle(cats[k]));const keys=Object.keys(cats),idx={};keys.forEach(k=>idx[k]=0);const result=[];let g=0;while(result.length<total&&g<total*3){g++;for(const k of keys){if(result.length>=total)break;if(idx[k]<cats[k].length)result.push(cats[k][idx[k]++]);}}return shuffle(result.slice(0,total));}
@@ -722,7 +777,7 @@ function onResponse(word,dir,rt){
     const adjCat=pref[0]||adj[0];
     if(adjCat)engine.queue.push(...fromCluster(adjCat,1));
   }
-  if(engine.darkStreak>=3&&!engine.pivotOffered){engine.pivotOffered=true;const prefs=PIVOT_PREFS[cat]||['survivre'];let pivot=null;for(const pw of prefs){if(!engine.shown.has(pw)){pivot=POOL_CLEAN.find(p=>p[0]===pw);break;}}if(!pivot)pivot=fromCluster('pivot',1)[0];if(pivot){engine.pivotWord=pivot[0];engine.queue.unshift(pivot);}}
+  if(engine.darkStreak>=3&&!engine.pivotOffered){engine.pivotOffered=true;const prefs=PIVOT_PREFS[cat]||['braise'];let pivot=null;for(const pw of prefs){if(!engine.shown.has(pw)){pivot=POOL_CLEAN.find(p=>p[0]===pw);break;}}if(!pivot)pivot=fromCluster('pivot',1)[0];if(pivot){engine.pivotWord=pivot[0];engine.queue.unshift(pivot);}}
   // Bright-side failsafe — counterweight to dark pivot. Recurring: fires every time
   // lightStreak hits 4, to prevent the adaptive queue from creating a positive-only feed.
   if(engine.lightStreak>=4){
@@ -743,16 +798,13 @@ function onResponse(word,dir,rt){
 function scoreResponse(r,targetDir){if(r.direction!==targetDir)return -1;const wObj=WORD_MAP[r.word];if(!wObj)return 0;const speedScore=1000/Math.max(1,r.rt);const earnedBonus=engine.earnedWords.has(r.word)?1.6:1.0;const expectedDir=wObj.v>0.5?'pos':'neg';const isSurprising=r.direction!==expectedDir;const neutralness=1-Math.abs(wObj.v-0.5)*2;const surpriseBonus=isSurprising?1.8:(1+neutralness*0.4);return speedScore*earnedBonus*surpriseBonus;}
 function isConflict(dir,w){if(!dir)return false;return((dir==='pos'&&w[1]<0.35)||(dir==='neg'&&w[1]>0.65))||((dir==='pos'&&w[3]<0.22)||(dir==='neg'&&w[3]>0.78));}
 const SK='tc_settings_v3';
-let CFG={wc:60,bs:30,bd:5,ct:100,privacy:true,showIntro:true,maxRt:2000,research:false};
+let CFG={wc:60,bs:30,bd:5,ct:100,privacy:true,showIntro:true,animations:true,maxRt:2000,research:false};
 function loadCFG(){try{const s=JSON.parse(localStorage.getItem(SK)||'{}');CFG={...CFG,...s};}catch(e){}
   // Quality floors: silently raise legacy settings that fall below the data-quality minimums.
   // Empirically (sim'd on 350-word pool × 12 sessions): below 60 words the personal signature
   // surfaces <50% of values; below 1200ms max-RT the usable signal window shrinks below 360ms.
   if(CFG.wc<60)CFG.wc=60;
   if(CFG.maxRt<1200)CFG.maxRt=1200;
-  // Quality ceilings: clamp legacy saved values to the new tighter slider ranges.
-  if(CFG.maxRt>2000)CFG.maxRt=2000;
-  if(CFG.bd>10)CFG.bd=10;
 }
 function saveCFG(){try{localStorage.setItem(SK,JSON.stringify(CFG));}catch(e){}}
 function applyContrast(val){
@@ -775,6 +827,7 @@ function calcEstTime(wc,bs,bd,maxRt){const breaks=Math.max(0,Math.floor((wc-1)/b
 function updateEstTime(){const t=calcEstTime(CFG.wc,CFG.bs,CFG.bd,CFG.maxRt||2000);const el=document.getElementById('est-time-val');if(el)el.innerText=t;}
 function updateSliderBrightness(slider){if(!slider)return;const min=parseFloat(slider.min);const max=parseFloat(slider.max);const val=parseFloat(slider.value);const ratio=Math.max(0,Math.min(1,(val-min)/(max-min||1)));const brightness=0.25+ratio*0.75;slider.style.setProperty('--thumb-bright',brightness.toFixed(3));}
 function onSlider(key,val){const labels={wc:'wc-val',bs:'bs-val',bd:'bd-val',ct:'ct-val',rt:'rt-val'};const fmt={wc:v=>v,bs:v=>v,bd:v=>v+'s',ct:v=>v,rt:v=>v+'ms'};document.getElementById(labels[key]).innerText=fmt[key](val);if(key==='rt'){CFG.maxRt=parseInt(val);}else{CFG[key]=parseInt(val);}saveCFG();if(key==='ct')applyContrast(parseInt(val));updateSliderBrightness(document.getElementById(key+'-range'));updateEstTime();}
+function toggleAnimations(){CFG.animations=!CFG.animations;document.getElementById('anim-toggle').classList.toggle('on',CFG.animations);document.getElementById('anim-note').style.display=CFG.animations?'none':'block';saveCFG();}
 function togglePrivacy(){CFG.privacy=!CFG.privacy;document.getElementById('privacy-toggle').classList.toggle('on',CFG.privacy);document.getElementById('privacy-note').style.display=CFG.privacy?'none':'block';saveCFG();}
 function toggleShowIntro(){CFG.showIntro=!CFG.showIntro;document.getElementById('intro-toggle').classList.toggle('on',CFG.showIntro);document.getElementById('intro-note').style.display=CFG.showIntro?'none':'block';saveCFG();}
 function toggleResearch(){
@@ -798,7 +851,7 @@ function applyResearchConstraints(){
   if(!wc||!bs||!rt)return;
   wc.min=r?120:60;
   bs.min=r?60:5;
-  rt.max=r?1700:2000;
+  rt.max=r?1700:2500;
   // Re-clamp values to the now-valid range, then push to UI
   if(r){
     if(CFG.wc<120)CFG.wc=120;
@@ -816,46 +869,85 @@ function applyResearchConstraints(){
   [wc,bs,rt].forEach(el=>{try{updateSliderBrightness(el);}catch(e){}});
   try{updateEstTime();}catch(e){}
 }
-function initSettings(){loadCFG();document.getElementById('wc-range').value=CFG.wc;document.getElementById('wc-val').innerText=CFG.wc;document.getElementById('bs-range').value=CFG.bs;document.getElementById('bs-val').innerText=CFG.bs;document.getElementById('bd-range').value=CFG.bd;document.getElementById('bd-val').innerText=CFG.bd+'s';document.getElementById('ct-range').value=CFG.ct;document.getElementById('ct-val').innerText=CFG.ct;document.getElementById('rt-range').value=CFG.maxRt;document.getElementById('rt-val').innerText=CFG.maxRt+'ms';document.getElementById('privacy-toggle').classList.toggle('on',CFG.privacy);document.getElementById('privacy-note').style.display=CFG.privacy?'none':'block';document.getElementById('intro-toggle').classList.toggle('on',CFG.showIntro);document.getElementById('intro-note').style.display=CFG.showIntro?'none':'block';applyContrast(CFG.ct);['wc-range','bs-range','bd-range','ct-range','rt-range'].forEach(id=>updateSliderBrightness(document.getElementById(id)));updateEstTime();applyResearchConstraints();}
+function initSettings(){loadCFG();document.getElementById('wc-range').value=CFG.wc;document.getElementById('wc-val').innerText=CFG.wc;document.getElementById('bs-range').value=CFG.bs;document.getElementById('bs-val').innerText=CFG.bs;document.getElementById('bd-range').value=CFG.bd;document.getElementById('bd-val').innerText=CFG.bd+'s';document.getElementById('ct-range').value=CFG.ct;document.getElementById('ct-val').innerText=CFG.ct;document.getElementById('rt-range').value=CFG.maxRt;document.getElementById('rt-val').innerText=CFG.maxRt+'ms';document.getElementById('privacy-toggle').classList.toggle('on',CFG.privacy);document.getElementById('privacy-note').style.display=CFG.privacy?'none':'block';document.getElementById('intro-toggle').classList.toggle('on',CFG.showIntro);document.getElementById('intro-note').style.display=CFG.showIntro?'none':'block';document.getElementById('anim-toggle').classList.toggle('on',CFG.animations);document.getElementById('anim-note').style.display=CFG.animations?'none':'block';applyContrast(CFG.ct);['wc-range','bs-range','bd-range','ct-range','rt-range'].forEach(id=>updateSliderBrightness(document.getElementById(id)));updateEstTime();applyResearchConstraints();}
 const LS_KEY='tc_fr_v3';
 function loadSessions(){try{return JSON.parse(localStorage.getItem(LS_KEY)||'[]');}catch(e){return[];}}
 function saveSession(d){if(!CFG.privacy)return;try{const s=loadSessions();s.unshift(d);localStorage.setItem(LS_KEY,JSON.stringify(s.slice(0,10)));}catch(e){}}
 function fmtDate(ts){const d=Math.floor((Date.now()-ts)/86400000);return d===0?"AUJOURD'HUI":d===1?'HIER':d+'J';}
 
 // ============ INVITATION SYSTEM ============
-// Scroll-driven reveal — each line fades in as it enters the viewport.
-// Replaces the previous timed stagger. Natural pacing, user-controlled.
-let _invObserver=null;
+const INV_REVEAL_STAGGER=1100;
+const INV_REVEAL_INITIAL=400;
+let _invLines=[];
+let _invIdx=0;
+let _invTimers=[];
+let _invHintShown=false;
 function showInvitation(){
   const inv=document.getElementById('invitation');
   inv.classList.add('show');
-  // Always start at the top so the first line(s) animate in as expected.
-  try{inv.scrollTop=0;}catch(e){}
-  const lines=Array.from(inv.querySelectorAll('.inv-line'));
-  lines.forEach(l=>l.classList.remove('in'));
+  _invLines=Array.from(inv.querySelectorAll('.inv-line'));
+  _invLines.forEach(l=>l.classList.remove('in'));
   const btn=document.getElementById('inv-enter');
-  btn.style.display='block';
+  btn.style.display='none';
   btn.classList.remove('in');
-  // Hint no longer makes sense (no tap-to-advance); hide it.
   const hint=document.getElementById('inv-hint');
-  if(hint){hint.style.display='none';hint.classList.remove('in');}
-  // Disconnect any prior observer (in case showInvitation is called twice).
-  if(_invObserver){try{_invObserver.disconnect();}catch(e){}_invObserver=null;}
-  // Reveal lines and the button as they scroll into view inside the invitation panel.
-  _invObserver=new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){
-        e.target.classList.add('in');
-        _invObserver.unobserve(e.target);
-      }
-    });
-  },{root:inv,threshold:0.18});
-  lines.forEach(l=>_invObserver.observe(l));
-  _invObserver.observe(btn);
+  hint.classList.remove('in');
+  _invHintShown=false;
+  _invIdx=0;
+  _invTimers=[];
+  // Schedule reveal of each line
+  _invLines.forEach((line,i)=>{
+    const t=setTimeout(()=>revealInvLine(i),INV_REVEAL_INITIAL+i*INV_REVEAL_STAGGER);
+    _invTimers.push(t);
+  });
+  // Show hint after the second line appears (so they know they can tap)
+  const hintT=setTimeout(()=>{
+    if(!_invHintShown){hint.classList.add('in');_invHintShown=true;}
+  },INV_REVEAL_INITIAL+INV_REVEAL_STAGGER*2);
+  _invTimers.push(hintT);
 }
-// Kept as a no-op so the legacy tap/click handlers on #invitation don't error.
-// Scrolling is now the natural advance; tapping does nothing on the page itself.
-function advanceInvitation(){}
+function revealInvLine(i){
+  if(i>=_invLines.length){showInvButton();return;}
+  const line=_invLines[i];
+  if(!line.classList.contains('in')){
+    line.classList.add('in');
+    // Gently scroll into view if needed (no-op if already visible)
+    try{line.scrollIntoView({behavior:'smooth',block:'nearest'});}catch(e){}
+  }
+  if(i>_invIdx)_invIdx=i;
+  // If this was the last line, schedule the button
+  if(i===_invLines.length-1){
+    const btn=document.getElementById('inv-enter');
+    setTimeout(()=>{
+      btn.style.display='block';
+      setTimeout(()=>{
+        btn.classList.add('in');
+        // Hide the hint once the button is visible
+        const hint=document.getElementById('inv-hint');
+        hint.classList.remove('in');
+        setTimeout(()=>{hint.style.display='none';},800);
+        try{btn.scrollIntoView({behavior:'smooth',block:'nearest'});}catch(e){}
+      },50);
+    },900);
+  }
+}
+function advanceInvitation(){
+  // Tap-to-advance: reveal the next unrevealed line immediately
+  for(let i=0;i<_invLines.length;i++){
+    if(!_invLines[i].classList.contains('in')){
+      // Cancel its scheduled timer and reveal now
+      if(_invTimers[i])clearTimeout(_invTimers[i]);
+      revealInvLine(i);
+      return;
+    }
+  }
+}
+function showInvButton(){
+  const btn=document.getElementById('inv-enter');
+  if(btn.style.display==='block')return;
+  btn.style.display='block';
+  setTimeout(()=>btn.classList.add('in'),50);
+}
 function finishInvitation(e){
   if(e&&e.stopPropagation)e.stopPropagation();
   document.documentElement.removeAttribute('data-first-launch');
@@ -868,7 +960,9 @@ function finishInvitation(e){
     inv.style.transition='';
     // Menu becomes visible because data-first-launch is removed
   },520);
-  if(_invObserver){try{_invObserver.disconnect();}catch(e){}_invObserver=null;}
+  // Clear any pending timers
+  _invTimers.forEach(t=>clearTimeout(t));
+  _invTimers=[];
 }
 // ============ END INVITATION SYSTEM ============
 
@@ -880,8 +974,8 @@ let _briefingActiveSteps=[];
 const BRIEFING_STEPS_BASE=[
   {text:"Vous pouvez mettre le test en pause à tout moment.",position:'top-left',pulsePause:true},
   {text:"Un mot apparaîtra ici, au centre de l'écran.",position:'center',zone:'center'},
-  {text:"Si le mot vous semble positif, appuyez à droite.",position:'center',zone:'right'},
-  {text:"Si le mot vous semble négatif, appuyez à gauche.",position:'center',zone:'left'},
+  {text:"Si le mot vous semble positif, appuyez à droite.",position:'right',zone:'right'},
+  {text:"Si le mot vous semble négatif, appuyez à gauche.",position:'left',zone:'left'},
   {text:"Répondez d'instinct.",sub:"Ne réfléchissez pas. Votre première réaction est la bonne.",position:'center',gold:true,linger:true}
 ];
 const BRIEFING_FIRST_TIME_NOTICE={text:"Ce tutoriel peut être désactivé dans les réglages.",position:'center',linger:true};
@@ -1076,8 +1170,7 @@ function buildExport(session){
 }
 let expandedIdx=-1;
 function populateLogView(){const sessions=loadSessions();const list=document.getElementById('saved-list');const clr=document.getElementById('saved-clear');if(!CFG.privacy){list.innerHTML='<div class="no-sessions">La sauvegarde locale est désactivée.<br>Activez-la dans les réglages pour conserver vos sessions.</div>';clr.style.display='none';}else if(!sessions.length){list.innerHTML='<div class="no-sessions">Aucune session enregistrée</div>';clr.style.display='none';}else{list.innerHTML=sessions.map((x,i)=>buildRow(x,i)).join('');clr.style.display='block';}}
-function buildRow(x,i){const pw=x.posWords?x.posWords.map(w=>w.word||w).join(' · '):'';const nw=x.negWords?x.negWords.map(w=>w.word||w).join(' · '):'';const cw=x.cflWords?x.cflWords.map(w=>`${w.word}(${w.dir==='pos'?'▶':'◄'})`).join(' · '):'';const fw=x.fastWords?x.fastWords.map(w=>`${w.word}(${w.rt}ms)`).join(' · '):'';return`<div class="hi" onclick="toggleRow(${i})"><div class="hi-l"><div class="hi-date">${fmtDate(x.ts)}${x.mood?` · ${x.mood.toUpperCase()}`:''}</div><div class="hi-vad">V${x.vad[0]}% · A${x.vad[1]}% · D${x.vad[2]}%</div></div><div style="display:flex;align-items:center;gap:12px"><div class="hi-stats">${x.n} mots · ${x.rt}ms</div><div class="hi-expand" id="hi-arrow-${i}">›</div></div></div><div class="hi-detail" id="hi-detail-${i}">${pw?`<div class="hi-detail-section">MOTS POSITIFS</div><div class="hi-detail-words">${pw}</div>`:''}${nw?`<div class="hi-detail-section">MOTS NÉGATIFS</div><div class="hi-detail-words">${nw}</div>`:''}${cw?`<div class="hi-detail-section">CONFLITS</div><div class="hi-detail-cfl">${cw}</div>`:''}${fw?`<div class="hi-detail-section">PLUS RAPIDES</div><div class="hi-detail-words">${fw}</div>`:''}${x.pivot?`<div class="hi-detail-section">PIVOT</div><div class="hi-detail-cfl">${x.pivot} → ${x.pivotRes==='pos'?'accepté':'maintenu à distance'}</div>`:''}.<button class="copy-btn" onclick="copyRow(${i},event)">COPIER POUR IA</button><div class="copy-confirm" id="copy-ok-${i}">Copié dans le presse-papiers ✓</div><button class="del-btn" onclick="deleteRow(${i},event)">SUPPRIMER CETTE SESSION</button></div>`;}
-function deleteRow(i,e){if(e&&e.stopPropagation)e.stopPropagation();const sessions=loadSessions();if(!sessions[i])return;const x=sessions[i];const label=`${fmtDate(x.ts)} · V${x.vad[0]}% A${x.vad[1]}% D${x.vad[2]}%`;if(!confirm(`Supprimer cette session ?\n\n${label}\n\nCette action est irréversible.`))return;sessions.splice(i,1);try{localStorage.setItem(LS_KEY,JSON.stringify(sessions));}catch(err){}populateLogView();}
+function buildRow(x,i){const pw=x.posWords?x.posWords.map(w=>w.word||w).join(' · '):'';const nw=x.negWords?x.negWords.map(w=>w.word||w).join(' · '):'';const cw=x.cflWords?x.cflWords.map(w=>`${w.word}(${w.dir==='pos'?'▶':'◄'})`).join(' · '):'';const fw=x.fastWords?x.fastWords.map(w=>`${w.word}(${w.rt}ms)`).join(' · '):'';return`<div class="hi" onclick="toggleRow(${i})"><div class="hi-l"><div class="hi-date">${fmtDate(x.ts)}${x.mood?` · ${x.mood.toUpperCase()}`:''}</div><div class="hi-vad">V${x.vad[0]}% · A${x.vad[1]}% · D${x.vad[2]}%</div></div><div style="display:flex;align-items:center;gap:12px"><div class="hi-stats">${x.n} mots · ${x.rt}ms</div><div class="hi-expand" id="hi-arrow-${i}">›</div></div></div><div class="hi-detail" id="hi-detail-${i}">${pw?`<div class="hi-detail-section">MOTS POSITIFS</div><div class="hi-detail-words">${pw}</div>`:''}${nw?`<div class="hi-detail-section">MOTS NÉGATIFS</div><div class="hi-detail-words">${nw}</div>`:''}${cw?`<div class="hi-detail-section">CONFLITS</div><div class="hi-detail-cfl">${cw}</div>`:''}${fw?`<div class="hi-detail-section">PLUS RAPIDES</div><div class="hi-detail-words">${fw}</div>`:''}${x.pivot?`<div class="hi-detail-section">PIVOT</div><div class="hi-detail-cfl">${x.pivot} → ${x.pivotRes==='pos'?'accepté':'maintenu à distance'}</div>`:''}.<button class="copy-btn" onclick="copyRow(${i},event)">COPIER POUR IA</button><div class="copy-confirm" id="copy-ok-${i}">Copié dans le presse-papiers ✓</div></div>`;}
 function toggleRow(i){const d=document.getElementById(`hi-detail-${i}`);const a=document.getElementById(`hi-arrow-${i}`);if(expandedIdx===i){d.classList.remove('open');a.innerText='›';expandedIdx=-1;}else{if(expandedIdx>=0){const pd=document.getElementById(`hi-detail-${expandedIdx}`);const pa=document.getElementById(`hi-arrow-${expandedIdx}`);if(pd)pd.classList.remove('open');if(pa)pa.innerText='›';}d.classList.add('open');a.innerText='˅';expandedIdx=i;}}
 function copyRow(i,e){e.stopPropagation();const sessions=loadSessions();if(!sessions[i])return;const text=buildExport(sessions[i]);const ok=()=>{const el=document.getElementById(`copy-ok-${i}`);if(el){el.style.display='block';setTimeout(()=>el.style.display='none',2500);}};if(navigator.clipboard){navigator.clipboard.writeText(text).then(ok).catch(()=>fallbackCopy(text,ok));}else fallbackCopy(text,ok);}
 function fallbackCopy(text,cb){const ta=document.createElement('textarea');ta.value=text;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');cb();}catch(e){}document.body.removeChild(ta);}
@@ -1100,9 +1193,9 @@ function fitWord(txt){
   fs=Math.max(fs,36);
   document.getElementById('w').style.fontSize=fs+'px';
 }
-function showMenu(){document.body.classList.remove('in-briefing');document.body.classList.remove('has-drift-warning');document.getElementById('menu').classList.remove('hid');document.getElementById('disclaimer').classList.add('hid');document.getElementById('briefing').style.display='none';document.getElementById('res').style.display='none';const drb=document.getElementById('drift-warning-btn');if(drb){drb.style.display='none';}try{closeDriftWarning();}catch(e){}document.getElementById('dp-panel').style.display='none';document.getElementById('dashboard-panel').style.display='none';['field','pw','ct','ww','rtw','cal-overlay'].forEach(id=>show(id,false));const _ms=document.getElementById('mood-screen');if(_ms)_ms.style.display='none';_currentMood=null;_moodOnDone=null;show('pause-btn',false);const bk=document.getElementById('bk');bk.style.display='none';bk.style.zIndex='';bk.style.opacity='';bk.style.transition='';document.getElementById('bk-overlay').style.display='';try{disposeOutro();}catch(e){}try{disposeBreak();}catch(e){}clearShootingStars();applyContrast(CFG.ct);}
+function showMenu(){document.body.classList.remove('in-briefing');document.body.classList.remove('has-rage-warning');document.body.classList.remove('has-pattern-warning');document.body.classList.remove('has-drift-warning');document.getElementById('menu').classList.remove('hid');document.getElementById('disclaimer').classList.add('hid');document.getElementById('briefing').style.display='none';document.getElementById('res').style.display='none';const ob=document.getElementById('outro-buttons');ob.style.display='none';ob.classList.remove('in');const dwb=document.getElementById('div-warning-btn');if(dwb){dwb.style.display='none';}const rwb=document.getElementById('rage-warning-btn');if(rwb){rwb.style.display='none';}const pwb=document.getElementById('pattern-warning-btn');if(pwb){pwb.style.display='none';}const drb=document.getElementById('drift-warning-btn');if(drb){drb.style.display='none';}try{closeDivWarning();}catch(e){}try{closeRageWarning();}catch(e){}try{closePatternWarning();}catch(e){}try{closeDriftWarning();}catch(e){}document.getElementById('dp-panel').style.display='none';document.getElementById('dashboard-panel').style.display='none';document.getElementById('more-panel').style.display='none';['field','pw','ct','ww','rtw','cal-overlay'].forEach(id=>show(id,false));const _ms=document.getElementById('mood-screen');if(_ms)_ms.style.display='none';_currentMood=null;_moodOnDone=null;show('pause-btn',false);const bk=document.getElementById('bk');bk.style.display='none';bk.style.zIndex='';bk.style.opacity='';bk.style.transition='';document.getElementById('bk-overlay').style.display='';try{disposeOutro();}catch(e){}try{disposeBreak();}catch(e){}clearShootingStars();applyContrast(CFG.ct);}
 function startFromMenu(){TOTAL=CFG.wc;BATCH=CFG.bs;BREAK_SECS=CFG.bd;document.getElementById('menu').classList.add('hid');document.getElementById('disclaimer').classList.remove('hid');}
-function doCalibration(cb){const overlay=document.getElementById('cal-overlay');const cd=document.getElementById('cal-cd');overlay.style.display='flex';let secs=3;cd.setAttribute('data-word',String(secs));cd.innerText=secs;const tick=setInterval(()=>{secs--;if(secs<=0){clearInterval(tick);cd.setAttribute('data-word','');cd.innerText='';overlay.style.display='none';cb();return;}cd.setAttribute('data-word',String(secs));cd.innerText=secs;},1000);}
+function doCalibration(cb){const overlay=document.getElementById('cal-overlay');const cd=document.getElementById('cal-cd');overlay.style.display='flex';let secs=3;cd.setAttribute('data-word',String(secs));cd.innerText=secs;const tick=setInterval(()=>{secs--;if(secs<=0){clearInterval(tick);overlay.style.display='none';cb();return;}cd.setAttribute('data-word',String(secs));cd.innerText=secs;},1000);}
 function launchCalibration(){TOTAL=CFG.wc;BATCH=CFG.bs;BREAK_SECS=CFG.bd;document.getElementById('disclaimer').classList.add('hid');_currentMood=null;showMoodScreen(_launchCalibrationCore);}
 function _launchCalibrationCore(){
   // Defensive: ensure no leftover outro / results state from a previous test
@@ -1115,63 +1208,57 @@ function _launchCalibrationCore(){
   const bk=document.getElementById('bk');
   bk.style.display='none';bk.style.zIndex='';bk.style.opacity='';bk.style.transition='';
   document.getElementById('bk-overlay').style.display='';
-  responses=[];blocked=true;_queuedTap=null;initEngine(TOTAL);
-  // Réinitialiser le compteur visible + barre de progression AVANT le décompte
-  // — sinon le "20/60" périmé de la session précédente s'affichait pendant les
-  // 3 secondes d'attente.
-  const _ctEl=document.getElementById('ct');if(_ctEl)_ctEl.innerText=`0 / ${TOTAL}`;
-  const _pbEl=document.getElementById('pb');if(_pbEl)_pbEl.style.width='0%';
-  // Effacer aussi tout texte de mot résiduel de la session précédente
-  const _wEl=document.getElementById('w');if(_wEl){_wEl.innerText='';_wEl.removeAttribute('data-word');}
-  show('field',true);show('pw',true);show('ct',true);show('ww',false);show('rtw',false);show('pause-btn',false);applyContrast(CFG.ct);doCalibration(()=>{show('ww',true);show('rtw',true);show('pause-btn',true);renderWord();});}
+  responses=[];blocked=true;_queuedTap=null;initEngine(TOTAL);show('field',true);show('pw',true);show('ct',true);show('ww',false);show('rtw',false);show('pause-btn',false);applyContrast(CFG.ct);doCalibration(()=>{show('ww',true);show('rtw',true);show('pause-btn',true);renderWord();});}
 function openSettings(){document.getElementById('settings-panel').style.display='flex';}
 function closeSettings(){document.getElementById('settings-panel').style.display='none';updateEstTime();}
 const FAQ_ITEMS=[
 {q:"Qu'est-ce que V3KTOR et que fait-il?",a:`<p>V3KTOR est un outil de calibration affective. Vous voyez un mot, vous répondez par instinct — gauche pour négatif, droite pour positif. Votre temps de réaction est mesuré.</p><p>L'outil ne diagnostique rien. Il vous donne une lecture de votre <strong>signal émotionnel</strong> à ce moment précis. Comme un thermomètre, ou un <strong>scan OBD2</strong> pour une voiture : il rapporte ce qu'il voit.</p><p>L'utilisation est gratuite. Vos données restent sur votre appareil. Rien n'est transmis.</p>`},
-{q:"Pourquoi se cartographier compte?",a:`<p>L'instrument existe parce que la majorité du signal reçu dans une journée concerne d'autres personnes — leurs contenus, leurs récits, leurs intentions. Il n'existe aucun point de référence intégré pour distinguer leur signal du vôtre. Avec le temps, cela produit l'expérience d'être « à côté » sans pouvoir nommer ce qui a changé.</p><p>Une baseline fournit ce point de référence : un enregistrement mesuré de ce que vos réflexes affirment et rejettent de manière constante, distinct de ce que vous dites de vous-même.</p><p>Trois conséquences en découlent :</p><p>• Détecter quand les lectures actuelles <strong>divergent de votre baseline</strong> — c'est ainsi que la pression apparaît avant que vous puissiez la nommer.<br>• Distinguer <strong>pression et changement</strong> — la divergence courte est du bruit ; la divergence soutenue est un mouvement.<br>• Prendre des décisions à partir d'une référence stable plutôt que de l'input le plus récent.</p><p>C'est une affirmation au niveau de l'instrument, pas une promesse de développement personnel. Un cardiofréquencemètre ne vous rend pas plus sain ; il montre quand votre cœur fait quelque chose d'inhabituel. V3KTOR fait l'équivalent pour votre signal réflexif.</p>`},
+{q:"Pourquoi se cartographier compte?",a:`<p>La plupart du signal qu'on reçoit dans une journée concerne d'autres personnes — leurs histoires, leurs agendas, leurs contenus, leurs projections. Algorithmique, social, commercial. Nous n'avons pas évolué pour cela. Le système nerveux humain a été construit pour un environnement où la majorité du signal venait de l'entourage immédiat et concernait votre propre vie. Cet environnement a disparu.</p><p>Dans l'environnement actuel, l'état par défaut est la <strong>dérive</strong> : vous absorbez la narrative la plus forte autour de vous, et avec le temps vous finissez par la confondre avec votre propre voix. La plupart des gens n'ont aucun point de référence fixe pour détecter ça. Ils se sentent "à côté" sans pouvoir nommer ce qui a changé, parce qu'il n'y a pas de baseline pour comparer.</p><p>Une carte de qui vous êtes — mesurée, pas racontée — est un point de référence. Trois choses deviennent possibles une fois que vous en avez une :</p><p>• Vous pouvez dire quand vous êtes <strong>poussé</strong> (divergence par rapport à la baseline) contre quand vous <strong>bougez réellement</strong>.<br>• Vous pouvez nommer la source du bruit au lieu de vous l'attribuer.<br>• Les décisions prises à partir de la carte s'alignent avec ce que vous valorisez réellement, plutôt qu'avec ce que vous avez absorbé en dernier.</p><p>Ce n'est pas une promesse de développement personnel. C'est une affirmation au niveau de l'instrument. Un cardiofréquencemètre ne vous rend pas plus sain — il vous permet de voir quand votre cœur fait quelque chose d'inhabituel. V3KTOR ne vous rend pas plus cohérent. Il vous montre quand vos lectures divergent de votre carte, et vous laisse demander pourquoi.</p><p>Les répercussions sont généralement lentes et cumulatives : moins de décisions que vous regrettez, moins de trahison de soi, moins de temps passé confus à se demander pourquoi vous vous sentez mal après quelque chose qui "aurait dû bien se passer". La cohérence n'est pas un sentiment. C'est l'absence de friction entre qui vous êtes et comment vous agissez.</p>`},
 {q:"Quel est le fondement scientifique de V3KTOR?",a:`<p>Le modèle <strong>VAD</strong> (Valence, Activation, Dominance) provient des travaux d'Albert Mehrabian (Mehrabian &amp; Russell, 1974) et du modèle circumplex de Russell (1980). C'est l'un des cadres les plus établis pour décrire les états affectifs.</p><p>Les valeurs des mots utilisés s'alignent sur les normes affectives françaises publiées (Monnier &amp; Syssau, 2014, <strong>FAN</strong>) et le <strong>NRC VAD Lexicon</strong> (Mohammad, 2018) — deux références standards en sciences affectives.</p><p>Le temps de réponse comme signal d'automaticité émotionnelle s'appuie sur la recherche en <strong>décision lexicale</strong> (Balota et al., 2007) et le paradigme <strong>IAT</strong> (Greenwald, McGhee &amp; Schwartz, 1998), qui montrent qu'une réponse en moins de 500-700ms reflète un traitement automatique plutôt que délibéré.</p><p>V3KTOR n'est pas un outil clinique. Il applique un cadre scientifique reconnu à un usage personnel.</p>`},
-{q:"Qu'est-ce qu'une réponse intuitive?",a:`<p>Une réponse mesurée avant que la délibération ait eu le temps de s'assembler. L'instrument s'appuie sur le traitement automatique : les mots qui traversent rapidement le système nerveux produisent des temps de réponse courts — typiquement sous 500–700ms — tandis que les mots qui engagent la délibération produisent des temps plus longs.</p><p>Si vous vous surprenez à chercher la bonne réponse, vous mesurez la composition, pas la réaction. Plus le temps de réponse est court, plus la lecture s'approche du réflexe plutôt que du récit.</p>`},
+{q:"Qu'est-ce qu'une réponse intuitive?",a:`<p>Une réponse intuitive vient <strong>avant que vous ayez le temps de réfléchir</strong>. Vous voyez le mot, votre instinct répond. Si vous hésitez — si vous cherchez la bonne réponse — vous mesurez votre réflexion, pas votre signal.</p><p>Ne réfléchissez pas. Faites confiance à votre première impulsion. Plus vous répondez vite, plus le signal est pur.</p>`},
 {q:"Qu'est-ce que la BASELINE et comment l'utiliser?",a:`<p>La <strong>BASELINE</strong> est votre signal de fond, mesuré sur plusieurs sessions. Une seule session reflète votre état du moment. La baseline reflète ce qui revient — les mots qui réapparaissent rapidement, session après session.</p><p>Pour la débloquer, complétez au moins <strong>3 sessions</strong> avec la sauvegarde locale activée dans les réglages.</p><p>Faites un test quand vous êtes calme. Faites-en un autre quand vous êtes tendu. Avec le temps, la baseline filtre le bruit et révèle ce qui est stable.</p><p>Vous la trouverez dans l'onglet BASELINE du DASHBOARD.</p>`},
 {q:"Pourquoi une seule session ne suffit pas?",a:`<p>Comme la tension artérielle.</p><p>Une mesure unique de tension peut être élevée pour des raisons sans rapport avec votre santé : café, mauvaise nuit, brassard mal placé, anxiété de la consultation. C'est pour cette raison que les médecins prennent plusieurs mesures sur plusieurs jours avant de conclure quoi que ce soit.</p><p>Votre esprit a au moins autant de variables que votre cœur. Une session reflète ce que vous avez mangé, dormi, la lumière de la pièce, ce qui s'est passé dans l'heure précédente, votre niveau d'hydratation, votre état hormonal. Tout ça compte pour une mesure isolée.</p><p>C'est précisément pour cette raison que V3KTOR n'est pas un test ponctuel mais un <strong>instrument de baseline</strong>. Le bruit s'annule. Ce qui revient à travers les variations — c'est le signal.</p><p>Une session unique vous donne une lecture du moment. Dix sessions vous donnent qui vous êtes.</p>`},
 {q:"Suis-je assez stable pour être cartographié?",a:`<p>Oui — c'est la prémisse qui rend un instrument de baseline possible.</p><p>À la fin de l'adolescence, la structure sous-jacente des valeurs et de la personnalité est devenue suffisamment lente à bouger pour être cartographiée. Des décennies de recherche longitudinale montrent que la <strong>stabilité rang-ordre</strong> — la mesure dans laquelle les individus conservent leur position relative sur un trait au fil du temps — est élevée à l'âge adulte. Les corrélations test-retest se situent typiquement entre <strong>.60 et .80</strong> sur des intervalles de plusieurs années (McCrae &amp; Costa, 1994 ; Roberts &amp; DelVecchio, 2000). Cette stabilité est déjà substantielle au début de l'adolescence et augmente jusqu'au début de l'âge adulte (Borghuis et al., 2017).</p><p>Pour les <strong>valeurs</strong> spécifiquement — plus proches de ce que mesure V3KTOR — les hiérarchies de valeurs de Schwartz montrent une stabilité rang-ordre modérée à élevée même à travers des transitions de vie majeures (Vecchione et al., 2016).</p><p>Assez stable pour être cartographié. Pas absolument figé. Le territoire bouge lentement. C'est pour cela que la fluctuation session-à-session est surtout du bruit contre une carte stable, plutôt que la carte qui se redessine. Le spécifique du moteur n'est pas gravé dans le marbre, mais il est assez stable pour qu'une divergence significative soit détectable comme du bruit, et non comme le moteur devenant un autre moteur.</p><p>Mise en garde honnête : l'ancienne thèse selon laquelle "la personnalité est figée à 30 ans" a été empiriquement rejetée (Roberts, Walton &amp; Viechtbauer, 2006). Un changement significatif continue à travers la vingtaine, la trentaine et au-delà — le plus clairement vers une plus grande conscienciosité, agréabilité et stabilité émotionnelle (le <strong>principe de maturité</strong>). Votre baseline reflètera un vrai changement quand il se produira. Elle ne sera simplement pas trompée par une mauvaise nuit de sommeil.</p>`},
 {q:"Qu'est-ce que VAD?",a:`<p>VAD est un modèle scientifique qui décrit l'émotion sur trois axes :</p><p><strong>V — Valence</strong> : positif ou négatif.<br><strong>A — Activation</strong> : intensité de l'émotion.<br><strong>D — Dominance</strong> : sentiment de contrôle sur l'émotion.</p><p>Par exemple : la joie est positive, activée, dominante. La peur est négative, activée, sans contrôle. Le calme est positif, peu activé, dominant.</p><p>Chaque mot du test a un profil VAD. Vos réponses construisent le vôtre.</p>`},
-{q:"Pourquoi faire un test de réaction intuitive?",a:`<p>L'auto-évaluation consciente a des limites connues. Les personnes décrivent fréquemment mal leurs propres préférences, en particulier sous pression sociale ou en présence d'un récit intériorisé. Les mesures de temps de réponse contournent cette couche : elles capturent ce qui a été décidé avant que la composition ne commence.</p><p>Le test ne vous demande pas de vous décrire. Il enregistre ce que vos réflexes ont résolu avant l'arrivée du langage. La sortie est de la donnée ; ce que vous en faites vous appartient.</p>`},
+{q:"Pourquoi faire un test de réaction intuitive?",a:`<p>Parce que votre instinct sait des choses que vous n'avez pas formulées.</p><p>Beaucoup de gens vivent avec des émotions qu'ils n'arrivent pas à nommer. Ce test ne demande pas de mots — il demande seulement votre <strong>réponse rapide</strong>. Le résultat met en mots ce que vous portez déjà.</p><p>C'est un outil de réflexion personnelle. Pour vous-même. Sans jugement.</p>`},
 {q:"Que peut prouver ou montrer ce test?",a:`<p>Le test peut montrer :</p><p>• <strong>Ce qui résonne en vous</strong> : les mots auxquels vous répondez vite et positivement.<br>• <strong>Ce qui vous bloque</strong> : les mots qui vous font ralentir, ou auxquels vous répondez contre l'attendu.<br>• <strong>Des écarts</strong> entre votre signal et votre discours habituel.</p><p>Le test ne prouve rien. Il rapporte un signal. À vous de l'interpréter.</p>`},
 {q:"Qu'est-ce que la cohérence, et comment V3KTOR la soutient?",a:`<p>La cohérence, c'est vivre plus près de la carte que vous êtes déjà.</p><p>Votre baseline est un portrait de votre signal stable — ce que vous affirmez et rejetez rapidement, session après session, à travers les variations d'humeur et de conditions. Le territoire bouge lentement (voir <em>Suis-je assez stable pour être cartographié?</em>). Donc quand une session unique diverge de votre baseline, cette divergence est presque toujours du <strong>bruit</strong>, pas la carte qui se redessine : stress, mauvais sommeil, une histoire que vous maintenez contre votre propre réflexe, pression situationnelle.</p><p>L'instrument ne vous pousse pas vers qui vous devriez être. Il vous montre qui vous êtes, et signale quand vos lectures actuelles divergent de cela. <strong>Divergence par rapport à la baseline = bruit. Retour à la baseline = cohérence restaurée.</strong></p><p>C'est pour cela que l'écart entre l'humeur déclarée et le réflexe mesuré compte. L'humeur déclarée, c'est l'histoire. Le réflexe mesuré, c'est le territoire. Quand ils sont en désaccord, l'écart est le signal que quelque chose produit du bruit contre votre carte.</p><p>Vous n'avez rien à faire de cette information. L'instrument rapporte. Ce que vous en faites vous appartient. Mais la boucle est simple : cartographier le territoire, surveiller la divergence, demander ce qui produit le bruit, revenir.</p>`},
 {q:"Comment améliorer la précision des données?",a:`<p>• Faites le test dans un moment calme, sans interruption.<br>• Ne réfléchissez pas — répondez par instinct.<br>• Augmentez le <strong>nombre de mots</strong> dans les réglages : 60 est le minimum pour une baseline fiable, 100+ révèle votre signature personnelle plus finement.<br>• Faites plusieurs sessions à des moments différents. La baseline filtrera le bruit et révélera ce qui persiste.<br>• Ajustez le <strong>temps de réponse maximum</strong> selon votre rythme. 2000ms pour débuter, 1200–1500ms quand vos réflexes se stabilisent.</p>`},
 {q:"Pourquoi utiliser le MODE RECHERCHE pour la précision de la carte?",a:`<p>Le mode recherche verrouille le test sur les paramètres qui donnent la carte la plus nette et la plus propre. Ce n'est pas pour vos premières sessions — c'est pour la lecture que vous voulez une fois que vous vous êtes stabilisé.</p><p>Ce qu'il change :</p><p>• <strong>≥120 mots par session.</strong> Chaque mot est un point de donnée. Doubler l'échantillon divise approximativement le bruit par deux. La carte s'affine avec le nombre de mesures, de la même façon qu'un cardiofréquencemètre échantillonnant plus souvent produit une trace plus précise.</p><p>• <strong>Temps de réponse maximum ≤1700ms.</strong> Au-dessus de ~1500ms, vous commencez à mesurer la délibération, pas le réflexe. Resserrer la fenêtre filtre les réponses où vous aviez le temps de composer une réponse au lieu d'en révéler une. Le signal que vous voulez — l'automaticité — vit sous ce plafond.</p><p>• <strong>Top 10 mots rapides par direction au lieu du top 5.</strong> Quand la baseline agrège à travers les sessions, plus de mots rapides capturés signifie plus de chances qu'un même mot revienne. La récurrence est ce que la baseline récompense. Le top 5 risque de manquer de vrais ancrages qui sont tombés au #6 ou #7 dans une session donnée.</p><p>• <strong>Top 15 conflits au lieu du top 8.</strong> Les conflits — les mots auxquels vous avez répondu contre leur charge typique — sont parmi les données les plus diagnostiques que l'instrument capture. La capture plus large fait que les inversions rares mais significatives ne se perdent pas.</p><p>Quand l'activer : après environ 5 sessions, une fois que votre fenêtre de réflexe s'est stabilisée et que vous connaissez le rythme. Avant ça, les sessions plus longues produisent surtout de la fatigue et la donnée se dégrade.</p><p>Le compromis est honnête : les sessions en mode recherche sont plus longues (typiquement 7–10 minutes au lieu de 4–5). Les données qu'elles produisent sont plus denses dans la même proportion. Si vous construisez une carte sur laquelle vous comptez vous appuyer — pour une réflexion sérieuse, un partage avec quelqu'un, ou l'un des usages prospectifs — c'est le mode pour ce travail.</p>`},
 {q:"Quelle précision peut-on attendre?",a:`<p>Avec un usage régulier — <strong>10 sessions ou plus, 60+ mots par session</strong> — la baseline fait surface ce qui est stable chez vous avec une précision élevée. Votre signature de valeurs (ce que vous affirmez et repoussez rapidement, session après session) ressort de manière fiable. Le socle universel partagé est très stable.</p><p>Trois nuances honnêtes :</p><p>• La qualité du signal est forte. La qualité de la <em>lecture</em> dépend de l'IA à qui vous la donnez. Claude, GPT-4, Gemini avec le prompt fourni produiront une lecture précise et spécifique. Une IA plus faible, ou trop "polie", dilue.</p><p>• Les premières 3-5 sessions construisent la baseline mais ne la verrouillent pas. Considérez cette période comme l'étalonnage. À partir de 10 sessions, le signal est solide.</p><p>• Si vous êtes en transition (changement de carrière, deuil, recovery, mutation spirituelle), la baseline reflètera ce mouvement plutôt qu'un portrait fixe. C'est correct, pas une erreur.</p>`},
 {q:"Et si je ne corresponds à aucun \"type\"?",a:`<p>La plupart des gens ne sont pas un archétype pur. Vous pouvez être en partie créateur, en partie soignant, en partie sceptique — selon le contexte, le moment, la saison de votre vie.</p><p>L'outil ne vous force pas dans une boîte. Il rapporte ce qui revient dans vos sessions, partitionné en : <strong>socle humain partagé</strong> (universels), <strong>signature personnelle</strong> (ce qui vous distingue), et <strong>inversions</strong> s'il y en a — mots dont la charge habituelle est inversée par votre réflexe.</p><p>Si vous êtes en transition (changement de carrière, deuil, recovery, changement profond), vous verrez un portrait stratifié plutôt qu'un type unique. Ça aussi est de l'information : le territoire bouge lentement, et ce qui tient à travers le changement est votre signal le plus fiable.</p><p>Pas de diagnostic. Pas de catégorie. Une carte de qui vous êtes.</p>`},
-{q:"Que faire avec les données?",a:`<p>L'instrument produit un enregistrement structuré : direction et temps de réponse par mot, profil VAD de la session, conflits où votre direction contredit la valence par défaut du mot, et les mots que votre réflexe a traversés le plus vite.</p><p>Trois usages :</p><p><strong>La lire directement.</strong> Les données apparaissent à l'écran à la fin de chaque session, réparties entre réflexes, hésitations, conflits, et (s'il y a lieu) affirmations à charge sombre.</p><p><strong>La passer à une IA pour interprétation.</strong> Le bouton <strong>COPIER LES DONNÉES</strong> copie la session complète sous forme de prompt formaté. Collez-le dans Claude, ChatGPT ou Gemini avec une question, et le modèle lira le signal comme de la donnée, pas comme un récit.</p><p><strong>La garder privée.</strong> Tout reste sur votre appareil. Les sessions individuelles peuvent être supprimées depuis le journal ; <em>EFFACER L'HISTORIQUE</em> les efface toutes. Exportez votre baseline vers un fichier depuis les réglages pour en garder une copie portable.</p>`},
-{q:"V3KTOR peut-il personnaliser une IA selon moi?",a:`<p>Oui — et c'est l'un des cas d'usage les plus forts.</p><p>Les modèles de langage utilisent par défaut une persona générique. Ils ne savent pas à qui ils parlent jusqu'à ce que vous leur disiez, et ce que vous leur dites est généralement narratif : « Je suis ingénieur en logiciel et j'aime la randonnée. » C'est la même autodescription que l'instrument est conçu pour ne pas prendre comme référence. L'IA reçoit votre récit, pas votre signal, et répond au récit.</p><p>Une baseline V3KTOR fournit au modèle autre chose — des données mesurées sur ce que vos réflexes affirment et rejettent de manière constante, ce qui porte de la friction pour vous, où votre direction contredit le lexique. Collée dans l'IA avec n'importe quelle question, cela permet au modèle de calibrer :</p><p>• <strong>Le ton et le registre</strong>, par rapport à ce que vos réponses suggèrent comme facile ou pesant.<br>• <strong>La profondeur</strong> — expliquer ou avancer, selon ce qui se lit comme territoire résolu.<br>• <strong>Le traitement des sujets</strong> — quelles zones approcher prudemment parce que les conflits ou les hésitations s'y concentrent.<br>• <strong>Ce que le modèle conteste</strong>, contre votre signal de valeurs plutôt que contre ses paramètres par défaut.</p><p>C'est de la <strong>calibration, pas de l'alignement</strong>. Le modèle continue de faire son travail. Vous lui donnez un meilleur contexte. Le résultat : des réponses ajustées à qui vous êtes mesurablement plutôt qu'à qui vous vous décrivez — et l'écart entre les deux est précisément ce que V3KTOR capture.</p><p>Usage pratique : collez la sortie du bouton COPIER LES DONNÉES dans votre IA de choix avant un échange substantiel. Une seule session suffit pour commencer. Des sessions répétées, exportées ensemble, donnent au modèle une image plus stable. Certains utilisateurs gardent un fichier baseline à portée et le collent dans chaque nouvelle conversation IA.</p>`},
-{q:"Une baseline peut-elle être un enregistrement de quelqu'un?",a:`<p>Une photographie préserve l'apparence. Un enregistrement préserve la voix. Une lettre préserve les mots choisis. Une baseline préserve autre chose — la structure de la préférence réflexive, ce que quelqu'un a affirmé et rejeté avant la composition.</p><p>C'est une couche d'une personne qui n'a pas été enregistrable jusqu'à maintenant. L'autodescription est trop filtrée. Le comportement dépend trop du contexte. Une baseline capture ce que le système nerveux a résolu avant l'arrivée du récit, et elle reste suffisamment stable dans le temps pour compter comme un enregistrement de qui quelqu'un était à un moment mesuré.</p><p>Certains utilisateurs abordent V3KTOR de cette manière délibérément. Une baseline prise une fois par an constitue une archive personnelle de longue durée. Une baseline partagée entre des personnes qui comptent l'une pour l'autre donne à chacune accès à la hiérarchie réelle des valeurs de l'autre plutôt qu'à la version offerte en conversation. Une baseline lue par une IA en parallèle de lettres, de photos et d'enregistrements produit un portrait qui s'appuie sur le signal et pas seulement sur le style.</p><p>Ce n'est pas de la préservation de conscience ni rien qui en approche. C'est un résidu structuré, plus étroit que la personne mais plus proche de son réflexe que tout médium antérieur. L'instrument existe pour l'utilisateur qui fait la session ; ce qu'il laisse derrière est un effet secondaire que certains trouvent significatif.</p><p>Cela ne fonctionne que tant que la personne est vivante pour faire des sessions. La baseline que vous construisez maintenant est celle qui existe.</p>`},
+{q:"Que faire avec les données?",a:`<p>Trois choix :</p><p><strong>Les regarder.</strong> Vos quatre mots, votre profil VAD. Posez-vous : est-ce que ça résonne?</p><p><strong>Les partager avec une IA.</strong> Le bouton COMPRENDRE MES MOTS copie automatiquement vos données. Collez-les dans Claude, ChatGPT ou Gemini avec une question. Une IA peut lire le signal et l'interpréter.</p><p><strong>Les garder pour vous.</strong> Tout reste sur votre appareil. Vous pouvez tout effacer à tout moment dans les réglages.</p>`},
 {q:"Que pourrait permettre une carte numérique de soi?",a:`<p>Ceci est prospectif. L'instrument existe aujourd'hui ; une partie de ce qui suit est spéculative mais cohérente avec ce que l'instrument mesure réellement.</p><p><strong>Un agent numérique qui vous représente.</strong> La plupart des assistants IA aujourd'hui sont optimisés pour être utiles en général. Une IA nourrie de votre baseline pourrait être optimisée pour être utile en tant que <em>vous</em> — refusant ce que vous refuseriez, plaidant pour ce que vous défendriez, écrivant dans le registre que vous utilisez réellement. Pas une copie. Un délégué contraint par votre signal de valeurs.</p><p><strong>Une baseline partagée entre les personnes qui comptent.</strong> La plupart des frictions relationnelles viennent d'opérer sur des suppositions sur l'autre personne construites à partir d'histoires plutôt que de signal. Deux personnes qui échangent leurs baselines voient la hiérarchie de valeurs réelle de l'autre — ce qu'elles affirment vite, ce qu'elles rejettent vite, où vivent leurs inversions. Cela ne remplace pas le fait de connaître quelqu'un. Cela clarifie ce qu'il y a à connaître.</p><p><strong>Une trace qui vous survit.</strong> Une photographie préserve un visage. Un enregistrement préserve une voix. Une baseline préserve quelque chose d'arguablement plus essentiel — la structure de vos valeurs, ce que votre instinct a affirmé et rejeté, le signal que vous avez laissé à travers des centaines de mots. Après la mort, la baseline persiste. Un proche qui la lit voit non pas ce que vous disiez de vous-même mais ce que vous <em>étiez</em> de façon mesurable. Une IA nourrie de votre baseline aux côtés de vos lettres et de votre voix pourrait parler avec votre signal de valeurs, pas seulement votre style.</p><p>Ce n'est pas un "transfert de conscience". C'est un <strong>résidu structuré</strong>. Mais c'est un résidu plus proche de qui vous étiez réellement qu'une photographie — parce qu'il capture la préférence et la valeur plutôt que l'apparence. La photographie contemporaine d'un être cher n'est peut-être pas la photo sur la cheminée. C'est peut-être la baseline qu'il a laissée dans l'instrument.</p><p>Rien de tout cela n'est intégré à l'app aujourd'hui. <strong>La carte est le prérequis.</strong> Tout le reste découle d'en avoir une.</p>`}
 ];
-let _faqOpen=new Set();
+let _faqOpen=-1;
 function openHelp(){
   const list=document.getElementById('faq-list');
   list.innerHTML=FAQ_ITEMS.map((item,i)=>`<div class="faq-item"><div class="faq-q" id="faq-q-${i}" onclick="toggleFaq(${i})"><span>${item.q}</span><span class="faq-arrow">›</span></div><div class="faq-a" id="faq-a-${i}">${item.a}</div></div>`).join('');
-  _faqOpen=new Set();
+  _faqOpen=-1;
   document.getElementById('help-panel').style.display='flex';
 }
 function toggleFaq(i){
   const a=document.getElementById('faq-a-'+i);
   const q=document.getElementById('faq-q-'+i);
-  if(!a||!q)return;
-  // Multi-open : chaque item bascule indépendamment. Pas de fermeture en
-  // cascade, donc le DOM ne se décale pas sous le doigt de l'utilisateur.
-  if(_faqOpen.has(i)){
+  if(_faqOpen===i){
     a.classList.remove('open');
     q.classList.remove('open');
-    _faqOpen.delete(i);
-  }else{
-    a.classList.add('open');
-    q.classList.add('open');
-    _faqOpen.add(i);
+    _faqOpen=-1;
+    return;
   }
+  if(_faqOpen>=0){
+    const prevA=document.getElementById('faq-a-'+_faqOpen);
+    const prevQ=document.getElementById('faq-q-'+_faqOpen);
+    if(prevA)prevA.classList.remove('open');
+    if(prevQ)prevQ.classList.remove('open');
+  }
+  a.classList.add('open');
+  q.classList.add('open');
+  _faqOpen=i;
 }
-function closeHelp(){document.getElementById('help-panel').style.display='none';_faqOpen=new Set();}
-function returnToMenu(){document.getElementById('res').style.display='none';document.getElementById('dp-panel').style.display='none';clearShootingStars();showMenu();}
+function closeHelp(){document.getElementById('help-panel').style.display='none';_faqOpen=-1;}
+function returnToMenu(){document.getElementById('res').style.display='none';const ob=document.getElementById('outro-buttons');ob.style.display='none';ob.classList.remove('in');document.getElementById('dp-panel').style.display='none';document.getElementById('more-panel').style.display='none';clearShootingStars();showMenu();}
+function openDonnees(){document.getElementById('dp-panel').style.display='flex';}
 function closeDonnees(){document.getElementById('dp-panel').style.display='none';}
 function openPause(){if(document.getElementById('pause-overlay').style.display==='flex')return;blocked=true;_queuedTap=null;clearInterval(rtTimer);if(timeoutPending){clearTimeout(timeoutPending);timeoutPending=null;}document.getElementById('rtb').style.transition='none';document.getElementById('pause-overlay').style.display='flex';}
 function resumeTest(){document.getElementById('pause-overlay').style.display='none';blocked=false;startRT();}
@@ -1281,118 +1368,9 @@ document.getElementById('invitation').addEventListener('touchend',e=>{if(e.targe
 document.addEventListener('DOMContentLoaded',()=>{initSettings();document.querySelectorAll('.sbtn,.mbtn,.nav-btn').forEach(btn=>{btn.addEventListener('touchend',function(e){e.preventDefault();this.click();},{passive:false});});if(CFG.showIntro){showInvitation();}else{document.documentElement.removeAttribute('data-first-launch');}});
 window.addEventListener('resize',()=>{if(bkRenderer&&bkCamera){const canvas=document.getElementById('bk-canvas');const W=window.innerWidth,H=window.innerHeight;canvas.width=W;canvas.height=H;bkCamera.aspect=W/H;bkCamera.updateProjectionMatrix();bkRenderer.setSize(W,H);}});
 let bkScene=null,bkCamera=null,bkRenderer=null,bkAnim=null;
-function disposeBreak(){
-  // Annuler la frame en attente AVANT de disposer du renderer.
-  if(bkAnim){cancelAnimationFrame(bkAnim);bkAnim=null;}
-  // Disposer chaque geometry + material du scene graph. Sans ça, fuite de
-  // mémoire GPU à travers les sessions et le main thread commence à saccader
-  // — c'est ce qui causait le symptôme du tap-mort-après-pause.
-  if(bkScene){
-    try{
-      bkScene.traverse(obj=>{
-        if(obj.geometry){try{obj.geometry.dispose();}catch(e){}}
-        if(obj.material){
-          if(Array.isArray(obj.material)){obj.material.forEach(m=>{try{m.dispose();}catch(e){}});}
-          else {try{obj.material.dispose();}catch(e){}}
-        }
-      });
-    }catch(e){}
-  }
-  // Libération explicite du contexte WebGL. Les navigateurs limitent à ~16
-  // contextes par page ; sans forceContextLoss ils restent jusqu'au GC et
-  // provoquent du thrashing GPU.
-  if(bkRenderer){
-    try{bkRenderer.dispose();}catch(e){}
-    try{if(bkRenderer.forceContextLoss)bkRenderer.forceContextLoss();}catch(e){}
-    bkRenderer=null;
-  }
-  bkScene=null;
-  bkCamera=null;
-}
+function disposeBreak(){if(bkAnim)cancelAnimationFrame(bkAnim);if(bkRenderer){bkRenderer.dispose();bkRenderer=null;}bkScene=null;bkCamera=null;}
 function initBreakScene(canvas,res){disposeBreak();const W=canvas.clientWidth||window.innerWidth,H=canvas.clientHeight||window.innerHeight;canvas.width=W;canvas.height=H;bkScene=new THREE.Scene();bkCamera=new THREE.PerspectiveCamera(55,W/H,0.1,100);bkCamera.position.set(0,0,3.2);bkRenderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});bkRenderer.setSize(W,H);bkRenderer.setPixelRatio(Math.min(devicePixelRatio,2));bkRenderer.setClearColor(0x050508,1);const pos=[],col=[];res.forEach(r=>{const d=r.direction==='pos'?1:r.direction==='neg'?-1:0;if(!d)return;pos.push((r.valence-0.5)*2*d,(r.arousal-0.5)*2,(r.dominance-0.5)*2*d);col.push(r.valence*d*.5+.5,r.arousal*.8,r.dominance*.5+.2);});pos.push(0,0,0);col.push(.15,.15,.22);const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));geo.setAttribute('color',new THREE.Float32BufferAttribute(col,3));const bkPoints=new THREE.Points(geo,new THREE.PointsMaterial({size:.18,vertexColors:true,transparent:true,opacity:.92}));bkScene.add(bkPoints);if(pos.length>9){const lg=new THREE.BufferGeometry();lg.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));lg.setAttribute('color',new THREE.Float32BufferAttribute(col,3));bkScene.add(new THREE.LineLoop(lg,new THREE.LineBasicMaterial({vertexColors:true,transparent:true,opacity:.5})));}const axM=new THREE.LineBasicMaterial({color:0x383858,transparent:true,opacity:.6});[[[-1.5,0,0],[1.5,0,0]],[[0,-1.5,0],[0,1.5,0]],[[0,0,-1.5],[0,0,1.5]]].forEach(pts=>{const ag=new THREE.BufferGeometry().setFromPoints(pts.map(p=>new THREE.Vector3(...p)));bkScene.add(new THREE.Line(ag,axM));});let t=0;function animate(){bkAnim=requestAnimationFrame(animate);t+=0.008;bkPoints.rotation.y=t;bkPoints.rotation.x=Math.sin(t*.4)*.3;bkScene.children.forEach(c=>{if(c!==bkPoints){c.rotation.y=t;c.rotation.x=Math.sin(t*.4)*.3;}});bkRenderer.render(bkScene,bkCamera);}animate();}
-function doBreak(cb){
-  if(BREAK_SECS<=0){cb();return;}
-  // Clear any queued tap from before the break. A tap that arrived during the
-  // 500ms inter-word gap (or during the break itself) was a fast-tap intent
-  // for the *previous* mini-batch — applying it to the first word AFTER a
-  // multi-second pause would synthesize a 250ms RT for a word the user hasn't
-  // even seen yet. That's how the "first two words ran into each other" bug
-  // manifested: word 31 auto-tapped instantly, word 32 then caught the user
-  // off-guard and timed out.
-  _queuedTap=null;
-  ['field','pw','ct','ww','rtw'].forEach(id=>show(id,false));
-  const bk=document.getElementById('bk');
-  bk.style.display='flex';
-  // Pause = écran noir + décompte. Le visuel 3D était une source récurrente
-  // de bugs WebGL en mode PWA standalone sur iOS (contextes refusés, frames
-  // qui fuyaient, dead-taps après la pause). Le rendu 3D des données est
-  // conservé pour l'écran de résultats — c'est là qu'il a une vraie valeur.
-  const sn=Math.ceil(engine.shownCount/BATCH),ts=Math.ceil(engine.total/BATCH);
-  document.getElementById('bk-set').innerText=`série ${sn} sur ${ts} · ${responses.filter(r=>r.direction).length} signaux cartographiés`;
-  // Décompte basé sur le temps plutôt que sur secs--. iOS Safari throttle
-  // agressivement les setInterval en mode PWA standalone quand l'app est mise
-  // brièvement en arrière-plan (notifications, centre de contrôle, écran de
-  // verrouillage). L'ancienne approche secs-- laissait le test bloqué sur la
-  // pause si l'interval était tué. Maintenant : calcul du temps restant via
-  // Date.now() à chaque tick + setTimeout de secours qui garantit la transition.
-  const startMs=Date.now();
-  const durMs=BREAK_SECS*1000;
-  document.getElementById('bk-cd').innerText=BREAK_SECS;
-  let done=false;
-  function transition(){
-    if(done)return;
-    done=true;
-    try{clearInterval(tick);}catch(e){}
-    try{clearTimeout(fallback);}catch(e){}
-    bk.style.display='none';
-    show('field',true);show('pw',true);show('ct',true);show('ww',true);show('rtw',true);
-    // Le décompte de la pause sert déjà de signal « le test reprend ». Pas
-    // besoin d'un battement supplémentaire — il a causé deux artefacts
-    // visuels successifs (cube split-color puis carré blanc sur fond noir).
-    // Le mot suivant apparaît directement, avec son propre fondu d'opacité.
-    // Doublure de sécurité : on efface aussi _queuedTap ici, car la fenêtre
-    // de ~65 ms entre l'affichage du champ et le mot suivant peut techniquement
-    // capter un tap si le doigt est encore au-dessus de lh/rh.
-    _queuedTap=null;
-    cb();
-  }
-  const tick=setInterval(()=>{
-    const remaining=Math.max(0,Math.ceil((durMs-(Date.now()-startMs))/1000));
-    document.getElementById('bk-cd').innerText=remaining;
-    if(remaining<=0)transition();
-  },250);
-  // Filet de sécurité : si le tick est tué ou throttle, ceci se déclenche
-  // quand même et débloque l'utilisateur. +1,5s de marge pour finir le visuel.
-  const fallback=setTimeout(transition,durMs+1500);
-}
-function doReadyBeat(cb){
-  // Belt-and-suspenders: also clear here in case any tap landed during the
-  // ready beat itself (cal-overlay passes pointer events through to the field).
-  _queuedTap=null;
-  const overlay=document.getElementById('cal-overlay');
-  const cd=document.getElementById('cal-cd');
-  if(!overlay||!cd){cb();return;}
-  // Brève marque "prêt" de 1,2 s. Réutilise le calque de calibration existant
-  // pour que le style visuel reste cohérent avec le décompte de début de test.
-  overlay.style.display='flex';
-  cd.setAttribute('data-word','·');
-  cd.innerText='·';
-  setTimeout(()=>{
-    // Vider le contenu AVANT de masquer. Le « · » utilise le même rendu split-
-    // color (clip-path ::before/::after) que les mots, et en gros il apparaît
-    // pile au centre de l'écran à mi-hauteur — exactement où Tobie/Josefa
-    // voyaient un « cube mi-blanc » sur le premier mot après chaque pause.
-    // iOS Safari peut retarder la destruction du calque de composition quand
-    // display passe à none pendant qu'un sibling (#w) entame une transition
-    // d'opacité ET qu'une animation tourne sur cal-cd (calTick). Une frame
-    // suffit à laisser le « · » imprimé sur le début du mot suivant. Effacer
-    // explicitement le data-word coupe le rendu à la source.
-    cd.setAttribute('data-word','');
-    cd.innerText='';
-    overlay.style.display='none';
-    cb();
-  },1200);
-}
+function doBreak(cb){if(BREAK_SECS<=0){cb();return;}['field','pw','ct','ww','rtw'].forEach(id=>show(id,false));const bk=document.getElementById('bk');bk.style.display='flex';initBreakScene(document.getElementById('bk-canvas'),responses.filter(r=>r.direction));const sn=Math.ceil(engine.shownCount/BATCH),ts=Math.ceil(engine.total/BATCH);document.getElementById('bk-set').innerText=`série ${sn} sur ${ts} · ${responses.filter(r=>r.direction).length} signaux cartographiés`;let secs=BREAK_SECS;document.getElementById('bk-cd').innerText=secs;const tick=setInterval(()=>{secs--;document.getElementById('bk-cd').innerText=secs;if(secs<=0){clearInterval(tick);bk.style.display='none';disposeBreak();show('field',true);show('pw',true);show('ct',true);show('ww',true);show('rtw',true);cb();}},1000);}
 // ============ OUTRO SYSTEM ============
 let _outroAnim=null,_outroScene=null,_outroCamera=null,_outroRenderer=null,_outroPoints=null;
 let _outroAxes=[],_outroT=0,_outroFrozen=false,_outroAxisOpacity=0.6;
@@ -1402,6 +1380,55 @@ let _lastSessionData=null;
 let _outroTimeouts=[];
 function _outroST(fn,delay){const id=setTimeout(()=>{_outroTimeouts=_outroTimeouts.filter(t=>t!==id);try{fn();}catch(e){}},delay);_outroTimeouts.push(id);return id;}
 function cancelOutroTimeouts(){_outroTimeouts.forEach(id=>clearTimeout(id));_outroTimeouts=[];}
+
+function initOutroScene(constResponses){
+  if(_outroRenderer){_outroRenderer.dispose();_outroRenderer=null;}
+  if(_outroAnim){cancelAnimationFrame(_outroAnim);_outroAnim=null;}
+  const canvas=document.getElementById('bk-canvas');
+  const W=window.innerWidth,H=window.innerHeight;
+  canvas.width=W;canvas.height=H;
+  _outroScene=new THREE.Scene();
+  _outroCamera=new THREE.PerspectiveCamera(55,W/H,0.1,100);
+  _outroCamera.position.set(0,0,3.2);
+  _outroRenderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+  _outroRenderer.setSize(W,H);
+  _outroRenderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  _outroRenderer.setClearColor(0x050508,1);
+  const pos=[],col=[];
+  constResponses.forEach(r=>{
+    const d=r.direction==='pos'?1:-1;
+    pos.push((r.valence-0.5)*2*d,(r.arousal-0.5)*2,(r.dominance-0.5)*2*d);
+    col.push(r.valence*d*.5+.5,r.arousal*.8,r.dominance*.5+.2);
+  });
+  const geo=new THREE.BufferGeometry();
+  geo.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));
+  geo.setAttribute('color',new THREE.Float32BufferAttribute(col,3));
+  _outroCurrentColors=Float32Array.from(col);
+  _outroPoints=new THREE.Points(geo,new THREE.PointsMaterial({size:.18,vertexColors:true,transparent:true,opacity:.92}));
+  _outroScene.add(_outroPoints);
+  const axM=()=>new THREE.LineBasicMaterial({color:0x383858,transparent:true,opacity:_outroAxisOpacity});
+  _outroAxes=[];
+  [[[-1.5,0,0],[1.5,0,0]],[[0,-1.5,0],[0,1.5,0]],[[0,0,-1.5],[0,0,1.5]]].forEach(pts=>{
+    const ag=new THREE.BufferGeometry().setFromPoints(pts.map(p=>new THREE.Vector3(...p)));
+    const ln=new THREE.Line(ag,axM());
+    _outroScene.add(ln);
+    _outroAxes.push(ln);
+  });
+  _outroAxisOpacity=0.6;_outroFrozen=false;_outroT=0;
+  function animate(){
+    _outroAnim=requestAnimationFrame(animate);
+    if(!_outroFrozen)_outroT+=0.008;
+    _outroPoints.rotation.y=_outroT;
+    _outroPoints.rotation.x=Math.sin(_outroT*.4)*.3;
+    _outroAxes.forEach(a=>{
+      a.rotation.y=_outroT;
+      a.rotation.x=Math.sin(_outroT*.4)*.3;
+      a.material.opacity=_outroAxisOpacity;
+    });
+    _outroRenderer.render(_outroScene,_outroCamera);
+  }
+  animate();
+}
 function _disposeOutroTechnical(){
   // Technical cleanup only — safe to call at natural end of sequence.
   // Does NOT cancel pending outro timeouts (showOutroButtons may still be pending).
@@ -1417,6 +1444,48 @@ function disposeOutro(){
   // Cancels all pending outro timeouts including any in-flight UI reveals.
   cancelOutroTimeouts();
   _disposeOutroTechnical();
+}
+function fadePointToBlack(index,duration){
+  if(!_outroPoints||!_outroCurrentColors)return;
+  const startTime=performance.now();
+  const i3=index*3;
+  const sR=_outroCurrentColors[i3],sG=_outroCurrentColors[i3+1],sB=_outroCurrentColors[i3+2];
+  const colorAttr=_outroPoints.geometry.attributes.color;
+  function step(){
+    if(!_outroPoints||!_outroCurrentColors)return;
+    const elapsed=performance.now()-startTime;
+    const t=Math.min(1,elapsed/duration);
+    const e=t*t;
+    const r=sR*(1-e),g=sG*(1-e),b=sB*(1-e);
+    _outroCurrentColors[i3]=r;_outroCurrentColors[i3+1]=g;_outroCurrentColors[i3+2]=b;
+    colorAttr.setXYZ(index,r,g,b);
+    colorAttr.needsUpdate=true;
+    if(t<1)requestAnimationFrame(step);
+  }
+  step();
+}
+function fadeAxes(duration){
+  const startTime=performance.now();
+  const startOpacity=_outroAxisOpacity;
+  function step(){
+    const elapsed=performance.now()-startTime;
+    const t=Math.min(1,elapsed/duration);
+    _outroAxisOpacity=startOpacity*(1-t);
+    if(t<1)requestAnimationFrame(step);
+  }
+  step();
+}
+function getPointScreenPos(index){
+  if(!_outroPoints||!_outroCamera)return{x:window.innerWidth/2,y:window.innerHeight/2};
+  const v=new THREE.Vector3();
+  v.fromBufferAttribute(_outroPoints.geometry.attributes.position,index);
+  _outroPoints.updateMatrixWorld();
+  v.applyMatrix4(_outroPoints.matrixWorld);
+  v.project(_outroCamera);
+  return{
+    x:(v.x+1)*window.innerWidth/2,
+    y:(-v.y+1)*window.innerHeight/2
+  };
 }
 function shootStar(fromX,fromY,toX,toY,duration,onArrive){
   const star=document.createElement('div');
@@ -1487,10 +1556,13 @@ function buildSessionData(R){
 }
 function renderResultsPanel(R){
   document.getElementById('res').style.display='flex';
-  // Build the human-facing data panel
+  const coreBlock=document.getElementById('core-block');
+  coreBlock.innerHTML=R.coreWords.map((w,i)=>`<div class="core-word" id="core-word-${i}" style="opacity:0">${w.toUpperCase()}</div>`).join('');
+  document.getElementById('hinge-wrap').style.display='none';
+  // Build the human-facing data panel: VOS RÉSULTATS COMPLETS
   const answered=R.answered;
   const conflicts=R.conflicts;
-  // Words tagged positive that have low default valence
+  // Words tagged positive that have low default valence — "traversée du noir"
   const traversee=answered.filter(r=>r.direction==='pos'&&r.valence<=0.32).sort((a,b)=>a.rt-b.rt);
   const traverseeSet=new Set(traversee.map(r=>r.word));
   // Pure conflicts: conflicts that aren't already in traversée
@@ -1501,27 +1573,27 @@ function renderResultsPanel(R){
   const hesitations=[...answered].filter(r=>!r.timeout&&r.rt<getMaxRT()).sort((a,b)=>b.rt-a.rt).slice(0,CFG.research?10:5);
   const mkRow=(r,cls)=>`<div class="wi ${cls||r.direction}"><span class="ww_">${r.word}</span><span class="wr">${r.rt}ms</span><span class="wd">${r.direction==='pos'?'▶':r.direction==='neg'?'◄':'·'}</span></div>`;
   const mkSection=(heading,explainer,rows)=>`<div class="dp-section"><div class="dp-section-heading"><span class="lbl-text lbl-gold">${heading}</span></div><div class="dp-section-explainer">${explainer}</div><div class="dp-section-list">${rows||'<div class="dp-section-empty">aucun signal dans cette catégorie</div>'}</div></div>`;
-  let html=`<div class="dp-baseline">${answered.length} réponse${answered.length>1?'s':''} valide${answered.length>1?'s':''} · temps de réponse moyen ${R.avgRT}ms.</div>`;
+  let html=`<div class="dp-baseline">Vous avez répondu à ${answered.length} mot${answered.length>1?'s':''}. Temps de réponse moyen : ${R.avgRT}ms.</div>`;
   if(pureConflicts.length>0){
-    html+=mkSection('CONFLITS',
-      "Réponses dont la direction contredit la valence par défaut du mot dans le lexique.",
+    html+=mkSection('VOS CONFLITS',
+      "Les mots où votre réponse a contredit le sens habituel. Ce sont souvent les plus révélateurs.",
       pureConflicts.slice(0,8).map(r=>mkRow(r,'cfl')).join(''));
   }
-  html+=mkSection('RÉFLEXES',
-    "Réponses les plus rapides — RT le plus court de la session.",
+  html+=mkSection('VOS RÉFLEXES',
+    "Les mots auxquels vous avez répondu le plus vite — presque sans réfléchir. C'est votre instinct.",
     reflexes.map(r=>mkRow(r)).join(''));
-  html+=mkSection('HÉSITATIONS',
-    "Réponses les plus lentes — RT le plus long (hors timeouts).",
+  html+=mkSection('VOS HÉSITATIONS',
+    "Les mots qui vous ont fait ralentir. Là où votre tête et votre instinct ne sont pas d'accord.",
     hesitations.map(r=>mkRow(r)).join(''));
   if(traversee.length>0){
-    html+=mkSection('AFFIRMÉS · CHARGE SOMBRE',
-      "Mots affirmés (pos) portant une valence par défaut basse (V ≤ 0,32 dans le lexique).",
+    html+=mkSection('LA TRAVERSÉE DU NOIR',
+      "Vous avez répondu positivement à des mots sombres. C'est rare et significatif — peut-être un signe d'intégration de la souffrance.",
       traversee.slice(0,8).map(r=>mkRow(r,'shadow')).join(''));
   }
   if(engine.pivotOffered&&engine.pivotWord){
     const pr=engine.pivotResponse;
-    const prText=pr==='pos'?"Affirmé (pos).":pr==='neg'?"Rejeté (neg).":"Timeout.";
-    html+=`<div class="dp-section"><div class="dp-section-heading"><span class="lbl-text lbl-gold">PIVOT</span></div><div class="dp-section-explainer">Mot pivot inséré après une séquence sombre (darkStreak ≥ 3).</div><div class="dp-section-list"><div class="wi cfl"><span class="ww_">${engine.pivotWord}</span><span class="wi-note">${prText}</span></div></div></div>`;
+    const prText=pr==='pos'?"Vous l'avez accepté — vous avez pivoté vers la lumière.":pr==='neg'?"Vous l'avez tenu à distance — le signal est resté sombre.":"Vous n'avez pas répondu à temps.";
+    html+=`<div class="dp-section"><div class="dp-section-heading"><span class="lbl-text lbl-gold">LE PIVOT</span></div><div class="dp-section-explainer">Après plusieurs mots sombres, nous vous avons offert ce mot. Votre réponse était votre choix : continuer dans le noir, ou pivoter vers la lumière.</div><div class="dp-section-list"><div class="wi cfl"><span class="ww_">${engine.pivotWord}</span><span class="wi-note">${prText}</span></div></div></div>`;
   }
   document.getElementById('dp-content').innerHTML=html;
 }
@@ -1534,13 +1606,14 @@ function showResults(){
   renderResultsPanel(R);
   _lastSessionData=buildSessionData(R);
   saveSession(_lastSessionData);
-  // After first completed session, auto-disable the intro tutorial.
-  // It's a ceremonial onboarding element — it earns its cost once, then becomes friction.
-  // User can re-enable it from settings; the flag fires once and never overrides their choice.
+  // After first completed session, auto-disable the intro tutorial and the end-of-test animation.
+  // Both are ceremonial onboarding elements — they earn their cost once, then become friction.
+  // User can re-enable either from settings; the flag fires once and never overrides their choice.
   try{
     if(!localStorage.getItem('tc_first_completed_v1')){
       localStorage.setItem('tc_first_completed_v1','1');
       if(CFG.showIntro){CFG.showIntro=false;saveCFG();}
+      if(CFG.animations){CFG.animations=false;saveCFG();}
     }
   }catch(e){}
   runOutroSequence(R);
@@ -1549,33 +1622,115 @@ function showResults(){
 function runOutroSequence(R){
   // Safety: cancel any pending outro timeouts from a prior session
   cancelOutroTimeouts();
-  // New flow (May 2026): instrument integrity over ceremony.
-  // No four-word reveal, no rage/pattern/divergence popups — these were
-  // interpretive layers the instrument shouldn't claim. The AI handoff
-  // does interpretation; the app just delivers the reading.
-  // Drift detector stays (it's about instrument calibration, not the person).
-  const bk=document.getElementById('bk');
-  if(bk){bk.style.display='none';bk.style.zIndex='';}
-  const bko=document.getElementById('bk-overlay');
-  if(bko)bko.style.display='';
-  const res=document.getElementById('res');
-  const sc=document.getElementById('res-complete');
-  if(sc){
-    sc.style.opacity='0';
-    sc.style.display='block';
-    _outroST(()=>{sc.style.opacity='1';},60);
+  try{disposeBreak();}catch(e){}
+  // Animations disabled? Skip the 3D outro entirely, just reveal the four words quietly.
+  if(!CFG.animations){
+    const bk=document.getElementById('bk');
+    bk.style.display='none';
+    bk.style.zIndex='';
+    document.getElementById('bk-overlay').style.display='';
+    R.coreWords.forEach((w,i)=>{
+      const el=document.getElementById(`core-word-${i}`);
+      if(el)_outroST(()=>{el.style.opacity='1';el.classList.add('land');},200+i*250);
+    });
+    _outroST(()=>showOutroButtons(R),200+R.coreWords.length*250+1500);
+    return;
   }
-  // Quiet beat, then transition to the data screen.
+  // Need #bk above #res so the constellation is visible
+  const bk=document.getElementById('bk');
+  bk.style.display='flex';
+  bk.style.opacity='1';
+  bk.style.transition='';
+  bk.style.zIndex='110'; // above #res (z-index 100)
+  document.getElementById('bk-overlay').style.display='none';
+  // If too few responses for a constellation, skip straight to reveal
+  if(R.constResponses.length<4||R.winnerIndices.length<1){
+    bk.style.display='none';
+    bk.style.zIndex='';
+    document.getElementById('bk-overlay').style.display='';
+    R.coreWords.forEach((w,i)=>{
+      const el=document.getElementById(`core-word-${i}`);
+      if(el)_outroST(()=>{el.style.opacity='1';el.classList.add('land');},300+i*350);
+    });
+    _outroST(()=>showOutroButtons(),300+R.coreWords.length*350+800);
+    return;
+  }
+  initOutroScene(R.constResponses);
+  // Phase 1: Hold full constellation (1s)
   _outroST(()=>{
-    if(sc)sc.style.opacity='0';
+    // Phase 2: Dissolve weakest first
+    const winnersSet=new Set(R.winnerIndices);
+    const losers=[];
+    R.pointScores.forEach((sc,idx)=>{if(!winnersSet.has(idx))losers.push({idx,score:sc});});
+    losers.sort((a,b)=>a.score-b.score);
+    const totalDissolveDuration=2200;
+    const stagger=losers.length>0?totalDissolveDuration/losers.length:0;
+    losers.forEach((l,i)=>{
+      _outroST(()=>fadePointToBlack(l.idx,700),i*stagger);
+    });
+    // Phase 3: After most points faded, fade axes
+    _outroST(()=>fadeAxes(500),totalDissolveDuration+150);
+    // Phase 4: Freeze rotation
+    _outroST(()=>{_outroFrozen=true;},totalDissolveDuration+650);
+    // Phase 5: Hold then launch shooting stars
+    _outroST(()=>launchShootingStars(R),totalDissolveDuration+1100);
+  },1000);
+}
+
+function launchShootingStars(R){
+  const wordElems=[];
+  for(let i=0;i<R.winnerIndices.length;i++){
+    const el=document.getElementById(`core-word-${i}`);
+    if(el)wordElems.push(el);
+  }
+  const starInterval=400;
+  const starDuration=780;
+  R.winnerIndices.forEach((pointIdx,i)=>{
     _outroST(()=>{
-      if(res)res.style.display='none';
-      const dp=document.getElementById('dp-panel');
-      if(dp){dp.style.display='flex';try{dp.scrollTop=0;}catch(e){}}
-      try{maybeShowDriftWarning();}catch(e){}
-      try{buildSessionMoodCompare();}catch(e){}
-    },600);
-  },1400);
+      const fromPos=getPointScreenPos(pointIdx);
+      if(!wordElems[i]){fadePointToBlack(pointIdx,200);return;}
+      const wordRect=wordElems[i].getBoundingClientRect();
+      const toX=wordRect.left+wordRect.width/2;
+      const toY=wordRect.top+wordRect.height/2;
+      // Hide the 3D source point as the star launches
+      fadePointToBlack(pointIdx,180);
+      shootStar(fromPos.x,fromPos.y,toX,toY,starDuration,()=>{
+        const el=wordElems[i];
+        el.style.opacity='';
+        el.classList.add('land');
+      });
+    },i*starInterval);
+  });
+  const totalShootingTime=(R.winnerIndices.length-1)*starInterval+starDuration;
+  // Fade out the 3D canvas after the last word has landed
+  _outroST(()=>{
+    const bk=document.getElementById('bk');
+    bk.style.transition='opacity .8s ease';
+    bk.style.opacity='0';
+    _outroST(()=>{
+      bk.style.display='none';
+      bk.style.opacity='';
+      bk.style.transition='';
+      bk.style.zIndex='';
+      document.getElementById('bk-overlay').style.display='';
+      _disposeOutroTechnical();
+      clearShootingStars();
+    },820);
+  },totalShootingTime+500);
+  // Show buttons after the canvas fades, giving the user a beat alone with the four words
+  _outroST(()=>showOutroButtons(R),totalShootingTime+2500);
+}
+
+function showOutroButtons(R){
+  // If the current session diverges from the racine, show the warning above the buttons.
+  try{maybeShowRageWarning(R.rageTaps);}catch(e){}
+  try{maybeShowPatternWarning(R);}catch(e){}
+  try{maybeShowDivergenceWarning();}catch(e){}
+  try{maybeShowDriftWarning();}catch(e){}
+  try{buildSessionMoodCompare();}catch(e){}
+  const ob=document.getElementById('outro-buttons');
+  ob.style.display='flex';
+  setTimeout(()=>ob.classList.add('in'),250);
 }
 
 function buildSessionMoodCompare(){
@@ -1625,6 +1780,256 @@ function buildSessionMoodCompare(){
       `<span class="smc-cell">D ${ref[2]}${sdStr(2)}</span>`+
     `</div>`;
   el.classList.add('show');
+}
+
+function computeSessionDivergence(currentVad,racineVad){
+  // Both VAD arrays are [v,a,d] in 0-100 range. Returns Euclidean distance normalized to 0-1.
+  if(!currentVad||!racineVad||currentVad.length!==3||racineVad.length!==3)return null;
+  const dv=(currentVad[0]-racineVad[0])/100;
+  const da=(currentVad[1]-racineVad[1])/100;
+  const dd=(currentVad[2]-racineVad[2])/100;
+  return Math.sqrt(dv*dv+da*da+dd*dd);
+}
+function maybeShowDivergenceWarning(){
+  const btn=document.getElementById('div-warning-btn');
+  if(!btn)return;
+  // Reset
+  btn.style.display='none';
+  document.body.classList.remove('has-div-warning');
+  try{closeDivWarning();}catch(e){}
+  // Requirements: privacy on, current session data exists, at least 3 prior sessions for a valid racine
+  if(!CFG.privacy||!_lastSessionData)return;
+  const sessions=loadSessions();
+  // The current session is already at sessions[0]. We need 3+ PRIOR sessions, so total must be ≥4.
+  if(sessions.length<4)return;
+  const priorSessions=sessions.slice(1); // all sessions except the just-saved one
+  const racine=computeRacine(priorSessions);
+  if(!racine||!racine.vad)return;
+  const distance=computeSessionDivergence(_lastSessionData.vad,racine.vad);
+  if(distance===null)return;
+  // Threshold: 0.25 on normalized Euclidean. Roughly: at least one VAD dimension moved ~20+ points, or multiple moved meaningfully.
+  if(distance>=0.25){
+    btn.style.display='block';
+    document.body.classList.add('has-div-warning');
+    // Auto-open the popup, but ONLY if no rage-warning and no pattern-warning are active.
+    // If either is active, their close handlers will chain to us.
+    const rageBtn=document.getElementById('rage-warning-btn');
+    const rageActive=rageBtn&&rageBtn.style.display==='block';
+    const patternBtn=document.getElementById('pattern-warning-btn');
+    const patternActive=patternBtn&&patternBtn.style.display==='block';
+    if(!rageActive&&!patternActive){
+      setTimeout(()=>{
+        // Only auto-open if results view is still on screen
+        const res=document.getElementById('res');
+        if(res&&res.style.display==='flex')openDivWarning(null);
+      },900);
+    }
+  }
+}
+function openDivWarning(ev){
+  if(ev){ev.stopPropagation();}
+  const pop=document.getElementById('div-warning-popup');
+  if(!pop)return;
+  pop.style.display='block';
+  requestAnimationFrame(()=>pop.classList.add('in'));
+  // Defer attaching outside-click listener so the current tap doesn't immediately close it
+  setTimeout(()=>{document.addEventListener('click',outsideCloseDivWarning,true);},60);
+}
+function closeDivWarning(){
+  const pop=document.getElementById('div-warning-popup');
+  if(!pop)return;
+  pop.classList.remove('in');
+  setTimeout(()=>{pop.style.display='none';},260);
+  document.removeEventListener('click',outsideCloseDivWarning,true);
+  document.body.classList.remove('has-div-warning');
+  // Chain: drift warning if active
+  const res=document.getElementById('res');
+  if(!res||res.style.display!=='flex')return;
+  const driftBtn=document.getElementById('drift-warning-btn');
+  if(driftBtn&&driftBtn.style.display==='block'){
+    setTimeout(()=>{
+      const stillOnResults=document.getElementById('res');
+      if(stillOnResults&&stillOnResults.style.display==='flex')openDriftWarning(null);
+    },400);
+  }
+}
+function outsideCloseDivWarning(ev){
+  const pop=document.getElementById('div-warning-popup');
+  const btn=document.getElementById('div-warning-btn');
+  if(!pop||!btn)return;
+  if(pop.contains(ev.target)||btn.contains(ev.target))return;
+  closeDivWarning();
+}
+function maybeShowRageWarning(rageCount){
+  const btn=document.getElementById('rage-warning-btn');
+  if(!btn)return;
+  // Reset
+  btn.style.display='none';
+  document.body.classList.remove('has-rage-warning');
+  try{closeRageWarning();}catch(e){}
+  if(!rageCount||rageCount<1)return;
+  // Set popup body with the count
+  const body=document.getElementById('rw-popup-body');
+  if(body){
+    const word=rageCount===1?'réponse a été rejetée':'réponses ont été rejetées';
+    body.textContent=`${rageCount} ${word} du calcul. Ces taps étaient sous 200ms — plus rapides que le temps minimal pour lire un mot. Vos résultats reflètent vos vraies réactions.`;
+  }
+  btn.style.display='block';
+  document.body.classList.add('has-rage-warning');
+  // Auto-open the popup so the user must acknowledge it
+  setTimeout(()=>openRageWarning(null),900);
+}
+function openRageWarning(ev){
+  if(ev){ev.stopPropagation();}
+  const pop=document.getElementById('rage-warning-popup');
+  if(!pop)return;
+  pop.style.display='block';
+  requestAnimationFrame(()=>pop.classList.add('in'));
+  setTimeout(()=>{document.addEventListener('click',outsideCloseRageWarning,true);},60);
+}
+function closeRageWarning(){
+  const pop=document.getElementById('rage-warning-popup');
+  if(!pop)return;
+  pop.classList.remove('in');
+  setTimeout(()=>{pop.style.display='none';},260);
+  document.removeEventListener('click',outsideCloseRageWarning,true);
+  // Chain: pattern warning first (if active), else divergence (if active)
+  const res=document.getElementById('res');
+  if(!res||res.style.display!=='flex')return;
+  const patternBtn=document.getElementById('pattern-warning-btn');
+  if(patternBtn&&patternBtn.style.display==='block'){
+    setTimeout(()=>{
+      const stillOnResults=document.getElementById('res');
+      if(stillOnResults&&stillOnResults.style.display==='flex')openPatternWarning(null);
+    },400);
+    return;
+  }
+  const divBtn=document.getElementById('div-warning-btn');
+  if(divBtn&&divBtn.style.display==='block'){
+    setTimeout(()=>{
+      const stillOnResults=document.getElementById('res');
+      if(stillOnResults&&stillOnResults.style.display==='flex')openDivWarning(null);
+    },400);
+    return;
+  }
+  const driftBtn=document.getElementById('drift-warning-btn');
+  if(driftBtn&&driftBtn.style.display==='block'){
+    setTimeout(()=>{
+      const stillOnResults=document.getElementById('res');
+      if(stillOnResults&&stillOnResults.style.display==='flex')openDriftWarning(null);
+    },400);
+  }
+}
+function outsideCloseRageWarning(ev){
+  const pop=document.getElementById('rage-warning-popup');
+  const btn=document.getElementById('rage-warning-btn');
+  if(!pop||!btn)return;
+  if(pop.contains(ev.target)||btn.contains(ev.target))return;
+  closeRageWarning();
+}
+function maybeShowPatternWarning(R){
+  const btn=document.getElementById('pattern-warning-btn');
+  if(!btn)return;
+  // Reset
+  btn.style.display='none';
+  document.body.classList.remove('has-pattern-warning');document.body.classList.remove('has-drift-warning');
+  try{closePatternWarning();}catch(e){}try{closeDriftWarning();}catch(e){}
+  if(!R||!R.answered)return;
+  // Count anchor responses on the rage-tap-filtered set
+  // Dark anchors: words with valence < 0.15 (mort, peur, douleur, terreur, etc.)
+  // Bright anchors: words with valence > 0.85 (amour, joie, paix, etc.)
+  let darkAsPositive=0;
+  let brightAsNegative=0;
+  const darkExamples=[];
+  const brightExamples=[];
+  R.answered.forEach(r=>{
+    if(r.direction==='pos'&&r.valence<0.15){
+      darkAsPositive++;
+      if(darkExamples.length<3)darkExamples.push(r.word);
+    }else if(r.direction==='neg'&&r.valence>0.85){
+      brightAsNegative++;
+      if(brightExamples.length<3)brightExamples.push(r.word);
+    }
+  });
+  const THRESHOLD=2;
+  let mode=null;
+  // Pick the stronger pattern; tie-break to dark-positive
+  if(darkAsPositive>=THRESHOLD&&darkAsPositive>=brightAsNegative)mode='dark-positive';
+  else if(brightAsNegative>=THRESHOLD)mode='bright-negative';
+  if(!mode)return;
+  // Build the message
+  const body=document.getElementById('pw-popup-body');
+  if(body){
+    if(mode==='dark-positive'){
+      const ex=darkExamples.length>0?darkExamples.slice(0,3).join(', '):'mort, peur, douleur';
+      body.innerHTML=`Vous avez répondu positivement à plusieurs mots habituellement sombres (par exemple : ${ex}). Cela peut être très significatif — un deuil traversé, un travail intérieur, une acceptation profonde — ou cela peut indiquer un moment de distraction.<br><br>Quatre mots ne suffisent pas à lire ce signal. Si ce n'était pas une distraction, copiez vos données dans une IA (Claude, ChatGPT, Gemini) pour une analyse plus complète.`;
+    }else{
+      const ex=brightExamples.length>0?brightExamples.slice(0,3).join(', '):'amour, joie, paix';
+      body.innerHTML=`Vous avez répondu négativement à plusieurs mots habituellement lumineux (par exemple : ${ex}). Cela peut refléter un moment difficile, ou un rapport personnel à ces mots qui mérite d'être exploré.<br><br>Quatre mots ne suffisent pas à lire ce signal. Une IA peut faire une lecture plus complète à partir de vos données détaillées. Si vous traversez une période sombre, parlez-en à quelqu'un — vous n'êtes pas seul·e.`;
+    }
+  }
+  btn.style.display='block';
+  document.body.classList.add('has-pattern-warning');
+  // Auto-open the popup ONLY if no rage-warning is active (otherwise rage will chain to us)
+  const rageBtn=document.getElementById('rage-warning-btn');
+  const rageActive=rageBtn&&rageBtn.style.display==='block';
+  if(!rageActive){
+    setTimeout(()=>{
+      const res=document.getElementById('res');
+      if(res&&res.style.display==='flex')openPatternWarning(null);
+    },900);
+  }
+}
+function openPatternWarning(ev){
+  if(ev){ev.stopPropagation();}
+  const pop=document.getElementById('pattern-warning-popup');
+  if(!pop)return;
+  pop.style.display='block';
+  requestAnimationFrame(()=>pop.classList.add('in'));
+  setTimeout(()=>{document.addEventListener('click',outsideClosePatternWarning,true);},60);
+}
+function closePatternWarning(){
+  const pop=document.getElementById('pattern-warning-popup');
+  if(!pop)return;
+  pop.classList.remove('in');
+  setTimeout(()=>{pop.style.display='none';},260);
+  document.removeEventListener('click',outsideClosePatternWarning,true);
+  // Chain: if divergence is also active and results still on screen, auto-open it
+  const res=document.getElementById('res');
+  if(!res||res.style.display!=='flex')return;
+  const divBtn=document.getElementById('div-warning-btn');
+  if(divBtn&&divBtn.style.display==='block'){
+    setTimeout(()=>{
+      const stillOnResults=document.getElementById('res');
+      if(stillOnResults&&stillOnResults.style.display==='flex')openDivWarning(null);
+    },400);
+    return;
+  }
+  const driftBtn=document.getElementById('drift-warning-btn');
+  if(driftBtn&&driftBtn.style.display==='block'){
+    setTimeout(()=>{
+      const stillOnResults=document.getElementById('res');
+      if(stillOnResults&&stillOnResults.style.display==='flex')openDriftWarning(null);
+    },400);
+  }
+}
+function outsideClosePatternWarning(ev){
+  const pop=document.getElementById('pattern-warning-popup');
+  const btn=document.getElementById('pattern-warning-btn');
+  if(!pop||!btn)return;
+  if(pop.contains(ev.target)||btn.contains(ev.target))return;
+  closePatternWarning();
+}
+
+function openMore(){
+  // Copy data to clipboard, then open the explanation panel
+  try{copyForAI(true);}catch(e){}
+  const panel=document.getElementById('more-panel');
+  if(panel){panel.style.display='flex';try{panel.scrollTop=0;}catch(e){}}
+}
+function closeMore(){
+  const panel=document.getElementById('more-panel');
+  if(panel)panel.style.display='none';
 }
 
 function copyForAI(silent){
@@ -1813,38 +2218,38 @@ function buildRacineDataView(racine){
     return `<div class="racine-word-row${extraCls?' '+extraCls:''}"><span class="ww_">${w.word}</span><span class="rw-freq">${freqDisplay}</span><span class="rw-rt">${Math.round(w.avgRT)}ms</span></div>`;
   };
   let html='';
-  // ─── AFFIRMÉS (récurrents à travers les sessions) ───
+  // ─── AFFIRMÉS ───
   if(posUniv.length){
-    html+=`<div class="racine-data-heading">RÉCURRENTS · ANCRES UNIVERSELLES</div>`+
-      `<div class="racine-data-explainer">Mots positifs de l'ensemble d'ancrage (V ≥ 0,88 dans le lexique) que vous avez affirmés à travers les sessions. Comptage : occurrences / nombre de sessions.</div>`+
+    html+=`<div class="racine-data-heading">AFFIRMÉS · UNIVERSELS</div>`+
+      `<div class="racine-data-explainer">Mots universellement valorisés que votre instinct affirme rapidement. Leur présence confirme votre base humaine partagée.</div>`+
       posUniv.map(w=>wordRow(w)).join('');
   }
   if(posPers.length){
-    html+=`<div class="racine-data-heading">RÉCURRENTS · INDIVIDUELS</div>`+
-      `<div class="racine-data-explainer">Mots hors-ancrage que vous avez affirmés à travers les sessions. Comptage : occurrences / nombre de sessions.</div>`+
+    html+=`<div class="racine-data-heading">AFFIRMÉS · PERSONNELS</div>`+
+      `<div class="racine-data-explainer">Votre signature individuelle d'affirmation. Ce que <em>vous</em> valorisez, au-delà du socle humain partagé.</div>`+
       posPers.map(w=>wordRow(w)).join('');
   }
-  // ─── REPOUSSÉS (récurrents à travers les sessions) ───
+  // ─── REPOUSSÉS ───
   if(negUniv.length){
-    html+=`<div class="racine-data-heading racine-data-heading-neg">REPOUSSÉS · ANCRES UNIVERSELLES</div>`+
-      `<div class="racine-data-explainer">Mots négatifs de l'ensemble d'ancrage (V ≤ 0,08 dans le lexique) que vous avez repoussés à travers les sessions.</div>`+
+    html+=`<div class="racine-data-heading racine-data-heading-neg">REPOUSSÉS · UNIVERSELS</div>`+
+      `<div class="racine-data-explainer">Mots universellement rejetés que votre instinct écarte rapidement. Leur présence confirme votre base humaine partagée.</div>`+
       negUniv.map(w=>wordRow(w,'racine-word-row-neg')).join('');
   }
   if(negPers.length){
-    html+=`<div class="racine-data-heading racine-data-heading-neg">REPOUSSÉS · INDIVIDUELS</div>`+
-      `<div class="racine-data-explainer">Mots hors-ancrage que vous avez repoussés à travers les sessions.</div>`+
+    html+=`<div class="racine-data-heading racine-data-heading-neg">REPOUSSÉS · PERSONNELS</div>`+
+      `<div class="racine-data-explainer">Votre signature morale individuelle — vos valeurs en creux, au-delà du socle humain partagé. Plus le signal est fort, plus le terrain est non-négociable.</div>`+
       negPers.map(w=>wordRow(w,'racine-word-row-neg')).join('');
   }
-  // ─── INVERSIONS ───
+  // ─── INVERSIONS (only if present — rare, significant) ───
   if(posInv.length||negInv.length){
     html+=`<div class="racine-data-heading racine-data-heading-inv">INVERSIONS</div>`+
-      `<div class="racine-data-explainer">Mots de l'ensemble d'ancrage dont votre réflexe a inversé la charge à travers les sessions.</div>`;
+      `<div class="racine-data-explainer">Mots dont la charge habituelle est inversée par votre réflexe. Signaux rares et significatifs — souvent le marqueur d'un cadre philosophique ou spirituel (la mort lue comme passage, le vide comme libération), plutôt qu'une anomalie.</div>`;
     if(posInv.length){
-      html+=`<div class="racine-mood-key">Ancres négatives que vous avez affirmées :</div>`+
+      html+=`<div class="racine-mood-key">Universellement repoussés, que vous affirmez :</div>`+
         posInv.map(w=>wordRow(w,'racine-word-row-inv')).join('');
     }
     if(negInv.length){
-      html+=`<div class="racine-mood-key" style="margin-top:8px">Ancres positives que vous avez repoussées :</div>`+
+      html+=`<div class="racine-mood-key" style="margin-top:8px">Universellement affirmés, que vous repoussez :</div>`+
         negInv.map(w=>wordRow(w,'racine-word-row-inv')).join('');
     }
   }
@@ -2182,9 +2587,9 @@ function maybeShowDriftWarning(){
   else if(medianRT>slowT*1.10)mode='slower';
   if(!mode)return;
   // Suggested window: 2× median, so the new fast-threshold (30%) lands near 60% of median.
-  // Round to nearest 100ms, clamp to the settings slider range [1200, 2000].
+  // Round to nearest 100ms, clamp to the settings slider range [800, 2500].
   let suggested=Math.round((medianRT*2)/100)*100;
-  suggested=Math.max(1200,Math.min(2000,suggested));
+  suggested=Math.max(1200,Math.min(2500,suggested));
   const fastTRound=Math.round(fastT);
   const slowTRound=Math.round(slowT);
   const title=document.getElementById('dr-popup-title');
@@ -2260,135 +2665,6 @@ function skipMood(){
   if(fn)fn();
 }
 // ============ END MOOD TRACKER ============
-
-
-// ============ EXPORT / IMPORT BASELINE ============
-// Permet aux utilisateurs de transporter leurs données entre appareils,
-// ou de restaurer après un effacement. Capture chaque clé tc_* dans
-// localStorage : sessions, calibration, paramètres, drapeaux.
-function _v3ktorCollectKeys() {
-  const out = {};
-  for (let i = 0; i < localStorage.length; i++) {
-    const k = localStorage.key(i);
-    if (k && k.startsWith('tc_')) {
-      out[k] = localStorage.getItem(k);
-    }
-  }
-  return out;
-}
-
-function _v3ktorShowDataMsg(msg, isError) {
-  const el = document.getElementById('data-msg');
-  if (!el) return;
-  el.textContent = msg;
-  el.style.color = isError ? 'rgba(220,75,75,.92)' : 'rgba(212,160,23,.92)';
-  el.style.display = 'block';
-  clearTimeout(_v3ktorShowDataMsg._t);
-  _v3ktorShowDataMsg._t = setTimeout(() => { el.style.display = 'none'; }, 5000);
-}
-
-function exportData() {
-  try {
-    const keys = _v3ktorCollectKeys();
-    const count = Object.keys(keys).length;
-    if (count === 0) {
-      _v3ktorShowDataMsg('Rien à exporter pour l\u2019instant.', true);
-      return;
-    }
-    const payload = {
-      app: 'V3KTOR',
-      schema: 1,
-      lang: 'fr',
-      exported_at: new Date().toISOString(),
-      keys: keys
-    };
-    const json = JSON.stringify(payload, null, 2);
-    const blob = new Blob([json], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    const ts = new Date().toISOString().slice(0, 10);
-    a.download = `v3ktor-baseline-${ts}.json`;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 1500);
-    _v3ktorShowDataMsg(`Exporté · ${count} élément${count === 1 ? '' : 's'} · gardez ce fichier en sécurité`);
-  } catch (e) {
-    _v3ktorShowDataMsg('Échec de l\u2019export.', true);
-  }
-}
-
-function importData() {
-  const input = document.getElementById('import-file');
-  if (input) input.click();
-}
-
-function handleImportFile(event) {
-  const file = event.target.files && event.target.files[0];
-  event.target.value = '';
-  if (!file) return;
-
-  const reader = new FileReader();
-  reader.onload = (ev) => {
-    let payload;
-    try {
-      payload = JSON.parse(ev.target.result);
-    } catch (err) {
-      _v3ktorShowDataMsg('Fichier invalide · JSON illisible.', true);
-      return;
-    }
-    if (!payload || payload.app !== 'V3KTOR' || !payload.keys || typeof payload.keys !== 'object') {
-      _v3ktorShowDataMsg('Fichier invalide · pas un export V3KTOR.', true);
-      return;
-    }
-    const incomingCount = Object.keys(payload.keys).length;
-    const existingCount = Object.keys(_v3ktorCollectKeys()).length;
-    let msg = `Importer ${incomingCount} élément${incomingCount === 1 ? '' : 's'} ?`;
-    if (existingCount > 0) {
-      msg += `\n\nCela remplacera vos données locales actuelles (${existingCount} élément${existingCount === 1 ? '' : 's'}).`;
-    }
-    msg += '\n\nL\u2019application se rechargera après l\u2019import.';
-    if (!confirm(msg)) return;
-
-    try {
-      const toRemove = [];
-      for (let i = 0; i < localStorage.length; i++) {
-        const k = localStorage.key(i);
-        if (k && k.startsWith('tc_')) toRemove.push(k);
-      }
-      toRemove.forEach((k) => localStorage.removeItem(k));
-      Object.entries(payload.keys).forEach(([k, v]) => {
-        if (k.startsWith('tc_') && typeof v === 'string') {
-          localStorage.setItem(k, v);
-        }
-      });
-      _v3ktorShowDataMsg('Importé · rechargement…');
-      setTimeout(() => location.reload(), 900);
-    } catch (e) {
-      _v3ktorShowDataMsg('Échec de l\u2019import · erreur de stockage.', true);
-    }
-  };
-  reader.onerror = () => _v3ktorShowDataMsg('Lecture du fichier impossible.', true);
-  reader.readAsText(file);
-}
-// ============ END EXPORT / IMPORT ============
-
-
-// ============ PWA : service worker + stockage persistant ============
-// Enregistre le service worker pour que l'app soit installable et hors-ligne.
-// Demande le stockage persistant pour que l'OS n'efface pas la baseline.
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').catch(() => {
-      // Échec silencieux — l'app fonctionne quand même comme page web.
-    });
-  });
-}
-if (navigator.storage && navigator.storage.persist) {
-  navigator.storage.persist().catch(() => {});
-}
-// ============ FIN PWA ============
 
 
 </script>
