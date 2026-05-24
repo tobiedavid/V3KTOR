@@ -7,9 +7,9 @@ Turns V3KTOR into an installable Progressive Web App: home-screen icon, fullscre
 Upload these files to the **repo root** (same level as the existing `index.html`, `v3ktor_eng.html`, `v3ktor_fr.html`). GitHub Pages will serve them under `https://v3ktor.app/`.
 
 ```
-/index.html              ← Landing page (language buttons fixed to relative paths)
-/v3ktor_eng.html         ← English app (now PWA-ready, with Export/Import)
-/v3ktor_fr.html          ← French app (now PWA-ready, with Export/Import)
+/index.html              ← Landing /index.html              ← Landing page (relative links to language builds)
+/v3ktor_eng.html         ← English app (PWA-ready, Export/Import)
+/v3ktor_fr.html          ← French app (PWA-ready, Export/Import)
 /sw.js                   ← Service worker (must live at repo root)
 /manifest-en.webmanifest
 /manifest-fr.webmanifest
