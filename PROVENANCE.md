@@ -4,7 +4,8 @@ V3KTOR's method, file format specification, and reference
 implementation were timestamped on 18 May 2026 via:
 
 - **OpenTimestamps (Bitcoin anchor):** see `docs/timestamps/`
-- **Zenodo (DOI deposit):** [DOIs to be added once deposited]
+- **Zenodo (DOI deposit):** not yet deposited; planned for the v1.1 package
+- **Trademark:** Canadian application 2476142, CIPO, filed 19 May 2026 (pending)
 - **AGPL-3.0 source license:** see `LICENSE`
 - **CC BY 4.0 documentation license:** see `docs/v3ktor_method_v1.pdf`
   and `docs/v3ktor_format_spec_v1.pdf`
