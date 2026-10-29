@@ -9,7 +9,7 @@
  * Bump CACHE_VERSION whenever you ship a deliberate cache invalidation.
  */
 
-const CACHE_VERSION = 'v3ktor-2026-10-29b';
+const CACHE_VERSION = 'v3ktor-2026-10-29c';
 const CORE_ASSETS = [
   '/',
   '/index.html',

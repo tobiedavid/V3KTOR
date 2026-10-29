@@ -471,9 +471,12 @@ body.in-briefing .hl{display:inline}
     <div class="inv-body inv-line"><strong>Before each session you say how you feel,</strong> in four taps and an optional line of context. The test records what your thumb does. The gap between the two is kept, because it has a shape.</div>
     <div class="inv-body inv-line"><strong>One session is a reading. Each one after it raises the resolution.</strong> Words met again confirm or contradict. Contexts that flip a word show themselves. Foggy sessions count less toward speed; what you answered on them counts in full. Sittings on different days in different states count most.</div>
     <div class="inv-body inv-line"><strong>The map checks itself.</strong> Every ten sittings close a block; from twenty on, each new block is checked against the one before it, and the map tells you in one line how much to trust it. Before that, a provisional figure stands in. The thresholds can't be lowered. A map that takes months to confirm is one you have watched form.</div>
-    <div class="inv-body inv-line"><strong>What comes out:</strong> what you affirm, what you refuse, the exceptions that hold, and a file that carries its own confidence. Paste it into <strong>Claude, ChatGPT or Gemini</strong> for a reading, or show it to an AI so it stops guessing who it is talking to. The map is yours. Nothing here is built for a machine to steer by.</div>
+    <div class="inv-body inv-line"><strong>What comes out:</strong> what you affirm, what you refuse, the exceptions that hold, and a file that carries its own confidence. Paste it into a language model for a reading, or show it to an AI so it stops guessing who it is talking to. The map is yours. Nothing here is built for a machine to steer by.</div>
     <div class="inv-body inv-line">Not a clinical tool, and not a copy of anyone. None of the parts are new: the word values, the frequency norms, the reaction-time paradigm, the decision models were all published, and are used here as published. What is new is the assembly, for one person, over months, on a phone: <strong>a map of what you answer before you explain</strong>, the layer under the story you tell others and yourself, measured rather than narrated. No one has tested the whole. That test is the one you run by using it.</div>
     <div class="inv-credits inv-line">
+      <div class="inv-credits-title">THIS BUILD</div>
+      <div class="inv-credit" id="inv-build">V3KTOR</div>
+      <div class="inv-credit"><b>Records of record</b> · method <a href="https://doi.org/10.5281/zenodo.20277360" target="_blank" rel="noopener" style="color:inherit">10.5281/zenodo.20277360</a> · session file format <a href="https://doi.org/10.5281/zenodo.20277659" target="_blank" rel="noopener" style="color:inherit">10.5281/zenodo.20277659</a> · software <a href="https://doi.org/10.5281/zenodo.20277820" target="_blank" rel="noopener" style="color:inherit">10.5281/zenodo.20277820</a> · source <a href="https://github.com/tobiedavid/V3KTOR" target="_blank" rel="noopener" style="color:inherit">github.com/tobiedavid/V3KTOR</a> · data sources and licence terms in DATA-SOURCES.md</div>
       <div class="inv-credits-title">BUILT ON</div>
       <div class="inv-credits-h">used directly, as data or formula</div>
       <div class="inv-credit"><b>NRC VAD Lexicon v2.1</b> (Mohammad, 2018) · the valence, arousal and dominance value of every word; the crowd your answers are set against. 516 word values, scaled to 0–1, used with attribution under NRC's terms of use for research and non-commercial purposes; the lexicon itself is not redistributed here, obtain it from NRC</div>
@@ -577,12 +580,12 @@ body.in-briefing .hl{display:inline}
   <div class="cfg">
     <div class="cfg-box">
       <div class="cfg-box-title">TEST</div>
-      <div class="cfg-row"><div class="cfg-label"><span>NUMBER OF WORDS</span><span class="cfg-val" id="wc-val">60</span></div><input type="range" id="wc-range" min="60" max="300" step="20" value="60" oninput="onSlider('wc',this.value)"><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,.62);margin-top:8px;line-height:1.6">More words = sharper signal. 60 = minimum for a reliable baseline. 100+ reveals personal signature more finely.</div></div>
+      <div class="cfg-row"><div class="cfg-label"><span>NUMBER OF WORDS</span><span class="cfg-val" id="wc-val">60</span></div><input type="range" id="wc-range" min="60" max="300" step="20" value="60" oninput="onSlider('wc',this.value)"><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,.62);margin-top:8px;line-height:1.6">60 words is the shortest sitting the baseline accepts; 100 is the default. Longer sittings meet more of the pool per session.</div></div>
       <div class="cfg-row"><div class="cfg-label"><span>WORDS PER SET</span><span class="cfg-val" id="bs-val">30</span></div><input type="range" id="bs-range" min="5" max="150" step="5" value="30" oninput="onSlider('bs',this.value)"></div>
       <div class="cfg-row"><div class="cfg-label"><span>BREAK DURATION</span><span class="cfg-val" id="bd-val">5s</span></div><input type="range" id="bd-range" min="0" max="10" step="5" value="5" oninput="onSlider('bd',this.value)"></div>
-      <div class="cfg-row"><div class="cfg-label"><span>MAX RESPONSE TIME</span><span class="cfg-val" id="rt-val">2000ms</span></div><input type="range" id="rt-range" min="1200" max="2000" step="100" value="2000" oninput="onSlider('rt',this.value)"><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,.62);margin-top:8px;line-height:1.6">Recommended: 2000ms for the first session. 1200–1500ms for regular users. Below that, the signal window becomes too narrow to capture the reflex.</div></div>
+      <div class="cfg-row"><div class="cfg-label"><span>MAX RESPONSE TIME</span><span class="cfg-val" id="rt-val">2000ms</span></div><input type="range" id="rt-range" min="1200" max="2000" step="100" value="2000" oninput="onSlider('rt',this.value)"><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,.62);margin-top:8px;line-height:1.6">2000 ms for a first session; 1200–1500 ms once answers are routine. Answers that miss the window are kept as unanswered, which is its own category.</div></div>
       <div class="toggle-row" style="margin-top:14px"><span class="toggle-lbl">RESEARCH MODE</span><button class="toggle-btn" id="research-toggle" onclick="toggleResearch()"></button></div>
-      <div id="research-note" style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(212,160,23,.7);margin-top:8px;line-height:1.6;display:none">Extended capture: top 10 per direction instead of top 5. Locks parameters: <strong>120 words min</strong>, <strong>60 per set</strong>, <strong>1700ms max</strong>. Recommended after ~5 sessions.</div>
+      <div id="research-note" style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(212,160,23,.7);margin-top:8px;line-height:1.6;display:none">Extended capture: top 10 per direction instead of top 5. Locks parameters: <strong>120 words min</strong>, <strong>60 per set</strong>, <strong>1700ms max</strong>. Meant for after the first few sittings.</div>
       <div class="cfg-box-stat"><span class="cfg-box-stat-lbl">ESTIMATED DURATION</span><span class="cfg-box-stat-val" id="est-time-val">—</span></div>
     </div>
     <div class="cfg-section-lbl">APPEARANCE</div>
@@ -993,6 +996,12 @@ function scoreResponse(r,targetDir){
 }
 function isConflict(dir,w){if(!dir)return false;return (dir==='pos'&&w[1]<0.35)||(dir==='neg'&&w[1]>0.65);}
 const SK='tc_settings_v3';
+// Build identity. Every export carries this line so a session can always be traced to the build and pool that made it.
+const APP_VERSION='1.1';const BUILD_DATE='2026-10-29';const LEXICON_ID='NRC VAD v2.1';const FREQ_ID='SUBTLEX-US';
+const DOI_METHOD='10.5281/zenodo.20277360',DOI_FORMAT='10.5281/zenodo.20277659',DOI_SOFTWARE='10.5281/zenodo.20277820';
+let _POOL_HASH=null;
+function poolHash(){if(_POOL_HASH)return _POOL_HASH;let h=2166136261;const str=POOL.map(w=>w[0]+':'+w[1]+':'+w[2]+':'+w[3]+':'+w[4]).join('|');for(let i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,16777619)>>>0;}_POOL_HASH=h.toString(16).padStart(8,'0');return _POOL_HASH;}
+function buildStamp(){return `V3KTOR ${APP_VERSION} · build ${BUILD_DATE} · pool ${POOL.length} words #${poolHash()} · ${LEXICON_ID} · ${FREQ_ID}`;}
 let CFG={wc:100,bs:30,bd:5,ct:50,privacy:true,showIntro:true,maxRt:2000,research:false,pressure:false,motor:true,fixation:false};
 function loadCFG(){try{const s=JSON.parse(localStorage.getItem(SK)||'{}');CFG={...CFG,...s};}catch(e){}
   if(CFG.wc<60)CFG.wc=60;
@@ -1062,7 +1071,8 @@ function applyResearchConstraints(){
   [wc,bs,rt].forEach(el=>{try{updateSliderBrightness(el);}catch(e){}});
   try{updateEstTime();}catch(e){}
 }
-function initSettings(){loadCFG();document.getElementById('wc-range').value=CFG.wc;document.getElementById('wc-val').innerText=CFG.wc;document.getElementById('bs-range').value=CFG.bs;document.getElementById('bs-val').innerText=CFG.bs;document.getElementById('bd-range').value=CFG.bd;document.getElementById('bd-val').innerText=CFG.bd+'s';document.getElementById('ct-range').value=CFG.ct;document.getElementById('ct-val').innerText=CFG.ct;document.getElementById('rt-range').value=CFG.maxRt;document.getElementById('rt-val').innerText=CFG.maxRt+'ms';document.getElementById('privacy-toggle').classList.toggle('on',CFG.privacy);document.getElementById('privacy-note').style.display=CFG.privacy?'none':'block';document.getElementById('intro-toggle').classList.toggle('on',CFG.showIntro);document.getElementById('intro-note').style.display=CFG.showIntro?'none':'block';document.getElementById('pressure-toggle').classList.toggle('on',!!CFG.pressure);document.getElementById('pressure-note').style.display=CFG.pressure?'block':'none';document.getElementById('motor-toggle').classList.toggle('on',CFG.motor!==false);document.getElementById('motor-note').style.display=CFG.motor===false?'block':'none';document.getElementById('fixation-toggle').classList.toggle('on',!!CFG.fixation);applyContrast(CFG.ct);['wc-range','bs-range','bd-range','ct-range','rt-range'].forEach(id=>updateSliderBrightness(document.getElementById(id)));updateEstTime();applyResearchConstraints();}
+function initSettings(){try{const b=document.getElementById('inv-build');if(b)b.textContent=buildStamp();}catch(e){}
+loadCFG();document.getElementById('wc-range').value=CFG.wc;document.getElementById('wc-val').innerText=CFG.wc;document.getElementById('bs-range').value=CFG.bs;document.getElementById('bs-val').innerText=CFG.bs;document.getElementById('bd-range').value=CFG.bd;document.getElementById('bd-val').innerText=CFG.bd+'s';document.getElementById('ct-range').value=CFG.ct;document.getElementById('ct-val').innerText=CFG.ct;document.getElementById('rt-range').value=CFG.maxRt;document.getElementById('rt-val').innerText=CFG.maxRt+'ms';document.getElementById('privacy-toggle').classList.toggle('on',CFG.privacy);document.getElementById('privacy-note').style.display=CFG.privacy?'none':'block';document.getElementById('intro-toggle').classList.toggle('on',CFG.showIntro);document.getElementById('intro-note').style.display=CFG.showIntro?'none':'block';document.getElementById('pressure-toggle').classList.toggle('on',!!CFG.pressure);document.getElementById('pressure-note').style.display=CFG.pressure?'block':'none';document.getElementById('motor-toggle').classList.toggle('on',CFG.motor!==false);document.getElementById('motor-note').style.display=CFG.motor===false?'block':'none';document.getElementById('fixation-toggle').classList.toggle('on',!!CFG.fixation);applyContrast(CFG.ct);['wc-range','bs-range','bd-range','ct-range','rt-range'].forEach(id=>updateSliderBrightness(document.getElementById(id)));updateEstTime();applyResearchConstraints();}
 const LS_KEY='tc_en_v3';
 // Sessions that feed the baseline and calibration: everything except pressure-mode runs.
 function baselineSessions(){return loadSessions().filter(s=>s.mode!=='pressure');}
@@ -1392,6 +1402,7 @@ function buildExport(session){
     'Personal reflection tool.',
     'No clinical interpretation is implied.',
     'The user shares this data freely.',
+    'Instrument: '+buildStamp(),
     L,
     `Date: ${fmtLocal(session.ts)} (local time · ${fmtDate(session.ts).toLowerCase()})`,
     session.engine?`ENGINE: ${session.engine.pivots||0} pivot${session.engine.pivots===1?'':'s'} fired · ${session.engine.probes||0} dark probe${session.engine.probes===1?'':'s'} after light streaks · ${session.engine.injected||0} words engine-served of ${session.n}. Reasons are in the FULL SEQUENCE: q=pulled from a cluster after a fast answer, a=adjacent cluster, l=dark probe after a light streak, v=pivot, f=follow-up to an affirmed pivot.`:null,
@@ -2133,6 +2144,7 @@ function buildSessionData(R){
     // engine-served only if the queue actually served it (before, a queued word met cold first was also marked).
     // rec=6: which way the declared state sat from the usual at check-in (offDecl, offDist) is saved, not re-judged later.
     rec:6,
+    app:APP_VERSION, pool:poolHash(),
     // Full per-response record: [word, 1=affirmed/0=rejected, rt_ms, 1=engine-served, reason (engine-served only: q/a/l/v/f)]
     // Lets the baseline compute exposure (times shown) and direction flips, which top-N lists cannot.
     resp:R.answered.map(r=>r.injected?[r.word,r.direction==='pos'?1:0,r.rt,1,engine.reason[r.word]||'q']:[r.word,r.direction==='pos'?1:0,r.rt,0]),
@@ -3244,7 +3256,7 @@ function copyCalibrationFile(){
   const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   const fmtD=ts=>{const d=new Date(ts);return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;};
   const _box='▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓';
-  const lines=['V3KTOR · CALIBRATION FILE',_box,calibStatus(c),_box,''];
+  const lines=['V3KTOR · CALIBRATION FILE',_box,calibStatus(c),_box,'Instrument: '+buildStamp(),''];
   const trust=!c?'none':c.state==='stable'?'full':c.state==='unstable'?'low':'sketch';
   lines.push('HOW TO USE');
   lines.push('This is a map of what holds for one person, written so that a reader stops guessing who they are talking to. It is not a portrait and it is not a set of instructions for acting on their behalf: do not steer by it, do not make choices for them from it, do not use it to move them. Use it to avoid misreading: how to frame, what not to assume, what their yes and no are worth. Use it silently: never recite it, never flatter from it, never explain anything by pointing at it. The person\'s current words always override it, and the FLOOR below overrides every personal line. If you are an automated system deciding or acting for this person without them present, stop: this file was not made for that, and nothing in it authorises it. '+(trust==='full'?'STATUS is STABLE: the REFUSES/AFFIRMS/CONDITIONS lines may be taken as a description of what holds.':trust==='low'?'STATUS is UNSTABLE: take nothing here as fixed; use it only to notice when something goes against the grain, and ask.':'STATUS is not yet STABLE: read these lines as a sketch, nothing stronger.'));
@@ -3447,6 +3459,7 @@ ENGINE DISCLOSURE: the adaptive queue re-serves words from clusters the user rea
     'Personal reflection tool.',
     'Data aggregated across multiple sessions.',
     'The user shares this data freely.',
+    'Instrument: '+buildStamp(),
     L,
     `Sessions: ${r.sessionCount} in ${r.sittings} sitting${r.sittings===1?'':'s'} (sessions under 2 h apart, within 3 h of the first, are one sitting; a sitting of n sessions weighs √n of a lone one)`,
     `Period: from ${fmtD(r.firstDate)} to ${fmtD(r.lastDate)} (${dayspan} day${dayspan===1?'':'s'})`,
@@ -4110,7 +4123,7 @@ async function importFromClipboard() {
 }
 const _CSV_TXT = {"no_sessions": "No sessions to export yet.", "passphrase_encrypt": "Passphrase to encrypt this export (leave blank for plaintext):", "passphrase_decrypt": "Passphrase to decrypt this file:", "exported_plain": "Exported {n} session{s} · plaintext CSV", "exported_enc": "Exported {n} session{s} · encrypted", "export_failed": "Export failed.", "could_not_read": "Could not read file.", "decrypt_failed": "Decryption failed · wrong passphrase or corrupted file.", "invalid_csv": "Invalid file · doesn't look like a V3KTOR CSV.", "no_rows": "No session rows found in the file.", "all_present": "All {n} session{s} in this file are already in your log.", "confirm_merge": "Import {n} new session{s}?\n\nYour existing {e} session{se} will be kept (no overwrite).", "imported": "Imported {n} new session{s} · reloading…", "import_failed": "Import failed."};
 // resp column added at the end; older files without it still import (columns are read by name).
-const _CSV_HEADER = 'timestamp,mood,n,pos,neg,cfl,avg_rt,vad_v,vad_a,vad_d,max_rt,split_aff_v,split_aff_a,split_aff_d,split_rej_v,split_rej_a,split_rej_d,cat_served,pretap,pivot,pivot_response,pos_words,neg_words,cfl_words,fast_words,resp,fast_cold,state_v,state_a,state_d,state_e,timeouts,complete,keyboard,planned,ez_v,ez_a,ez_ter,ez_pc,sdt_d,sdt_c,pcs,outliers,hz,mode,note,misread,eng_pivots,eng_probes,eng_injected,ez_self_v,ez_self_a,ez_self_ter,ez_self_pc,sdt_self_d,sdt_self_c,self_ref_n,motor_l,motor_r,motor_miss,len_slope,freq_slope,events,cat_z,off_at_start,hold_med,hold_pos,hold_neg,motor_hold_l,motor_hold_r,rec,off_decl,off_dist';
+const _CSV_HEADER = 'timestamp,mood,n,pos,neg,cfl,avg_rt,vad_v,vad_a,vad_d,max_rt,split_aff_v,split_aff_a,split_aff_d,split_rej_v,split_rej_a,split_rej_d,cat_served,pretap,pivot,pivot_response,pos_words,neg_words,cfl_words,fast_words,resp,fast_cold,state_v,state_a,state_d,state_e,timeouts,complete,keyboard,planned,ez_v,ez_a,ez_ter,ez_pc,sdt_d,sdt_c,pcs,outliers,hz,mode,note,misread,eng_pivots,eng_probes,eng_injected,ez_self_v,ez_self_a,ez_self_ter,ez_self_pc,sdt_self_d,sdt_self_c,self_ref_n,motor_l,motor_r,motor_miss,len_slope,freq_slope,events,cat_z,off_at_start,hold_med,hold_pos,hold_neg,motor_hold_l,motor_hold_r,rec,off_decl,off_dist,app_version,pool_hash';
 const _CSV_ENC_MAGIC = 'V3KTOR-ENCRYPTED-v1';
 function _csvEscape(v) {
   if (v === null || v === undefined) return '';
@@ -4169,7 +4182,7 @@ function _sessionsToCSV(sessions) {
       s.ez?s.ez.v:'', s.ez?s.ez.a:'', s.ez?s.ez.ter:'', s.ez?s.ez.pc:'', s.sdt?s.sdt.d:'', s.sdt?s.sdt.c:'', s.pcs?s.pcs.pct:'', s.outliers||'', s.hz||'', s.mode||'', s.note||'', [...misreadSet(s.ts)].join('|'), s.engine?s.engine.pivots:'', s.engine?s.engine.probes:'', s.engine?s.engine.injected:'',
       s.ezSelf?s.ezSelf.v:'', s.ezSelf?s.ezSelf.a:'', s.ezSelf?s.ezSelf.ter:'', s.ezSelf?s.ezSelf.pc:'', s.sdtSelf?s.sdtSelf.d:'', s.sdtSelf?s.sdtSelf.c:'', s.selfRefN||'', s.motor&&s.motor.l!=null?s.motor.l:'', s.motor&&s.motor.r!=null?s.motor.r:'', s.motor?s.motor.miss:'', s.lenAdj?s.lenAdj.slope:'', s.lenAdj&&s.lenAdj.freqSlope!=null?s.lenAdj.freqSlope:'',
       (s.events||[]).join('|'), s.catZ?Object.entries(s.catZ).map(([k,v])=>`${k}:${v}`).join(';'):'', s.offAtStart===1?1:s.offAtStart===0?0:'',
-      s.hold?s.hold.med:'', s.hold&&s.hold.pos!=null?s.hold.pos:'', s.hold&&s.hold.neg!=null?s.hold.neg:'', s.motor&&s.motor.hl!=null?s.motor.hl:'', s.motor&&s.motor.hr!=null?s.motor.hr:'', s.rec||'', s.offDecl||'', s.offDist!=null?s.offDist:''
+      s.hold?s.hold.med:'', s.hold&&s.hold.pos!=null?s.hold.pos:'', s.hold&&s.hold.neg!=null?s.hold.neg:'', s.motor&&s.motor.hl!=null?s.motor.hl:'', s.motor&&s.motor.hr!=null?s.motor.hr:'', s.rec||'', s.offDecl||'', s.offDist!=null?s.offDist:'', s.app||'', s.pool||''
     ].map(_csvEscape).join(',');
     rows.push(row);
   });
@@ -4428,7 +4441,7 @@ function exportData() {
     const keys = _v3ktorCollectKeys();
     const count = Object.keys(keys).length;
     if (count === 0) { _v3ktorShowDataMsg('Nothing to export yet.', true); return; }
-    const payload = { app: 'V3KTOR', schema: 2, lang: 'en', exported_at: new Date().toISOString(), keys };
+    const payload = { app: 'V3KTOR', schema: 2, lang: 'en', app_version: APP_VERSION, build: BUILD_DATE, pool_hash: poolHash(), instrument: buildStamp(), exported_at: new Date().toISOString(), keys };
     if (_v3kDownload(JSON.stringify(payload, null, 2), `v3ktor-baseline-${new Date().toISOString().slice(0, 10)}.json`, 'application/json') === 'webview') return;
     _v3ktorShowDataMsg(`Exported · ${count} item${count === 1 ? '' : 's'} · keep this file safe`);
   } catch (e) { _v3ktorShowDataMsg('Export failed.', true); }

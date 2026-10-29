@@ -471,9 +471,12 @@ body.in-briefing .hl{display:inline}
     <div class="inv-body inv-line"><strong>Avant chaque session, vous dites comment vous vous sentez,</strong> en quatre touches et une ligne de contexte facultative. Le test enregistre ce que fait votre pouce. L’écart entre les deux est conservé, parce qu’il a une forme.</div>
     <div class="inv-body inv-line"><strong>Une session est une lecture. Chacune après elle augmente la résolution.</strong> Les mots revus confirment ou contredisent. Les contextes qui retournent un mot se montrent. Les sessions brouillées comptent moins pour la vitesse ; ce que vous y avez répondu compte en entier. Les séances à des jours différents, dans des états différents, comptent le plus.</div>
     <div class="inv-body inv-line"><strong>La carte se vérifie elle-même.</strong> Toutes les dix séances, un bloc se ferme ; à partir de vingt, chaque nouveau bloc est vérifié contre le précédent, et la carte vous dit en une ligne jusqu’où lui faire confiance. Avant cela, un chiffre provisoire tient la place. Les seuils ne peuvent pas être abaissés. Une carte qui met des mois à se confirmer est une carte que vous avez vue se former.</div>
-    <div class="inv-body inv-line"><strong>Ce qui en sort :</strong> ce que vous affirmez, ce que vous refusez, les exceptions qui tiennent, et un fichier qui porte sa propre confiance. Collez-le dans <strong>Claude, ChatGPT ou Gemini</strong> pour une lecture, ou montrez-le à une IA pour qu’elle cesse de deviner à qui elle parle. La carte est à vous. Rien ici n’est construit pour qu’une machine s’en serve de gouvernail.</div>
+    <div class="inv-body inv-line"><strong>Ce qui en sort :</strong> ce que vous affirmez, ce que vous refusez, les exceptions qui tiennent, et un fichier qui porte sa propre confiance. Collez-le dans un modèle de langage pour une lecture, ou montrez-le à une IA pour qu’elle cesse de deviner à qui elle parle. La carte est à vous. Rien ici n’est construit pour qu’une machine s’en serve de gouvernail.</div>
     <div class="inv-body inv-line">Pas un outil clinique, et pas une copie de qui que ce soit. Aucune des pièces n’est nouvelle : les valeurs des mots, le paradigme du temps de réaction, les modèles de décision ont tous été publiés, et sont utilisés ici tels que publiés. Ce qui est nouveau, c’est l’assemblage, pour une personne, sur des mois, sur un téléphone : <strong>une carte de ce que vous répondez avant d’expliquer</strong>, la couche sous l’histoire que vous racontez aux autres et à vous-même, mesurée plutôt que racontée. Personne n’a testé l’ensemble. Ce test est celui que vous faites en l’utilisant.</div>
     <div class="inv-credits inv-line">
+      <div class="inv-credits-title">CETTE VERSION</div>
+      <div class="inv-credit" id="inv-build">V3KTOR</div>
+      <div class="inv-credit"><b>Archives de référence</b> · méthode <a href="https://doi.org/10.5281/zenodo.20277360" target="_blank" rel="noopener" style="color:inherit">10.5281/zenodo.20277360</a> · format de fichier de session <a href="https://doi.org/10.5281/zenodo.20277659" target="_blank" rel="noopener" style="color:inherit">10.5281/zenodo.20277659</a> · logiciel <a href="https://doi.org/10.5281/zenodo.20277820" target="_blank" rel="noopener" style="color:inherit">10.5281/zenodo.20277820</a> · source <a href="https://github.com/tobiedavid/V3KTOR" target="_blank" rel="noopener" style="color:inherit">github.com/tobiedavid/V3KTOR</a> · sources de données et conditions dans DATA-SOURCES.md</div>
       <div class="inv-credits-title">CONSTRUIT SUR</div>
       <div class="inv-credits-h">utilisés directement, comme données ou comme formule</div>
       <div class="inv-credit"><b>NRC VAD Lexicon v2.1</b> (Mohammad, 2018) · la valence, l’activation et la dominance de chaque mot ; la majorité contre laquelle vos réponses sont posées. Version française : chaque mot porte la valeur du mot anglais qu’il traduit ; pour un mot sans traduction directe, c’est une approximation. 516 valeurs, ramenées à 0–1, utilisées avec attribution selon les conditions d’utilisation du NRC pour la recherche et l’usage non commercial ; le lexique lui-même n’est pas redistribué ici, obtenez-le auprès du NRC</div>
@@ -577,12 +580,12 @@ body.in-briefing .hl{display:inline}
   <div class="cfg">
     <div class="cfg-box">
       <div class="cfg-box-title">TEST</div>
-      <div class="cfg-row"><div class="cfg-label"><span>NOMBRE DE MOTS</span><span class="cfg-val" id="wc-val">60</span></div><input type="range" id="wc-range" min="60" max="300" step="20" value="60" oninput="onSlider('wc',this.value)"><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,.62);margin-top:8px;line-height:1.6">Plus de mots = signal plus net. 60 = minimum pour une baseline fiable. 100+ révèle la signature personnelle plus finement.</div></div>
+      <div class="cfg-row"><div class="cfg-label"><span>NOMBRE DE MOTS</span><span class="cfg-val" id="wc-val">60</span></div><input type="range" id="wc-range" min="60" max="300" step="20" value="60" oninput="onSlider('wc',this.value)"><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,.62);margin-top:8px;line-height:1.6">60 mots est la séance la plus courte que la baseline accepte ; 100 est la valeur par défaut. Une séance plus longue rencontre une plus grande part du bassin.</div></div>
       <div class="cfg-row"><div class="cfg-label"><span>MOTS PAR SÉRIE</span><span class="cfg-val" id="bs-val">30</span></div><input type="range" id="bs-range" min="5" max="150" step="5" value="30" oninput="onSlider('bs',this.value)"></div>
       <div class="cfg-row"><div class="cfg-label"><span>DURÉE DE PAUSE</span><span class="cfg-val" id="bd-val">5s</span></div><input type="range" id="bd-range" min="0" max="10" step="5" value="5" oninput="onSlider('bd',this.value)"></div>
-      <div class="cfg-row"><div class="cfg-label"><span>TEMPS DE RÉPONSE MAX</span><span class="cfg-val" id="rt-val">2000ms</span></div><input type="range" id="rt-range" min="1200" max="2000" step="100" value="2000" oninput="onSlider('rt',this.value)"><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,.62);margin-top:8px;line-height:1.6">Recommandé : 2000ms pour la première session. 1200–1500ms pour les utilisateurs réguliers. En dessous, la fenêtre de signal devient trop étroite pour capter le réflexe.</div></div>
+      <div class="cfg-row"><div class="cfg-label"><span>TEMPS DE RÉPONSE MAX</span><span class="cfg-val" id="rt-val">2000ms</span></div><input type="range" id="rt-range" min="1200" max="2000" step="100" value="2000" oninput="onSlider('rt',this.value)"><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,.62);margin-top:8px;line-height:1.6">2000 ms pour une première séance ; 1200–1500 ms quand les réponses sont devenues routinières. Les réponses qui manquent la fenêtre sont gardées comme sans réponse, une catégorie à part.</div></div>
       <div class="toggle-row" style="margin-top:14px"><span class="toggle-lbl">MODE RECHERCHE</span><button class="toggle-btn" id="research-toggle" onclick="toggleResearch()"></button></div>
-      <div id="research-note" style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(212,160,23,.7);margin-top:8px;line-height:1.6;display:none">Capture étendue : top 10 par direction au lieu de top 5. Verrouille les paramètres : <strong>120 mots min</strong>, <strong>60 par série</strong>, <strong>1700ms max</strong>. Recommandé après ~5 sessions.</div>
+      <div id="research-note" style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(212,160,23,.7);margin-top:8px;line-height:1.6;display:none">Capture étendue : top 10 par direction au lieu de top 5. Verrouille les paramètres : <strong>120 mots min</strong>, <strong>60 par série</strong>, <strong>1700ms max</strong>. Prévu après les premières séances.</div>
       <div class="cfg-box-stat"><span class="cfg-box-stat-lbl">DURÉE ESTIMÉE</span><span class="cfg-box-stat-val" id="est-time-val">—</span></div>
     </div>
     <div class="cfg-section-lbl">APPARENCE</div>
@@ -1464,6 +1467,12 @@ function scoreResponse(r,targetDir){
 }
 function isConflict(dir,w){if(!dir)return false;return (dir==='pos'&&w[1]<0.35)||(dir==='neg'&&w[1]>0.65);}
 const SK='tc_settings_v3';
+// Build identity. Every export carries this line so a session can always be traced to the build and pool that made it.
+const APP_VERSION='1.1';const BUILD_DATE='2026-10-29';const LEXICON_ID='NRC VAD v2.1';const FREQ_ID='Lexique 3.83';
+const DOI_METHOD='10.5281/zenodo.20277360',DOI_FORMAT='10.5281/zenodo.20277659',DOI_SOFTWARE='10.5281/zenodo.20277820';
+let _POOL_HASH=null;
+function poolHash(){if(_POOL_HASH)return _POOL_HASH;let h=2166136261;const str=POOL.map(w=>w[0]+':'+w[1]+':'+w[2]+':'+w[3]+':'+w[4]).join('|');for(let i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,16777619)>>>0;}_POOL_HASH=h.toString(16).padStart(8,'0');return _POOL_HASH;}
+function buildStamp(){return `V3KTOR ${APP_VERSION} · build ${BUILD_DATE} · pool ${POOL.length} words #${poolHash()} · ${LEXICON_ID} · ${FREQ_ID}`;}
 let CFG={wc:100,bs:30,bd:5,ct:50,privacy:true,showIntro:true,maxRt:2000,research:false,pressure:false,motor:true,fixation:false};
 function loadCFG(){try{const s=JSON.parse(localStorage.getItem(SK)||'{}');CFG={...CFG,...s};}catch(e){}
   if(CFG.wc<60)CFG.wc=60;
@@ -1533,7 +1542,8 @@ function applyResearchConstraints(){
   [wc,bs,rt].forEach(el=>{try{updateSliderBrightness(el);}catch(e){}});
   try{updateEstTime();}catch(e){}
 }
-function initSettings(){loadCFG();document.getElementById('wc-range').value=CFG.wc;document.getElementById('wc-val').innerText=CFG.wc;document.getElementById('bs-range').value=CFG.bs;document.getElementById('bs-val').innerText=CFG.bs;document.getElementById('bd-range').value=CFG.bd;document.getElementById('bd-val').innerText=CFG.bd+'s';document.getElementById('ct-range').value=CFG.ct;document.getElementById('ct-val').innerText=CFG.ct;document.getElementById('rt-range').value=CFG.maxRt;document.getElementById('rt-val').innerText=CFG.maxRt+'ms';document.getElementById('privacy-toggle').classList.toggle('on',CFG.privacy);document.getElementById('privacy-note').style.display=CFG.privacy?'none':'block';document.getElementById('intro-toggle').classList.toggle('on',CFG.showIntro);document.getElementById('intro-note').style.display=CFG.showIntro?'none':'block';document.getElementById('pressure-toggle').classList.toggle('on',!!CFG.pressure);document.getElementById('pressure-note').style.display=CFG.pressure?'block':'none';document.getElementById('motor-toggle').classList.toggle('on',CFG.motor!==false);document.getElementById('motor-note').style.display=CFG.motor===false?'block':'none';document.getElementById('fixation-toggle').classList.toggle('on',!!CFG.fixation);applyContrast(CFG.ct);['wc-range','bs-range','bd-range','ct-range','rt-range'].forEach(id=>updateSliderBrightness(document.getElementById(id)));updateEstTime();applyResearchConstraints();}
+function initSettings(){try{const b=document.getElementById('inv-build');if(b)b.textContent=buildStamp();}catch(e){}
+loadCFG();document.getElementById('wc-range').value=CFG.wc;document.getElementById('wc-val').innerText=CFG.wc;document.getElementById('bs-range').value=CFG.bs;document.getElementById('bs-val').innerText=CFG.bs;document.getElementById('bd-range').value=CFG.bd;document.getElementById('bd-val').innerText=CFG.bd+'s';document.getElementById('ct-range').value=CFG.ct;document.getElementById('ct-val').innerText=CFG.ct;document.getElementById('rt-range').value=CFG.maxRt;document.getElementById('rt-val').innerText=CFG.maxRt+'ms';document.getElementById('privacy-toggle').classList.toggle('on',CFG.privacy);document.getElementById('privacy-note').style.display=CFG.privacy?'none':'block';document.getElementById('intro-toggle').classList.toggle('on',CFG.showIntro);document.getElementById('intro-note').style.display=CFG.showIntro?'none':'block';document.getElementById('pressure-toggle').classList.toggle('on',!!CFG.pressure);document.getElementById('pressure-note').style.display=CFG.pressure?'block':'none';document.getElementById('motor-toggle').classList.toggle('on',CFG.motor!==false);document.getElementById('motor-note').style.display=CFG.motor===false?'block':'none';document.getElementById('fixation-toggle').classList.toggle('on',!!CFG.fixation);applyContrast(CFG.ct);['wc-range','bs-range','bd-range','ct-range','rt-range'].forEach(id=>updateSliderBrightness(document.getElementById(id)));updateEstTime();applyResearchConstraints();}
 const LS_KEY='tc_fr_v3';
 // Sessions that feed the baseline and calibration: everything except pressure-mode runs.
 function baselineSessions(){return loadSessions().filter(s=>s.mode!=='pressure');}
@@ -1863,6 +1873,7 @@ function buildExport(session){
     'Outil de réflexion personnelle.',
     'Aucune interprétation clinique n’est impliquée.',
     'L’utilisateur partage ces données librement.',
+    'Instrument : '+buildStamp(),
     L,
     `Date : ${fmtLocal(session.ts)} (heure locale · ${fmtDate(session.ts).toLowerCase()})`,
     session.engine?`MOTEUR : ${session.engine.pivots||0} pivot${session.engine.pivots===1?'':'s'} déclenché(s) · ${session.engine.probes||0} sonde(s) sombre${session.engine.probes===1?'':'s'} après des séries claires · ${session.engine.injected||0} mots servis par le moteur sur ${session.n}. Les raisons sont dans la SÉQUENCE COMPLÈTE : q=tiré d’un groupe après une réponse rapide, a=groupe voisin, l=sonde sombre après une série claire, v=pivot, f=suite d’un pivot affirmé.`:null,
@@ -2604,6 +2615,7 @@ function buildSessionData(R){
     // engine-served only if the queue actually served it (before, a queued word met cold first was also marked).
     // rec=6: which way the declared state sat from the usual at check-in (offDecl, offDist) is saved, not re-judged later.
     rec:6,
+    app:APP_VERSION, pool:poolHash(),
     // Full per-response record: [word, 1=affirmed/0=rejected, rt_ms, 1=engine-served, reason (engine-served only: q/a/l/v/f)]
     // Lets the baseline compute exposure (times shown) and direction flips, which top-N lists cannot.
     resp:R.answered.map(r=>r.injected?[r.word,r.direction==='pos'?1:0,r.rt,1,engine.reason[r.word]||'q']:[r.word,r.direction==='pos'?1:0,r.rt,0]),
@@ -3715,7 +3727,7 @@ function copyCalibrationFile(){
   const months=['janv','févr','mars','avr','mai','juin','juil','août','sept','oct','nov','déc'];
   const fmtD=ts=>{const d=new Date(ts);return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;};
   const _box='▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓';
-  const lines=['V3KTOR · FICHIER DE CALIBRATION',_box,calibStatus(c),_box,''];
+  const lines=['V3KTOR · FICHIER DE CALIBRATION',_box,calibStatus(c),_box,'Instrument : '+buildStamp(),''];
   const trust=!c?'none':c.state==='stable'?'full':c.state==='unstable'?'low':'sketch';
   lines.push('MODE D’EMPLOI');
   lines.push('Ceci est une carte de ce qui tient pour une personne, écrite pour qu’un lecteur cesse de deviner à qui il parle. Ce n’est pas un portrait et ce n’est pas un jeu d’instructions pour agir à sa place : ne t’en sers pas comme gouvernail, ne fais pas de choix pour elle à partir de ceci, ne t’en sers pas pour la déplacer. Sers-t’en pour éviter de mal lire : comment cadrer, quoi ne pas présumer, ce que valent son oui et son non. Sers-t’en en silence : ne le récite jamais, ne flatte jamais à partir de lui, n’explique jamais rien en le pointant. Les mots présents de la personne priment toujours sur lui, et le SOCLE ci-dessous prime sur chaque ligne personnelle. Si tu es un système automatisé qui décide ou agit pour cette personne sans qu’elle soit présente, arrête-toi : ce fichier n’a pas été fait pour cela, et rien en lui ne l’autorise. '+(trust==='full'?'Le STATUT est STABLE : les lignes REFUSE/AFFIRME/CONDITIONS peuvent être prises comme une description de ce qui tient.':trust==='low'?'Le STATUT est INSTABLE : ne prends rien ici pour fixe ; sers-t’en seulement pour remarquer quand quelque chose va à rebrousse-poil, et demande.':'Le STATUT n’est pas encore STABLE : lis ces lignes comme une esquisse, rien de plus.'));
@@ -3918,6 +3930,7 @@ DIVULGATION DU MOTEUR : la file adaptative ressert des mots des groupes auxquels
     'Outil de réflexion personnelle.',
     'Données agrégées à travers plusieurs sessions.',
     'L’utilisateur partage ces données librement.',
+    'Instrument : '+buildStamp(),
     L,
     `Sessions : ${r.sessionCount} en ${r.sittings} séance${r.sittings===1?'':'s'} (des sessions à moins de 2 h d’écart, dans les 3 h de la première, forment une séance ; une séance de n sessions pèse √n d’une session seule)`,
     `Période : du ${fmtD(r.firstDate)} au ${fmtD(r.lastDate)} (${dayspan} jour${dayspan===1?'':'s'})`,
@@ -4581,7 +4594,7 @@ async function importFromClipboard() {
 }
 const _CSV_TXT = {"no_sessions": "Aucune session à exporter pour l’instant.", "passphrase_encrypt": "Phrase de passe pour chiffrer cet export (laissez vide pour du texte en clair) :", "passphrase_decrypt": "Phrase de passe pour déchiffrer ce fichier :", "exported_plain": "{n} session{s} exportée{s} · CSV en clair", "exported_enc": "{n} session{s} exportée{s} · chiffré", "export_failed": "Échec de l’export.", "could_not_read": "Lecture du fichier impossible.", "decrypt_failed": "Déchiffrement échoué · mauvaise phrase de passe ou fichier corrompu.", "invalid_csv": "Fichier invalide · ne ressemble pas à un CSV V3KTOR.", "no_rows": "Aucune ligne de session trouvée dans le fichier.", "all_present": "Les {n} session{s} de ce fichier sont déjà toutes dans votre journal.", "confirm_merge": "Importer {n} nouvelle{s} session{s} ?\n\nLes {e} session{se} déjà en place seront conservées (pas d’écrasement).", "imported": "{n} nouvelle{s} session{s} importée{s} · rechargement…", "import_failed": "Échec de l’import."};
 // resp column added at the end; older files without it still import (columns are read by name).
-const _CSV_HEADER = 'timestamp,mood,n,pos,neg,cfl,avg_rt,vad_v,vad_a,vad_d,max_rt,split_aff_v,split_aff_a,split_aff_d,split_rej_v,split_rej_a,split_rej_d,cat_served,pretap,pivot,pivot_response,pos_words,neg_words,cfl_words,fast_words,resp,fast_cold,state_v,state_a,state_d,state_e,timeouts,complete,keyboard,planned,ez_v,ez_a,ez_ter,ez_pc,sdt_d,sdt_c,pcs,outliers,hz,mode,note,misread,eng_pivots,eng_probes,eng_injected,ez_self_v,ez_self_a,ez_self_ter,ez_self_pc,sdt_self_d,sdt_self_c,self_ref_n,motor_l,motor_r,motor_miss,len_slope,freq_slope,events,cat_z,off_at_start,hold_med,hold_pos,hold_neg,motor_hold_l,motor_hold_r,rec,off_decl,off_dist';
+const _CSV_HEADER = 'timestamp,mood,n,pos,neg,cfl,avg_rt,vad_v,vad_a,vad_d,max_rt,split_aff_v,split_aff_a,split_aff_d,split_rej_v,split_rej_a,split_rej_d,cat_served,pretap,pivot,pivot_response,pos_words,neg_words,cfl_words,fast_words,resp,fast_cold,state_v,state_a,state_d,state_e,timeouts,complete,keyboard,planned,ez_v,ez_a,ez_ter,ez_pc,sdt_d,sdt_c,pcs,outliers,hz,mode,note,misread,eng_pivots,eng_probes,eng_injected,ez_self_v,ez_self_a,ez_self_ter,ez_self_pc,sdt_self_d,sdt_self_c,self_ref_n,motor_l,motor_r,motor_miss,len_slope,freq_slope,events,cat_z,off_at_start,hold_med,hold_pos,hold_neg,motor_hold_l,motor_hold_r,rec,off_decl,off_dist,app_version,pool_hash';
 const _CSV_ENC_MAGIC = 'V3KTOR-ENCRYPTED-v1';
 function _csvEscape(v) {
   if (v === null || v === undefined) return '';
@@ -4640,7 +4653,7 @@ function _sessionsToCSV(sessions) {
       s.ez?s.ez.v:'', s.ez?s.ez.a:'', s.ez?s.ez.ter:'', s.ez?s.ez.pc:'', s.sdt?s.sdt.d:'', s.sdt?s.sdt.c:'', s.pcs?s.pcs.pct:'', s.outliers||'', s.hz||'', s.mode||'', s.note||'', [...misreadSet(s.ts)].join('|'), s.engine?s.engine.pivots:'', s.engine?s.engine.probes:'', s.engine?s.engine.injected:'',
       s.ezSelf?s.ezSelf.v:'', s.ezSelf?s.ezSelf.a:'', s.ezSelf?s.ezSelf.ter:'', s.ezSelf?s.ezSelf.pc:'', s.sdtSelf?s.sdtSelf.d:'', s.sdtSelf?s.sdtSelf.c:'', s.selfRefN||'', s.motor&&s.motor.l!=null?s.motor.l:'', s.motor&&s.motor.r!=null?s.motor.r:'', s.motor?s.motor.miss:'', s.lenAdj?s.lenAdj.slope:'', s.lenAdj&&s.lenAdj.freqSlope!=null?s.lenAdj.freqSlope:'',
       (s.events||[]).join('|'), s.catZ?Object.entries(s.catZ).map(([k,v])=>`${k}:${v}`).join(';'):'', s.offAtStart===1?1:s.offAtStart===0?0:'',
-      s.hold?s.hold.med:'', s.hold&&s.hold.pos!=null?s.hold.pos:'', s.hold&&s.hold.neg!=null?s.hold.neg:'', s.motor&&s.motor.hl!=null?s.motor.hl:'', s.motor&&s.motor.hr!=null?s.motor.hr:'', s.rec||'', s.offDecl||'', s.offDist!=null?s.offDist:''
+      s.hold?s.hold.med:'', s.hold&&s.hold.pos!=null?s.hold.pos:'', s.hold&&s.hold.neg!=null?s.hold.neg:'', s.motor&&s.motor.hl!=null?s.motor.hl:'', s.motor&&s.motor.hr!=null?s.motor.hr:'', s.rec||'', s.offDecl||'', s.offDist!=null?s.offDist:'', s.app||'', s.pool||''
     ].map(_csvEscape).join(',');
     rows.push(row);
   });
@@ -4899,7 +4912,7 @@ function exportData() {
     const keys = _v3ktorCollectKeys();
     const count = Object.keys(keys).length;
     if (count === 0) { _v3ktorShowDataMsg('Rien à exporter pour l’instant.', true); return; }
-    const payload = { app: 'V3KTOR', schema: 2, lang: 'fr', exported_at: new Date().toISOString(), keys };
+    const payload = { app: 'V3KTOR', schema: 2, lang: 'fr', app_version: APP_VERSION, build: BUILD_DATE, pool_hash: poolHash(), instrument: buildStamp(), exported_at: new Date().toISOString(), keys };
     if (_v3kDownload(JSON.stringify(payload, null, 2), `v3ktor-baseline-${new Date().toISOString().slice(0, 10)}.json`, 'application/json') === 'webview') return;
     _v3ktorShowDataMsg(`Exporté · ${count} élément${count === 1 ? '' : 's'} · gardez ce fichier en sécurité`);
   } catch (e) { _v3ktorShowDataMsg('Échec de l’export.', true); }
