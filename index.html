@@ -16,10 +16,10 @@
 
 <!-- PWA: landing page is also installable; manifest is swapped to FR by setLang() -->
 <link rel="manifest" href="/manifest-en.webmanifest">
-<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png">
-<link rel="icon" type="image/png" sizes="64x64" href="/icon-64.png">
-<link rel="apple-touch-icon" href="/icon-180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/icon192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/icon512.png">
+<link rel="icon" type="image/png" sizes="64x64" href="/icon64.png">
+<link rel="apple-touch-icon" href="/icon180.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -966,8 +966,8 @@ footer {
   </p>
   <div class="pull-quote reveal">
     <p>
-      <span class="en">You can lie with words. You can't lie at 400 milliseconds.</span>
-      <span class="fr">On peut mentir avec des mots. On peut pas mentir à 400 millisecondes.</span>
+      <span class="en">You can edit what you say. You can't edit 400 milliseconds.</span>
+      <span class="fr">On peut corriger ce qu'on dit. On ne peut pas corriger 400 millisecondes.</span>
     </p>
   </div>
   <p class="what-body reveal">
@@ -1006,8 +1006,8 @@ footer {
           <span class="fr">Ton réflexe est mesuré sur trois dimensions.</span>
         </h3>
         <p>
-          <span class="en">Each word carries a known charge — <strong>valence</strong> (positive or negative), <strong>arousal</strong> (intensity), <strong>dominance</strong> (control). Your response time is the signal: under 500ms is pure reflex, above is friction. The instrument doesn't interpret. It just notes how fast each word moved through you, and in which direction.</span>
-          <span class="fr">Chaque mot porte une charge connue — <strong>valence</strong> (positif ou négatif), <strong>activation</strong> (intensité), <strong>dominance</strong> (contrôle). Ton temps de réponse est le signal : sous 500ms c'est du réflexe pur, au-dessus c'est de la friction. L'instrument n'interprète pas. Il note simplement avec quelle vitesse chaque mot t'a traversé, et dans quelle direction.</span>
+          <span class="en">Each word carries a published charge — <strong>valence</strong> (positive or negative), <strong>arousal</strong> (intensity), <strong>dominance</strong> (control) — from the NRC VAD Lexicon (Mohammad, 2018). Your response time is the signal, measured against your own speed: fast for you is a settled answer, slow for you is friction. The thresholds are fractions of your own calibrated window, not a fixed number of milliseconds. The instrument doesn't interpret. It just notes how fast each word moved through you, and in which direction.</span>
+          <span class="fr">Chaque mot porte une charge publiée — <strong>valence</strong> (positif ou négatif), <strong>activation</strong> (intensité), <strong>dominance</strong> (contrôle) — tirée du NRC VAD Lexicon (Mohammad, 2018). Ton temps de réponse est le signal, mesuré contre ta propre vitesse : rapide pour toi, c'est une réponse réglée ; lent pour toi, c'est de la friction. Les seuils sont des fractions de ta propre fenêtre calibrée, pas un nombre fixe de millisecondes. L'instrument n'interprète pas. Il note simplement avec quelle vitesse chaque mot t'a traversé, et dans quelle direction.</span>
         </p>
       </div>
     </div>
@@ -1034,8 +1034,8 @@ footer {
           <span class="fr">Trois sessions débloquent ta baseline.</span>
         </h3>
         <p>
-          <span class="en">Like blood pressure: a single reading is noise. What you ate, slept, how the day went — all of it leaks into one measurement. The pattern across readings is the signal. After three sessions, the baseline begins to form: the words that keep returning quickly, partitioned into your shared human floor and your individual signature. Ten sessions and the instrument knows you. Return at any time. The baseline filters the day. Your structure is what remains.</span>
-          <span class="fr">Comme la tension artérielle : une seule mesure est du bruit. Ce que tu as mangé, dormi, comment la journée s'est déroulée — tout s'infiltre dans une mesure isolée. Le motif à travers les mesures est le signal. Après trois sessions, la baseline commence à se former : les mots qui reviennent rapidement, partitionnés entre ton socle humain partagé et ta signature individuelle. Dix sessions et l'instrument te connaît. Reviens quand tu veux. La baseline filtre le jour. Ta structure est ce qui demeure.</span>
+          <span class="en">Like blood pressure: a single reading is noise. What you ate, slept, how the day went — all of it leaks into one measurement. The pattern across readings is the signal. After three sessions, the baseline begins to form: the words that keep returning quickly, partitioned into your shared human floor and your individual signature. Ten sessions and the baseline holds. Return at any time. The baseline filters the day. Your structure is what remains.</span>
+          <span class="fr">Comme la tension artérielle : une seule mesure est du bruit. Ce que tu as mangé, dormi, comment la journée s'est déroulée — tout s'infiltre dans une mesure isolée. Le motif à travers les mesures est le signal. Après trois sessions, la baseline commence à se former : les mots qui reviennent rapidement, partitionnés entre ton socle humain partagé et ta signature individuelle. Dix sessions et la baseline tient. Reviens quand tu veux. La baseline filtre le jour. Ta structure est ce qui demeure.</span>
         </p>
       </div>
     </div>
@@ -1100,11 +1100,51 @@ footer {
       <div class="principle-title en">The mirror cannot be captured.</div>
       <div class="principle-title fr">Le miroir ne peut être capturé.</div>
       <p class="principle-body">
-        <span class="en">The reference implementation is AGPL-3.0. The method and file format are deposited on Zenodo as permanent scientific records — DOIs, blockchain timestamps, the works. No company can buy V3KTOR and close it. No platform can rebrand it. The license is the moat.</span>
-        <span class="fr">L'implémentation de référence est sous AGPL-3.0. La méthode et le format de fichier sont déposés sur Zenodo comme archives scientifiques permanentes — DOI, horodatages blockchain, tout y est. Aucune entreprise ne peut acheter V3KTOR et le fermer. Aucune plateforme ne peut le rebrander. La licence est la barrière.</span>
+        <span class="en">The reference implementation is AGPL-3.0. The method and file format are timestamped on the Bitcoin chain via OpenTimestamps (18 May 2026; proofs in the repository), and the source is public on <a href="https://github.com/tobiedavid/V3KTOR" style="color:var(--gold)">GitHub</a>. No company can buy V3KTOR and close it. No platform can rebrand it. The license is the moat.</span>
+        <span class="fr">L'implémentation de référence est sous AGPL-3.0. La méthode et le format de fichier sont horodatés sur la chaîne Bitcoin via OpenTimestamps (18 mai 2026 ; preuves dans le dépôt), et la source est publique sur <a href="https://github.com/tobiedavid/V3KTOR" style="color:var(--gold)">GitHub</a>. Aucune entreprise ne peut acheter V3KTOR et le fermer. Aucune plateforme ne peut le rebrander. La licence est la barrière.</span>
       </p>
     </div>
 
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- SOURCES -->
+<section>
+  <span class="section-label reveal en">// What it stands on</span>
+  <span class="section-label reveal fr">// Sur quoi il repose</span>
+  <div class="how-grid">
+    <div class="how-item reveal">
+      <div class="how-num">·</div>
+      <div class="how-content">
+        <h3><span class="en">Word values</span><span class="fr">Valeurs des mots</span></h3>
+        <p>
+          <span class="en"><strong>NRC VAD Lexicon v2.1</strong> (Saif M. Mohammad, National Research Council Canada, 2018). 516 words, scaled to 0–1, used with attribution under NRC's terms for research and non-commercial use. The lexicon itself is not redistributed here. The French build carries the value of the English word each French word translates.</span>
+          <span class="fr"><strong>NRC VAD Lexicon v2.1</strong> (Saif M. Mohammad, Conseil national de recherches Canada, 2018). 516 mots, ramenés à 0–1, utilisés avec attribution selon les conditions du NRC pour la recherche et l'usage non commercial. Le lexique lui-même n'est pas redistribué ici. La version française porte la valeur du mot anglais que chaque mot français traduit.</span>
+        </p>
+      </div>
+    </div>
+    <div class="how-item reveal">
+      <div class="how-num">·</div>
+      <div class="how-content">
+        <h3><span class="en">Word frequency</span><span class="fr">Fréquence des mots</span></h3>
+        <p>
+          <span class="en"><strong>SUBTLEX-US</strong> (Brysbaert &amp; New, 2009) for English, <strong>Lexique 3.83</strong> (New, Pallier, Brysbaert &amp; Ferrand, 2004; CC BY-SA 4.0) for French. Common words are read faster whatever they mean; that is removed before a fast word is called a reflex.</span>
+          <span class="fr"><strong>SUBTLEX-US</strong> (Brysbaert &amp; New, 2009) pour l'anglais, <strong>Lexique 3.83</strong> (New, Pallier, Brysbaert &amp; Ferrand, 2004 ; CC BY-SA 4.0) pour le français. Les mots courants se lisent plus vite quel que soit leur sens ; cela est retiré avant qu'un mot rapide soit appelé réflexe.</span>
+        </p>
+      </div>
+    </div>
+    <div class="how-item reveal">
+      <div class="how-num">·</div>
+      <div class="how-content">
+        <h3><span class="en">Models</span><span class="fr">Modèles</span></h3>
+        <p>
+          <span class="en">Pleasure–arousal–dominance (Mehrabian &amp; Russell, 1974), EZ-diffusion (Wagenmakers et al., 2007), signal detection (Green &amp; Swets, 1966), Cohen's kappa. The full list, with what each one does in the method, is on the credits screen inside the instrument; the data sources and their licence terms are in <a href="https://github.com/tobiedavid/V3KTOR/blob/main/DATA-SOURCES.md" style="color:var(--gold)">DATA-SOURCES.md</a>. Studies of the assembled instrument: none yet. Every file it produces says how much has been confirmed, and by what.</span>
+          <span class="fr">Plaisir–activation–dominance (Mehrabian &amp; Russell, 1974), EZ-diffusion (Wagenmakers et al., 2007), détection du signal (Green &amp; Swets, 1966), kappa de Cohen. La liste complète, avec le rôle de chacun dans la méthode, est sur l'écran des crédits dans l'instrument ; les sources de données et leurs conditions sont dans <a href="https://github.com/tobiedavid/V3KTOR/blob/main/DATA-SOURCES.md" style="color:var(--gold)">DATA-SOURCES.md</a>. Études de l'instrument assemblé : aucune encore. Chaque fichier qu'il produit dit quelle part a été confirmée, et par quoi.</span>
+        </p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1232,8 +1272,8 @@ footer {
 <footer>
   <div class="footer-logo">V3KTOR<span class="tm">™</span></div>
   <div class="footer-note">
-    <span class="en">v3ktor.app · AGPL-3.0 · No ads · No tracking · No bullshit<br>// Mapping the Self · since 2026</span>
-    <span class="fr">v3ktor.app · AGPL-3.0 · Sans publicité · Sans pistage · Sans bullshit<br>// Cartographier le Soi · depuis 2026</span>
+    <span class="en">v3ktor.app · AGPL-3.0 · No ads · No tracking · No verdict<br>V3KTOR is a trademark of Tobie David · word values © NRC, used under its terms<br>// Mapping the Self · since 2026</span>
+    <span class="fr">v3ktor.app · AGPL-3.0 · Sans publicité · Sans pistage · Sans verdict<br>V3KTOR est une marque de Tobie David · valeurs des mots © NRC, utilisées selon ses conditions<br>// Cartographier le Soi · depuis 2026</span>
   </div>
 </footer>
 
