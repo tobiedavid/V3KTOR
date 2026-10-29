@@ -37,8 +37,9 @@ obligations, not only the AGPL. Check them before you ship.
 ## Citing V3KTOR
 
 If you use the instrument or its file format in published work, cite the
-repository release (version and commit) and the sources above that your
-analysis depends on. Participants' exports stamp the pool and protocol hash;
+Zenodo records (method 10.5281/zenodo.20277360, format 10.5281/zenodo.20277659,
+software 10.5281/zenodo.20277820), the repository release (version and commit),
+and the sources above that your analysis depends on. Participants' exports stamp the pool and protocol hash;
 report them.
 
 *Terms summarized in good faith as of October 2026; the linked originals
