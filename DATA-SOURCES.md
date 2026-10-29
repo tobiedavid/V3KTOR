@@ -1,7 +1,7 @@
 # V3KTOR — Data sources and their terms
 
-V3KTOR's code is AGPL-3.0 and its name is a registered trademark of True Color
-Foundation. The word values and corrections inside the app are **not** ours:
+V3KTOR's code is AGPL-3.0 and its name is a registered trademark of Tobie David
+(to be assigned to a registered society if the project grows). The word values and corrections inside the app are **not** ours:
 they come from published lexical norms, each under its own terms. Anyone who
 redistributes, re-hosts or sells a build of V3KTOR inherits every one of these
 obligations, not only the AGPL. Check them before you ship.
@@ -31,7 +31,7 @@ obligations, not only the AGPL. Check them before you ship.
 - The AGPL network clause separately requires any hosted version to offer its
   full source to its users.
 - "V3KTOR" and the logo may not be used on a modified build without permission
-  from True Color Foundation.
+  from the trademark holder.
 
 ## Citing V3KTOR
 
