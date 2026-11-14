@@ -11,6 +11,7 @@ Upload these files to the **repo root** (same level as the existing `index.html`
 /v3ktor_eng.html         ← English app (PWA-ready, Export/Import)
 /v3ktor_fr.html          ← French app (PWA-ready, Export/Import)
 /sw.js                   ← Service worker (must live at repo root)
+/404.html                ← Page not found, in both languages (GitHub Pages serves it for any address that doesn't exist)
 /manifest-en.webmanifest
 /manifest-fr.webmanifest
 /icon192.png             ← Required for installability
