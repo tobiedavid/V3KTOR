@@ -97,36 +97,44 @@ body::before {
 /* ── LANGUAGE TOGGLE ── */
 #lang-toggle {
   position: fixed;
-  top: 18px;
-  right: 20px;
+  top: 10px;
+  right: 12px;
   z-index: 500;
   display: flex;
-  gap: 2px;
+  gap: 0;
   align-items: center;
+  background: rgba(5,5,8,.88);
+  border: 1px solid rgba(201,152,10,.16);
+  border-radius: 2px;
 }
 
 .lang-btn {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 3px;
-  color: rgba(201,152,10,.3);
+  color: rgba(201,152,10,.8);
   background: none;
   border: none;
   cursor: pointer;
-  padding: 6px 8px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 6px 8px 6px 11px;
   transition: color .2s;
 }
 
 .lang-btn.active {
-  color: var(--gold);
+  color: var(--gold2);
+  text-decoration: underline;
+  text-underline-offset: 5px;
 }
 
-.lang-btn:hover { color: rgba(201,152,10,.65); }
+.lang-btn:hover { color: var(--gold2); }
+.lang-btn:focus-visible, .btn-try:focus-visible, .btn-lang:focus-visible, .btn-install:focus-visible, .btn-download:focus-visible, .contact-email:focus-visible, .donate-link:focus-visible { outline: 2px solid var(--gold2); outline-offset: 3px; }
 
 .lang-sep {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
-  color: rgba(201,152,10,.15);
+  font-size: 11px;
+  color: rgba(201,152,10,.3);
 }
 
 /* ── LANGUAGE VISIBILITY ── */
@@ -164,7 +172,7 @@ html[lang="fr"] .en { display: none !important; }
 
 .hero-eyebrow {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 300;
   letter-spacing: 7px;
   color: var(--gold);
@@ -209,16 +217,16 @@ html[lang="fr"] .en { display: none !important; }
 .footer-logo .tm {
   font-size: 0.45em;
   vertical-align: 0.6em;
-  color: rgba(201,152,10,.55);
-  -webkit-text-fill-color: rgba(201,152,10,.55);
+  color: rgba(201,152,10,.8);
+  -webkit-text-fill-color: rgba(201,152,10,.8);
 }
 
 .hero-sub {
   font-family: 'JetBrains Mono', monospace;
-  font-size: clamp(8px, 1.8vw, 11px);
+  font-size: clamp(11px, 2.6vw, 12px);
   font-weight: 300;
   letter-spacing: 4px;
-  color: rgba(201,152,10,.45);
+  color: rgba(201,152,10,.8);
   margin-bottom: 52px;
   opacity: 0;
   animation: fadeUp .9s ease .5s forwards;
@@ -255,7 +263,7 @@ html[lang="fr"] .en { display: none !important; }
   font-size: clamp(15px, 3.5vw, 19px);
   font-weight: 300;
   font-style: italic;
-  color: rgba(200,196,184,.45);
+  color: rgba(200,196,184,.74);
   max-width: 500px;
   line-height: 1.75;
   margin-bottom: 52px;
@@ -315,9 +323,9 @@ html[lang="fr"] .en { display: none !important; }
 
 .scroll-label {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 7px;
+  font-size: 11px;
   letter-spacing: 4px;
-  color: var(--dim);
+  color: rgba(200,196,184,.6);
 }
 
 /* ── DIVIDER ── */
@@ -336,7 +344,7 @@ section {
 
 .section-label {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8px;
+  font-size: 11px;
   font-weight: 300;
   letter-spacing: 6px;
   color: var(--gold);
@@ -428,7 +436,7 @@ section {
 
 .conflict-label {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 5px;
   color: var(--gold);
   text-transform: uppercase;
@@ -461,7 +469,7 @@ section {
 
 .principle-title {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 4px;
   color: var(--gold);
   text-transform: uppercase;
@@ -499,9 +507,9 @@ section {
 
 .begin-label {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 5px;
-  color: rgba(201,152,10,.5);
+  color: rgba(201,152,10,.8);
   text-transform: uppercase;
   margin-bottom: 18px;
   position: relative;
@@ -522,7 +530,7 @@ section {
   font-size: clamp(15px, 3vw, 18px);
   font-style: italic;
   font-weight: 300;
-  color: rgba(200,196,184,.55);
+  color: rgba(200,196,184,.74);
   margin-bottom: 56px;
   line-height: 1.6;
   position: relative;
@@ -570,17 +578,17 @@ section {
 
 .btn-lang-sub {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 4px;
-  color: rgba(201,152,10,.55);
+  color: rgba(201,152,10,.8);
   text-transform: uppercase;
 }
 
 .begin-trust {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 3px;
-  color: rgba(201,152,10,.32);
+  color: rgba(201,152,10,.8);
   margin-top: 44px;
   line-height: 2;
   text-transform: uppercase;
@@ -610,9 +618,9 @@ section {
 
 .keep-label {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 5px;
-  color: rgba(201,152,10,.72);
+  color: rgba(201,152,10,.8);
   text-transform: uppercase;
   margin-bottom: 32px;
   position: relative;
@@ -741,11 +749,12 @@ section {
 
 .install-sub {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 3px;
-  color: rgba(201,152,10,.65);
+  color: rgba(201,152,10,.8);
   margin-top: 16px;
   text-transform: uppercase;
+  line-height: 1.8;
   position: relative;
 }
 
@@ -781,7 +790,7 @@ section {
   border-radius: 2px;
   transition: background .25s, border-color .25s, color .25s;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 4px;
   color: rgba(201,152,10,.78);
   text-transform: uppercase;
@@ -808,9 +817,9 @@ section {
 
 .download-note {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 4px;
-  color: rgba(201,152,10,.6);
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: rgba(201,152,10,.8);
   margin-top: 18px;
   text-transform: uppercase;
   line-height: 1.8;
@@ -837,7 +846,7 @@ section {
 .contact-sub {
   font-size: clamp(14px, 3vw, 17px);
   font-weight: 300;
-  color: rgba(200,196,184,.5);
+  color: rgba(200,196,184,.74);
   margin-bottom: 36px;
   line-height: 1.7;
 }
@@ -854,7 +863,9 @@ section {
   padding-bottom: 4px;
   transition: border-color .2s, color .2s;
   margin-bottom: 28px;
+  position: relative;
 }
+.contact-email::after { content: ''; position: absolute; left: -10px; right: -10px; top: -14px; bottom: -13px; }
 
 .contact-email:hover { color: var(--gold2); border-color: var(--gold2); }
 
@@ -869,7 +880,9 @@ section {
   padding-bottom: 6px;
   border-bottom: 1px solid rgba(201,152,10,.35);
   transition: color .2s, border-color .2s;
+  position: relative;
 }
+.donate-link::after { content: ''; position: absolute; left: -10px; right: -10px; top: -13px; bottom: -12px; }
 
 .donate-link:hover { color: var(--gold2); border-bottom-color: var(--gold2); }
 
@@ -884,17 +897,20 @@ footer {
   font-family: 'Bebas Neue', sans-serif;
   font-size: 18px;
   letter-spacing: 8px;
-  color: rgba(201,152,10,.55);
+  color: rgba(201,152,10,.8);
   margin-bottom: 10px;
 }
 
 .footer-note {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 7px;
-  letter-spacing: 3px;
-  color: rgba(200,196,184,.42);
-  line-height: 1.8;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: rgba(200,196,184,.72);
+  line-height: 1.9;
+  max-width: 760px;
+  margin: 0 auto;
 }
+.footer-note a { text-underline-offset: 3px; }
 
 /* ── SCROLL REVEAL ── */
 .reveal {
@@ -914,10 +930,10 @@ footer {
 <body>
 
 <!-- LANGUAGE TOGGLE -->
-<div id="lang-toggle">
-  <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
-  <span class="lang-sep">·</span>
-  <button class="lang-btn" id="btn-fr" onclick="setLang('fr')">FR</button>
+<div id="lang-toggle" role="group" aria-label="Language / Langue">
+  <button class="lang-btn active" id="btn-en" type="button" lang="en" onclick="setLang('en')">EN</button>
+  <span class="lang-sep" aria-hidden="true">·</span>
+  <button class="lang-btn" id="btn-fr" type="button" lang="fr" onclick="setLang('fr')">FR</button>
 </div>
 
 <!-- HERO -->
@@ -1294,7 +1310,10 @@ function setLang(lang) {
   document.documentElement.lang = lang;
   document.getElementById('btn-en').classList.toggle('active', lang === 'en');
   document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
-  localStorage.setItem('v3ktor-lang', lang);
+  document.getElementById('btn-en').setAttribute('aria-pressed', String(lang === 'en'));
+  document.getElementById('btn-fr').setAttribute('aria-pressed', String(lang === 'fr'));
+  document.title = lang === 'fr' ? 'V3KTOR™ // Cartographier le Soi' : 'V3KTOR™ // Mapping the Self';
+  try { localStorage.setItem('v3ktor-lang', lang); } catch (_) {}
 
   // Swap the PWA manifest so installing from the landing puts the user
   // directly into the right-language app.
@@ -1304,9 +1323,10 @@ function setLang(lang) {
 
 // Auto-detect on load
 (function() {
-  const saved = localStorage.getItem('v3ktor-lang');
+  let saved = null;
+  try { saved = localStorage.getItem('v3ktor-lang'); } catch (_) {}
   const browser = navigator.language || navigator.userLanguage || 'en';
-  const lang = saved || (browser.startsWith('fr') ? 'fr' : 'en');
+  const lang = (saved === 'fr' || saved === 'en') ? saved : (browser.startsWith('fr') ? 'fr' : 'en');
   setLang(lang);
 })();
 

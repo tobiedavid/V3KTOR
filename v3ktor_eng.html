@@ -65,7 +65,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 html,body{width:100%;height:100%;overflow:hidden;touch-action:none;background:#050508}
 html,body,input,button,textarea{font-variant-numeric:lining-nums;-webkit-font-feature-settings:"lnum" 1;font-feature-settings:"lnum" 1}
 .sc{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;z-index:100;transition:opacity .4s ease}
-.sc.hid{opacity:0;pointer-events:none}
+.sc.hid{opacity:0;pointer-events:none;visibility:hidden;transition:opacity .4s ease,visibility 0s linear .4s}
 #menu{background:#050508}
 .menu-wrap{display:flex;flex-direction:column;align-items:center;width:100%;max-width:300px}
 .menu-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,14vw,82px);letter-spacing:10px;color:transparent;background:linear-gradient(175deg,#fff 0%,#d4a017 55%,#8b6000 100%);-webkit-background-clip:text;background-clip:text;margin-bottom:4px;text-align:center;line-height:1}
@@ -159,6 +159,8 @@ html[data-first-launch="1"] #menu{display:none!important}
 .cfg-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:4px;color:rgba(255,255,255,.68);margin-bottom:8px;display:flex;justify-content:space-between}
 .cfg-val{color:#d4a017}
 input[type=range]{-webkit-appearance:none;width:100%;height:2px;background:rgba(255,255,255,.15);border-radius:1px;outline:none;--thumb-bright:1}
+input[type=range]:focus-visible{outline:2px solid rgba(212,160,23,.9);outline-offset:8px}
+.faq-q:focus-visible,.hi:focus-visible,#saved-clear:focus-visible,#saved-restore:focus-visible,#pause-btn:focus-visible,.toggle-btn:focus-visible{outline:2px solid rgba(212,160,23,.9);outline-offset:2px}
 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:rgba(212,160,23,var(--thumb-bright));cursor:pointer;box-shadow:0 0 8px rgba(212,160,23,calc(var(--thumb-bright)*0.45))}
 input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:rgba(212,160,23,var(--thumb-bright));cursor:pointer;border:none}
 .toggle-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-top:1px solid rgba(255,255,255,.06);margin-top:8px}
@@ -302,8 +304,9 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 .dp-grid .smc-row:last-child{margin-bottom:0}
 .smc-row.smc-axis .smc-cell{color:rgba(255,255,255,.45);font-size:9px;letter-spacing:1.5px}
 .dp-grid-note{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.5px;color:rgba(255,255,255,.6);line-height:1.75;margin-top:10px;max-width:360px}
-#copy-toast{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);background:rgba(5,5,8,.95);border:1px solid rgba(212,160,23,.6);padding:18px 26px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;color:rgba(212,160,23,.95);z-index:400;display:none;text-align:center;box-shadow:0 0 40px rgba(212,160,23,.2);max-width:280px;line-height:1.6}
-#copy-toast.show{display:block;animation:wordIn .3s ease forwards}
+#copy-toast{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);background:rgba(5,5,8,.95);border:1px solid rgba(212,160,23,.6);padding:18px 26px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;color:rgba(212,160,23,.95);z-index:400;display:none;text-align:center;box-shadow:0 0 40px rgba(212,160,23,.2);width:max-content;max-width:min(280px,calc(100vw - 40px));line-height:1.6}
+#copy-toast.show{display:block;animation:toastIn .3s ease forwards}
+@keyframes toastIn{from{opacity:0;transform:translate(-50%,calc(-50% + 8px))}to{opacity:1;transform:translate(-50%,-50%)}}
 .about-link{display:block;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:2px;color:rgba(212,160,23,.85);margin-bottom:18px;text-decoration:none;padding-bottom:2px;touch-action:manipulation}
 .about-link:active{color:#d4a017}
 .faq-list{width:100%;margin-bottom:24px}
@@ -323,12 +326,13 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 .faq-a strong{color:rgba(212,160,23,.92);font-weight:400}
 .faq-footer{margin-top:24px;padding-top:24px;border-top:1px solid rgba(255,255,255,.08)}
 .faq-footer-lbl{font-family:'Bebas Neue',sans-serif;font-size:11px;letter-spacing:5px;color:rgba(212,160,23,.65);margin-bottom:8px;margin-top:4px}
-.hi{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;touch-action:manipulation}
-.hi-l{display:flex;flex-direction:column;gap:4px}
+.hi{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;touch-action:manipulation}
+.hi-l{display:flex;flex-direction:column;gap:4px;min-width:0}
+.hi>div:last-child{flex:none}
 .hi-date{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:rgba(255,255,255,.6)}
 .hi-tag{display:inline-block;font-size:9px;letter-spacing:2px;color:rgba(235,125,40,.9);border:1px solid rgba(235,125,40,.5);border-radius:2px;padding:1px 5px;margin-left:6px;vertical-align:middle}
 .hi-vad{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;color:rgba(255,255,255,.62)}
-.hi-stats{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(212,160,23,.65)}
+.hi-stats{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(212,160,23,.65);white-space:nowrap}
 .hi-expand{font-family:'JetBrains Mono',monospace;font-size:14px;color:rgba(255,255,255,.6)}
 .hi-detail{display:none;padding:12px 0 16px;border-bottom:1px solid rgba(255,255,255,.06)}
 .hi-detail.open{display:block}
@@ -407,7 +411,7 @@ body.in-briefing .hl{display:inline}
 #pause-btn:active{opacity:0.9}
 #pause-btn span{display:block;width:4px;height:18px;background:rgba(180,180,180,.9);border-radius:2px}
 @keyframes pauseFlash{0%,100%{opacity:0.45}50%{opacity:1;filter:drop-shadow(0 0 6px rgba(212,160,23,.8))}}
-#pause-overlay{position:fixed;inset:0;background:rgba(5,5,8,.92);z-index:350;display:none;align-items:center;justify-content:center}
+#pause-overlay{position:fixed;inset:0;background:#050508;z-index:350;display:none;align-items:center;justify-content:center}
 #pause-modal{display:flex;flex-direction:column;align-items:center;gap:14px;width:100%;max-width:260px;padding:0 32px}
 #pause-modal-title{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:5px;color:rgba(255,255,255,.6);margin-bottom:12px}
 .pause-btn-item{width:100%;background:transparent;border:1px solid rgba(212,160,23,.38);color:#d4a017;padding:14px;font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:8px;cursor:pointer;border-radius:2px;-webkit-appearance:none;touch-action:manipulation;text-align:center}
@@ -590,33 +594,33 @@ body.in-briefing .hl{display:inline}
   <div class="cfg">
     <div class="cfg-box">
       <div class="cfg-box-title">TEST</div>
-      <div class="cfg-row"><div class="cfg-label"><span>NUMBER OF WORDS</span><span class="cfg-val" id="wc-val">60</span></div><input type="range" id="wc-range" min="60" max="300" step="20" value="60" oninput="onSlider('wc',this.value)"><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,.62);margin-top:8px;line-height:1.6">60 words is the shortest sitting the baseline accepts; 100 is the default. Longer sittings meet more of the pool per session.</div></div>
-      <div class="cfg-row"><div class="cfg-label"><span>WORDS PER SET</span><span class="cfg-val" id="bs-val">30</span></div><input type="range" id="bs-range" min="5" max="150" step="5" value="30" oninput="onSlider('bs',this.value)"></div>
-      <div class="cfg-row"><div class="cfg-label"><span>BREAK DURATION</span><span class="cfg-val" id="bd-val">5s</span></div><input type="range" id="bd-range" min="0" max="10" step="5" value="5" oninput="onSlider('bd',this.value)"></div>
-      <div class="cfg-row"><div class="cfg-label"><span>MAX RESPONSE TIME</span><span class="cfg-val" id="rt-val">2000ms</span></div><input type="range" id="rt-range" min="1200" max="2000" step="100" value="2000" oninput="onSlider('rt',this.value)"><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,.62);margin-top:8px;line-height:1.6">2000 ms for a first session; 1200–1500 ms once answers are routine. Answers that miss the window are kept as unanswered, which is its own category.</div></div>
-      <div class="toggle-row" style="margin-top:14px"><span class="toggle-lbl">RESEARCH MODE</span><button class="toggle-btn" id="research-toggle" onclick="toggleResearch()"></button></div>
+      <div class="cfg-row"><div class="cfg-label"><span>NUMBER OF WORDS</span><span class="cfg-val" id="wc-val">60</span></div><input type="range" id="wc-range" aria-label="NUMBER OF WORDS" min="60" max="300" step="20" value="60" oninput="onSlider('wc',this.value)"><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,.62);margin-top:8px;line-height:1.6">60 words is the shortest sitting the baseline accepts; 100 is the default. Longer sittings meet more of the pool per session.</div></div>
+      <div class="cfg-row"><div class="cfg-label"><span>WORDS PER SET</span><span class="cfg-val" id="bs-val">30</span></div><input type="range" id="bs-range" aria-label="WORDS PER SET" min="5" max="150" step="5" value="30" oninput="onSlider('bs',this.value)"></div>
+      <div class="cfg-row"><div class="cfg-label"><span>BREAK DURATION</span><span class="cfg-val" id="bd-val">5s</span></div><input type="range" id="bd-range" aria-label="BREAK DURATION" min="0" max="10" step="5" value="5" oninput="onSlider('bd',this.value)"></div>
+      <div class="cfg-row"><div class="cfg-label"><span>MAX RESPONSE TIME</span><span class="cfg-val" id="rt-val">2000ms</span></div><input type="range" id="rt-range" aria-label="MAX RESPONSE TIME" min="1200" max="2000" step="100" value="2000" oninput="onSlider('rt',this.value)"><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,.62);margin-top:8px;line-height:1.6">2000 ms for a first session; 1200–1500 ms once answers are routine. Answers that miss the window are kept as unanswered, which is its own category.</div></div>
+      <div class="toggle-row" style="margin-top:14px"><span class="toggle-lbl">RESEARCH MODE</span><button class="toggle-btn" id="research-toggle" type="button" aria-label="RESEARCH MODE" aria-pressed="false" onclick="toggleResearch()"></button></div>
       <div id="research-note" style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(212,160,23,.7);margin-top:8px;line-height:1.6;display:none">Extended capture: top 10 per direction instead of top 5. Locks parameters: <strong>120 words min</strong>, <strong>60 per set</strong>, <strong>1700ms max</strong>. Meant for after the first few sittings.</div>
       <div class="cfg-box-stat"><span class="cfg-box-stat-lbl">ESTIMATED DURATION</span><span class="cfg-box-stat-val" id="est-time-val">—</span></div>
     </div>
     <div class="cfg-section-lbl">APPEARANCE</div>
-    <div class="cfg-row"><div class="cfg-label"><span>BRIGHTNESS</span><span class="cfg-val" id="ct-val">50</span></div><input type="range" id="ct-range" min="0" max="100" step="5" value="50" oninput="onSlider('ct',this.value)"><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,.55);margin-top:8px;line-height:1.6">Increase if your screen looks too dark.</div></div>
+    <div class="cfg-row"><div class="cfg-label"><span>BRIGHTNESS</span><span class="cfg-val" id="ct-val">50</span></div><input type="range" id="ct-range" aria-label="BRIGHTNESS" min="0" max="100" step="5" value="50" oninput="onSlider('ct',this.value)"><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,.55);margin-top:8px;line-height:1.6">Increase if your screen looks too dark.</div></div>
     <div class="cfg-section-lbl">PREFERENCES</div>
-    <div class="toggle-row"><span class="toggle-lbl">LOCAL STORAGE</span><button class="toggle-btn on" id="privacy-toggle" onclick="togglePrivacy()"></button></div>
+    <div class="toggle-row"><span class="toggle-lbl">LOCAL STORAGE</span><button class="toggle-btn on" id="privacy-toggle" type="button" aria-label="LOCAL STORAGE" aria-pressed="true" onclick="togglePrivacy()"></button></div>
     <div id="privacy-note">Storage is disabled. Your sessions will not be saved.</div>
-    <div class="toggle-row"><span class="toggle-lbl">TUTORIAL AND INTRO</span><button class="toggle-btn on" id="intro-toggle" onclick="toggleShowIntro()"></button></div>
+    <div class="toggle-row"><span class="toggle-lbl">TUTORIAL AND INTRO</span><button class="toggle-btn on" id="intro-toggle" type="button" aria-label="TUTORIAL AND INTRO" aria-pressed="true" onclick="toggleShowIntro()"></button></div>
     <div id="intro-note" style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,.6);margin-top:8px;line-height:1.8;display:none">The intro and tutorial will be skipped. The test starts directly after the countdown.</div>
-    <div class="toggle-row"><span class="toggle-lbl">MOTOR CHECK</span><button class="toggle-btn on" id="motor-toggle" onclick="toggleMotor()"></button></div>
+    <div class="toggle-row"><span class="toggle-lbl">MOTOR CHECK</span><button class="toggle-btn on" id="motor-toggle" type="button" aria-label="MOTOR CHECK" aria-pressed="true" onclick="toggleMotor()"></button></div>
     <div id="motor-note" style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,.6);margin-top:8px;line-height:1.8;display:none">Eight arrows before the first word, tapped on the side they point to, measure each thumb's plain movement time. Off, the yes/no speed difference can't be split into hand and decision.</div>
-    <div class="toggle-row"><span class="toggle-lbl">FIXATION DOT</span><button class="toggle-btn" id="fixation-toggle" onclick="toggleFixation()"></button></div>
+    <div class="toggle-row"><span class="toggle-lbl">FIXATION DOT</span><button class="toggle-btn" id="fixation-toggle" type="button" aria-label="FIXATION DOT" aria-pressed="false" onclick="toggleFixation()"></button></div>
     <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,.6);margin-top:8px;line-height:1.8">The pause before each word varies in length so the thumb can't fall into a rhythm. On, a small dim dot marks the centre during it; off, the screen is blank.</div>
-    <div class="toggle-row"><span class="toggle-lbl">PRESSURE MODE</span><button class="toggle-btn" id="pressure-toggle" onclick="togglePressure()"></button></div>
+    <div class="toggle-row"><span class="toggle-lbl">PRESSURE MODE</span><button class="toggle-btn" id="pressure-toggle" type="button" aria-label="PRESSURE MODE" aria-pressed="false" onclick="togglePressure()"></button></div>
     <div id="pressure-note" style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(235,125,40,.85);margin-top:8px;line-height:1.8;display:none">The engine chases what you react to, with no spacing and a looser cap (its queue can hold up to 60% of the session, against 30%) — the way the first version did. Same words, same timing. Sessions are tagged PRESSURE, kept in the log, and left out of the baseline and calibration.</div>
     <div class="cfg-section-lbl">DATA</div>
     <div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:2px;color:rgba(255,255,255,.62);margin-bottom:14px;line-height:1.7">Your sessions, baseline and settings live on this device. <strong style="color:rgba(212,160,23,.85);font-weight:400">Export</strong> to keep a portable copy. <strong style="color:rgba(212,160,23,.85);font-weight:400">Import</strong> to restore on another device — or after a wipe. The app asks your browser to keep this storage durable, so it isn't cleared when space runs low; nothing is sent anywhere. The app makes no request to any other site: its typefaces are served from v3ktor.app itself.</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><button class="mbtn" onclick="exportData()">EXPORT</button><button class="mbtn" onclick="importData()">IMPORT</button></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px"><button class="mbtn" onclick="exportCSV()">EXPORT CSV</button><button class="mbtn" onclick="importCSV()">IMPORT CSV</button></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px"><button class="mbtn" onclick="exportToClipboard()">COPY</button><button class="mbtn" onclick="importFromClipboard()">PASTE</button></div>
-    <div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:2px;color:rgba(255,255,255,.5);margin-top:12px;line-height:1.7">JSON = full backup (sessions, baseline, settings). CSV = sessions only, opens in Excel / R / pandas. COPY / PASTE = same data via clipboard for when downloads are awkward. Encryption passphrase is optional for all — leave blank for plaintext.</div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:2px;color:rgba(255,255,255,.5);margin-top:12px;line-height:1.7">JSON = full backup (every field of every session, baseline, settings). CSV = sessions only, the main columns: enough for Excel / R / pandas, not a full backup. COPY / PASTE = the CSV, through the clipboard, for when downloads are awkward. To move everything to another device, use JSON. Encryption passphrase is optional for all — leave blank for plaintext.</div>
     <input type="file" id="import-file" accept=".json,application/json" style="display:none" onchange="handleImportFile(event)">
     <input type="file" id="import-csv-file" accept=".csv,.v3k,text/csv,text/plain" style="display:none" onchange="handleImportCSVFile(event)">
     <div id="data-msg" style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:2.5px;color:rgba(212,160,23,.85);margin-top:12px;line-height:1.7;display:none;text-transform:uppercase"></div>
@@ -660,8 +664,8 @@ body.in-briefing .hl{display:inline}
   </div>
   <div class="dashboard-view" id="dash-view-log" style="display:none">
     <div id="saved-list"></div>
-    <div id="saved-clear" onclick="clearSaved()" style="display:none;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:rgba(255,255,255,.58);cursor:pointer;text-align:center;padding:16px 0;margin-top:8px">CLEAR HISTORY</div>
-    <div id="saved-restore" onclick="restoreCleared()" style="display:none;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:rgba(212,160,23,.7);cursor:pointer;text-align:center;padding:12px 0">RESTORE CLEARED LOG</div>
+    <div id="saved-clear" role="button" tabindex="0" onclick="clearSaved()" style="display:none;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:rgba(255,255,255,.58);cursor:pointer;text-align:center;padding:16px 0;margin-top:8px">CLEAR HISTORY</div>
+    <div id="saved-restore" role="button" tabindex="0" onclick="restoreCleared()" style="display:none;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:rgba(212,160,23,.7);cursor:pointer;text-align:center;padding:12px 0">RESTORE CLEARED LOG</div>
   </div>
 </div>
 <div id="field"><div id="lh"><span class="hl" id="ll">NEGATIVE</span></div><div id="rh"><span class="hl" id="rl">POSITIVE</span></div></div>
@@ -670,8 +674,8 @@ body.in-briefing .hl{display:inline}
 <div id="ww"><div id="w" data-word=""></div></div>
 <div id="rtw"><div id="rtb"></div></div>
 <div id="cal-overlay"><div id="cal-wrap"><div id="cal-cd" data-word="3">3</div></div></div>
-<div id="pause-btn" onclick="openPause()"><span></span><span></span></div>
-<div id="pause-overlay"><div id="pause-modal"><div id="pause-modal-title">// TEST PAUSED</div><button class="pause-btn-item" onclick="resumeTest()">CONTINUE</button><button class="pause-btn-item" onclick="pauseToResults()">RESULTS</button><button class="pause-btn-item ghost" onclick="pauseToMenu()">MENU</button></div></div>
+<div id="pause-btn" role="button" tabindex="0" aria-label="Pause" onclick="openPause()"><span></span><span></span></div>
+<div id="pause-overlay"><div id="pause-modal"><div id="pause-modal-title">// TEST PAUSED</div><button class="pause-btn-item" onclick="resumeTest()">CONTINUE</button><button class="pause-btn-item" onclick="pauseToResults()">RESULTS</button><button class="pause-btn-item ghost" onclick="pauseMenuAsk()">MENU</button></div></div>
 <div id="bk"><div id="bk-overlay"><div id="bk-cd">10</div><div id="bk-set"></div></div></div>
 <div id="res"><div class="res-main"><div class="res-complete" id="res-complete">SESSION COMPLETE</div></div></div>
 <button id="drift-warning-btn" type="button" onclick="openDriftWarning(event)" aria-label="Reflex shift">⚠</button>
@@ -1007,7 +1011,7 @@ function scoreResponse(r,targetDir){
 function isConflict(dir,w){if(!dir)return false;return (dir==='pos'&&w[1]<0.35)||(dir==='neg'&&w[1]>0.65);}
 const SK='tc_settings_v3';
 // Build identity. Every export carries this line so a session can always be traced to the build and pool that made it.
-const APP_VERSION='1.1';const BUILD_DATE='2026-11-13';const LEXICON_ID='NRC VAD v2.1';const FREQ_ID='SUBTLEX-US';
+const APP_VERSION='1.1';const BUILD_DATE='2026-11-14';const LEXICON_ID='NRC VAD v2.1';const FREQ_ID='SUBTLEX-US';
 const DOI_METHOD='10.5281/zenodo.20277360',DOI_FORMAT='10.5281/zenodo.20277659',DOI_SOFTWARE='10.5281/zenodo.20277820';
 let _POOL_HASH=null;
 function poolHash(){if(_POOL_HASH)return _POOL_HASH;let h=2166136261;const str=POOL.map(w=>w[0]+':'+w[1]+':'+w[2]+':'+w[3]+':'+w[4]).join('|');for(let i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,16777619)>>>0;}_POOL_HASH=h.toString(16).padStart(8,'0');return _POOL_HASH;}
@@ -1517,7 +1521,7 @@ function buildRow(x,i){
   const cw=x.cflWords?x.cflWords.map(w=>`${esc(w.word)}(${w.dir==='pos'?'▶':'◄'})`).join(' · '):'';
   const fw=x.fastWords?x.fastWords.map(w=>`${esc(w.word)}(${w.rt}ms)`).join(' · '):'';
   const pre=x.preTap&&x.preTap.length?x.preTap.map(w=>`${esc(w.word)}(${w.rt}ms)`).join(' · '):'';
-  return`<div class="hi" onclick="toggleRow(${i})"><div class="hi-l"><div class="hi-date">${fmtDate(x.ts)} · ${fmtLocal(x.ts).slice(11)}${x.mood?` · ${esc(x.mood.toUpperCase())}`:''}${x.mode==='pressure'?'<span class="hi-tag">PRESSURE</span>':''}</div><div class="hi-vad">V${x.vad[0]}% · A${x.vad[1]}% · D${x.vad[2]}%</div></div><div style="display:flex;align-items:center;gap:12px"><div class="hi-stats">${x.n} words · ${x.rt}ms</div><div class="hi-expand" id="hi-arrow-${i}">›</div></div></div><div class="hi-detail" id="hi-detail-${i}">${pw?`<div class="hi-detail-section">POSITIVE WORDS</div><div class="hi-detail-words">${pw}</div>`:''}${nw?`<div class="hi-detail-section">NEGATIVE WORDS</div><div class="hi-detail-words">${nw}</div>`:''}${cw?`<div class="hi-detail-section">CONFLICTS</div><div class="hi-detail-cfl">${cw}</div>`:''}${fw?`<div class="hi-detail-section">FASTEST</div><div class="hi-detail-words">${fw}</div>`:''}${pre?`<div class="hi-detail-section">PRE-TAP (excluded)</div><div class="hi-detail-words">${pre}</div>`:''}${x.note?`<div class="hi-detail-section">NOTE</div><div class="hi-detail-words">${esc(x.note)}</div>`:''}${x.pivot?`<div class="hi-detail-section">PIVOT</div><div class="hi-detail-cfl">${esc(x.pivot)} → ${x.pivotRes==='pos'?'accepted':'held at distance'}</div>`:''}<button class="copy-btn" onclick="copyRow(${i},event)">COPY FOR AI</button><div class="copy-confirm" id="copy-ok-${i}">Copied to clipboard ✓</div><button class="del-btn" onclick="deleteRow(${i},event)">DELETE THIS SESSION</button></div>`;}
+  return`<div class="hi" role="button" tabindex="0" onclick="toggleRow(${i})"><div class="hi-l"><div class="hi-date">${fmtDate(x.ts)} · ${fmtLocal(x.ts).slice(11)}${x.mood?` · ${esc(x.mood.toUpperCase())}`:''}${x.mode==='pressure'?'<span class="hi-tag">PRESSURE</span>':''}</div><div class="hi-vad">V${x.vad[0]}% · A${x.vad[1]}% · D${x.vad[2]}%</div></div><div style="display:flex;align-items:center;gap:12px"><div class="hi-stats">${x.n} words · ${x.rt}ms</div><div class="hi-expand" id="hi-arrow-${i}">›</div></div></div><div class="hi-detail" id="hi-detail-${i}">${pw?`<div class="hi-detail-section">POSITIVE WORDS</div><div class="hi-detail-words">${pw}</div>`:''}${nw?`<div class="hi-detail-section">NEGATIVE WORDS</div><div class="hi-detail-words">${nw}</div>`:''}${cw?`<div class="hi-detail-section">CONFLICTS</div><div class="hi-detail-cfl">${cw}</div>`:''}${fw?`<div class="hi-detail-section">FASTEST</div><div class="hi-detail-words">${fw}</div>`:''}${pre?`<div class="hi-detail-section">PRE-TAP (excluded)</div><div class="hi-detail-words">${pre}</div>`:''}${x.note?`<div class="hi-detail-section">NOTE</div><div class="hi-detail-words">${esc(x.note)}</div>`:''}${x.pivot?`<div class="hi-detail-section">PIVOT</div><div class="hi-detail-cfl">${esc(x.pivot)} → ${x.pivotRes==='pos'?'accepted':'held at distance'}</div>`:''}<button class="copy-btn" onclick="copyRow(${i},event)">COPY FOR AI</button><div class="copy-confirm" id="copy-ok-${i}">Copied to clipboard ✓</div><button class="del-btn" onclick="deleteRow(${i},event)">DELETE THIS SESSION</button></div>`;}
 async function deleteRow(i,e){
   if(e&&e.stopPropagation)e.stopPropagation();
   const sessions=loadSessions();
@@ -1635,7 +1639,7 @@ const FAQ_ITEMS=[
 let _faqOpen=new Set();
 function openHelp(){
   const list=document.getElementById('faq-list');
-  list.innerHTML=FAQ_ITEMS.map((item,i)=>item.h?`<div class="faq-section">${item.h}</div>`:`<div class="faq-item"><div class="faq-q" id="faq-q-${i}" onclick="toggleFaq(${i})"><span>${item.q}</span><span class="faq-arrow">›</span></div><div class="faq-a" id="faq-a-${i}">${item.a}</div></div>`).join('');
+  list.innerHTML=FAQ_ITEMS.map((item,i)=>item.h?`<div class="faq-section">${item.h}</div>`:`<div class="faq-item"><div class="faq-q" id="faq-q-${i}" role="button" tabindex="0" aria-expanded="false" aria-controls="faq-a-${i}" onclick="toggleFaq(${i})"><span>${item.q}</span><span class="faq-arrow">›</span></div><div class="faq-a" id="faq-a-${i}">${item.a}</div></div>`).join('');
   _faqOpen=new Set();
   document.getElementById('help-panel').style.display='flex';
 }
@@ -1652,6 +1656,7 @@ function toggleFaq(i){
     q.classList.add('open');
     _faqOpen.add(i);
   }
+  q.setAttribute('aria-expanded',String(_faqOpen.has(i)));
 }
 function closeHelp(){document.getElementById('help-panel').style.display='none';_faqOpen=new Set();}
 function returnToMenu(){responses=[];document.getElementById('res').style.display='none';document.getElementById('dp-panel').style.display='none';clearShootingStars();showMenu();}
@@ -1666,6 +1671,8 @@ function resumeTest(){setZoomLock(true);_queuedTap=null;_lastInput=null; // a ta
   if(_renderPending){_renderPending=false;renderWord();}
 }
 function pauseToResults(){_paused=false;_renderPending=false;_cutShort=true;document.getElementById('pause-overlay').style.display='none';show('pause-btn',false);showResults();}
+/* MENU on the pause screen drops the session. With answers already given it asks first; RESULTS is the way to keep them. */
+function pauseMenuAsk(){if(!responses.length){pauseToMenu();return;}v3kConfirm('LEAVE WITHOUT SAVING?',`MENU drops what you have answered so far.\n\nRESULTS shows it, and saves the session if at least ${MIN_SAVE_ANSWERS} answers are valid.`).then(ok=>{if(ok)pauseToMenu();});}
 function pauseToMenu(){setZoomLock(false);_queuedTap=null;_lastInput=null;_testActive=false;_paused=false;_renderPending=false;document.getElementById('pause-overlay').style.display='none';show('pause-btn',false);['field','pw','ct','ww','rtw','cal-overlay'].forEach(id=>show(id,false));const _ms=document.getElementById('mood-screen');if(_ms)_ms.style.display='none';_currentMood=null;_currentState=null;_moodOnDone=null;responses=[];blocked=false;_queuedTap=null;showMenu();}
 // A tap that lands during the inter-word gap is replayed on the next word with a synthetic RT.
 // That RT is not a real measurement, so the response is flagged (queued:true) and excluded from all stats.
@@ -1730,10 +1737,22 @@ function swipeBackHandler(){
   ];
   for(const [id,fn] of panels){
     const el=document.getElementById(id);
-    if(el&&el.style.display==='flex'){fn();return;}
+    if(el&&el.style.display==='flex'){fn();return true;}
   }
-  if(!document.getElementById('disclaimer').classList.contains('hid')){showMenu();return;}
-  if(document.getElementById('res').style.display==='flex'){returnToMenu();return;}
+  if(!document.getElementById('disclaimer').classList.contains('hid')){showMenu();return true;}
+  if(document.getElementById('res').style.display==='flex'){returnToMenu();return true;}
+  return false;
+}
+/* One step back inside the instrument, for the phone's Back button and for Escape. A question box answers Cancel. A word's sheet closes and keeps its note.
+   On the pause screen nothing happens: CONTINUE, RESULTS or MENU decide. A running session pauses, exactly as it already does for a call or an app switch
+   (same conditions as the visibilitychange handler below). A panel, the notice and the results go back the way the left swipe does.
+   Returns false when there is nothing to go back to: the menu, the invitation, the tutorial. */
+function navBack(){
+  const m=document.getElementById('v3k-modal');if(m&&m.classList.contains('show')){const c=document.getElementById('v3k-modal-cancel');if(c)c.click();return true;}
+  const ws=document.getElementById('word-sheet');if(ws&&ws.style.display&&ws.style.display!=='none'){closeWordSheet(true);return true;}
+  const po=document.getElementById('pause-overlay');if(po&&po.style.display==='flex')return true;
+  if(_testActive&&isInTestFlow()){const br=document.getElementById('briefing');if(!(br&&br.style.display==='flex')){try{openPause();}catch(e){}return true;}}
+  return swipeBackHandler();
 }
 // The event's own timestamp is when the browser recorded the contact; reading the clock here would add the queueing delay.
 // An older browser may stamp events in epoch time instead of page time: move that onto the same clock before checking it,
@@ -4381,7 +4400,7 @@ async function exportCSV() {
     const passphrase = await v3kPrompt('EXPORT CSV', _CSV_TXT.passphrase_encrypt, 'password');
     if (passphrase === null) return;
     if (passphrase.length > 0) { content = await _v3kEncrypt(content, passphrase); ext = 'v3k'; encrypted = true; }
-    const ts = new Date().toISOString().slice(0, 10);
+    const ts = fmtLocal(Date.now()).slice(0, 10);   // the local date, not the UTC one
     if (_v3kDownload(content, `v3ktor-sessions-${ts}.${ext}`, encrypted ? 'application/octet-stream' : 'text/csv') === 'webview') return;
     const n = sessions.length; const s = n === 1 ? '' : 's';
     _v3ktorShowDataMsg((encrypted ? _CSV_TXT.exported_enc : _CSV_TXT.exported_plain).replace('{n}', n).replace('{s}', s));
@@ -4452,7 +4471,7 @@ function exportData() {
     const count = Object.keys(keys).length;
     if (count === 0) { _v3ktorShowDataMsg('Nothing to export yet.', true); return; }
     const payload = { app: 'V3KTOR', schema: 2, lang: 'en', app_version: APP_VERSION, build: BUILD_DATE, pool_hash: poolHash(), instrument: buildStamp(), exported_at: new Date().toISOString(), keys };
-    if (_v3kDownload(JSON.stringify(payload, null, 2), `v3ktor-baseline-${new Date().toISOString().slice(0, 10)}.json`, 'application/json') === 'webview') return;
+    if (_v3kDownload(JSON.stringify(payload, null, 2), `v3ktor-baseline-${fmtLocal(Date.now()).slice(0, 10)}.json`, 'application/json') === 'webview') return;
     _v3ktorShowDataMsg(`Exported · ${count} item${count === 1 ? '' : 's'} · keep this file safe`);
   } catch (e) { _v3ktorShowDataMsg('Export failed.', true); }
 }
@@ -4492,6 +4511,22 @@ function handleImportFile(event) {
   reader.onerror = () => _v3ktorShowDataMsg('Could not read file.', true);
   reader.readAsText(file);
 }
+/* Keyboard. Escape goes one step back (it never leaves the instrument); during a session it pauses, and the focus lands on CONTINUE.
+   Enter or Space presses the blocks that act as buttons. Neither key is an answer key, so nothing here touches a response or its timing. */
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){if(e.repeat)return;const m=document.getElementById('v3k-modal');if(m&&m.classList.contains('show'))return; /* the box closes itself */
+    const running=_testActive&&!_paused;if(navBack()){e.preventDefault();if(running&&_paused){const b=document.querySelector('#pause-modal .pause-btn-item');if(b){try{b.focus();}catch(err){}}}}return;}
+  if(e.key!=='Enter'&&e.key!==' ')return;const t=e.target;
+  if(t&&t.matches&&t.matches('.faq-q,.hi,#saved-clear,#saved-restore,#pause-btn')){e.preventDefault();t.click();}
+});
+/* the six switches say whether they are on (their class changes in several places, so it is read back from the class) */
+(function(){const sync=b=>b.setAttribute('aria-pressed',String(b.classList.contains('on')));
+  document.querySelectorAll('.toggle-btn').forEach(b=>{sync(b);try{new MutationObserver(()=>sync(b)).observe(b,{attributes:true,attributeFilter:['class']});}catch(e){}});})();
+/* The phone's Back button: one extra history entry stands in for "inside the instrument". Back pops it, navBack() decides, and it is put back
+   unless there is nothing to go back to. Not inside a frame, where the history belongs to the page around it. */
+try{if(window.top===window.self){const mark=()=>{try{if(!(history.state&&history.state.v3k))history.pushState({v3k:1},'');}catch(e){}};
+  mark();window.addEventListener('popstate',()=>{if(navBack())mark();else history.back();});
+  window.addEventListener('pageshow',e=>{if(e.persisted)mark();});}}catch(e){}
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('./sw.js').catch(() => {});
