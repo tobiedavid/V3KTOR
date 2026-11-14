@@ -3,7 +3,7 @@
 V3KTOR — Mapping the Self
 An affective calibration instrument.
 
-Copyright (C) 2026 Tobie David <tobiedavid@hotmail.com>
+Copyright (C) 2026 Tobie David <hello@v3ktor.app>
 
 SPDX-License-Identifier: AGPL-3.0-or-later
 
@@ -50,7 +50,17 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 })();
 </script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;500;700&family=Cormorant+Garamond:wght@300&display=swap');
+/* Fonts are served from this site (/fonts/), not from Google, so opening the page contacts no other server. Licences: /fonts/OFL-*.txt */
+@font-face{font-family:'Bebas Neue';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/bebas-neue-latin-400-normal.woff2') format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:300;font-display:swap;src:url('/fonts/jetbrains-mono-latin-300-normal.woff2') format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:500;font-display:swap;src:url('/fonts/jetbrains-mono-latin-500-normal.woff2') format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:700;font-display:swap;src:url('/fonts/jetbrains-mono-latin-700-normal.woff2') format('woff2')}
+@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:300;font-display:swap;src:url('/fonts/cormorant-garamond-latin-300-normal.woff2') format('woff2')}
+/* Greek letters (the κ in the calibration text) */
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:300;font-display:swap;src:url('/fonts/jetbrains-mono-greek-300-normal.woff2') format('woff2');unicode-range:U+0370-03FF}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/jetbrains-mono-greek-400-normal.woff2') format('woff2');unicode-range:U+0370-03FF}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:700;font-display:swap;src:url('/fonts/jetbrains-mono-greek-700-normal.woff2') format('woff2');unicode-range:U+0370-03FF}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;user-select:none}
 html,body{width:100%;height:100%;overflow:hidden;touch-action:none;background:#050508}
 html,body,input,button,textarea{font-variant-numeric:lining-nums;-webkit-font-feature-settings:"lnum" 1;font-feature-settings:"lnum" 1}
@@ -462,7 +472,7 @@ body.in-briefing .hl{display:inline}
   <div class="inv-wrap">
     <div class="inv-offer inv-line">Three to five minutes a session. The map takes weeks.</div>
     <div class="inv-trust inv-line">No account · No payment · No data collected</div>
-    <div class="inv-trust inv-line" style="opacity:.7;margin-top:-6px">One outside request: the typefaces, from Google Fonts, on first load. Your sessions never leave the device.</div>
+    <div class="inv-trust inv-line" style="opacity:.7;margin-top:-6px">No outside requests: the typefaces are served from this site. Your sessions never leave the device.</div>
     <div class="inv-body inv-line">Most of the signal you receive in a day is about other people: their stories, their agendas, their content. Without a fixed reference point you drift with it, and after a while you mistake the noise for your own voice. V3KTOR builds the reference point. Measured, not narrated.</div>
     <div class="inv-body inv-line"><strong>One word at a time.</strong> Positive, tap right. Negative, tap left. Your thumb answers before your story does, and the time it takes is the measurement.</div>
     <div class="inv-body inv-line"><strong>Every word carries the crowd's values</strong> for how positive, how intense and how dominant it feels (NRC VAD Lexicon, National Research Council Canada). Your answer is set against them. Where you agree is the shared floor. Where you part ways is you.</div>
@@ -602,7 +612,7 @@ body.in-briefing .hl{display:inline}
     <div class="toggle-row"><span class="toggle-lbl">PRESSURE MODE</span><button class="toggle-btn" id="pressure-toggle" onclick="togglePressure()"></button></div>
     <div id="pressure-note" style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(235,125,40,.85);margin-top:8px;line-height:1.8;display:none">The engine chases what you react to, with no spacing and a looser cap (its queue can hold up to 60% of the session, against 30%) — the way the first version did. Same words, same timing. Sessions are tagged PRESSURE, kept in the log, and left out of the baseline and calibration.</div>
     <div class="cfg-section-lbl">DATA</div>
-    <div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:2px;color:rgba(255,255,255,.62);margin-bottom:14px;line-height:1.7">Your sessions, baseline and settings live on this device. <strong style="color:rgba(212,160,23,.85);font-weight:400">Export</strong> to keep a portable copy. <strong style="color:rgba(212,160,23,.85);font-weight:400">Import</strong> to restore on another device — or after a wipe. The app asks your browser to keep this storage durable, so it isn't cleared when space runs low; nothing is sent anywhere. The only network request the app makes is for its typefaces (Google Fonts), which shares your IP address with Google on load.</div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:2px;color:rgba(255,255,255,.62);margin-bottom:14px;line-height:1.7">Your sessions, baseline and settings live on this device. <strong style="color:rgba(212,160,23,.85);font-weight:400">Export</strong> to keep a portable copy. <strong style="color:rgba(212,160,23,.85);font-weight:400">Import</strong> to restore on another device — or after a wipe. The app asks your browser to keep this storage durable, so it isn't cleared when space runs low; nothing is sent anywhere. The app makes no request to any other site: its typefaces are served from v3ktor.app itself.</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><button class="mbtn" onclick="exportData()">EXPORT</button><button class="mbtn" onclick="importData()">IMPORT</button></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px"><button class="mbtn" onclick="exportCSV()">EXPORT CSV</button><button class="mbtn" onclick="importCSV()">IMPORT CSV</button></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px"><button class="mbtn" onclick="exportToClipboard()">COPY</button><button class="mbtn" onclick="importFromClipboard()">PASTE</button></div>
@@ -997,7 +1007,7 @@ function scoreResponse(r,targetDir){
 function isConflict(dir,w){if(!dir)return false;return (dir==='pos'&&w[1]<0.35)||(dir==='neg'&&w[1]>0.65);}
 const SK='tc_settings_v3';
 // Build identity. Every export carries this line so a session can always be traced to the build and pool that made it.
-const APP_VERSION='1.1';const BUILD_DATE='2026-10-29';const LEXICON_ID='NRC VAD v2.1';const FREQ_ID='SUBTLEX-US';
+const APP_VERSION='1.1';const BUILD_DATE='2026-11-13';const LEXICON_ID='NRC VAD v2.1';const FREQ_ID='SUBTLEX-US';
 const DOI_METHOD='10.5281/zenodo.20277360',DOI_FORMAT='10.5281/zenodo.20277659',DOI_SOFTWARE='10.5281/zenodo.20277820';
 let _POOL_HASH=null;
 function poolHash(){if(_POOL_HASH)return _POOL_HASH;let h=2166136261;const str=POOL.map(w=>w[0]+':'+w[1]+':'+w[2]+':'+w[3]+':'+w[4]).join('|');for(let i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,16777619)>>>0;}_POOL_HASH=h.toString(16).padStart(8,'0');return _POOL_HASH;}

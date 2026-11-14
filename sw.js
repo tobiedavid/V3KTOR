@@ -3,13 +3,14 @@
  *   - HTML pages: network-first (so updates ship as soon as user is online),
  *                 fall back to cache when offline.
  *   - Static assets (icons, manifest): cache-first.
- *   - Cross-origin requests (Google Fonts, three.js CDN): pass through,
- *     opportunistically cache successful GETs so the app survives offline.
+ *   - Fonts: served from /fonts/ on this site and cached at install, so an
+ *     installed app has them offline from the first open. No request goes
+ *     to another site.
  *
  * Bump CACHE_VERSION whenever you ship a deliberate cache invalidation.
  */
 
-const CACHE_VERSION = 'v3ktor-2026-10-29c';
+const CACHE_VERSION = 'v3ktor-2026-11-13a';
 const CORE_ASSETS = [
   '/',
   '/index.html',
@@ -20,7 +21,19 @@ const CORE_ASSETS = [
   '/icon-192.png',
   '/icon-512.png',
   '/icon-512-maskable.png',
-  '/icon-180.png'
+  '/icon-180.png',
+  '/fonts/bebas-neue-latin-400-normal.woff2',
+  '/fonts/jetbrains-mono-latin-300-normal.woff2',
+  '/fonts/jetbrains-mono-latin-400-normal.woff2',
+  '/fonts/jetbrains-mono-latin-500-normal.woff2',
+  '/fonts/jetbrains-mono-latin-700-normal.woff2',
+  '/fonts/cormorant-garamond-latin-300-normal.woff2',
+  '/fonts/cormorant-garamond-latin-400-normal.woff2',
+  '/fonts/cormorant-garamond-latin-300-italic.woff2',
+  '/fonts/cormorant-garamond-latin-400-italic.woff2',
+  '/fonts/jetbrains-mono-greek-300-normal.woff2',
+  '/fonts/jetbrains-mono-greek-400-normal.woff2',
+  '/fonts/jetbrains-mono-greek-700-normal.woff2'
 ];
 
 self.addEventListener('install', (e) => {

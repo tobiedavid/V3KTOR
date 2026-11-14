@@ -3,7 +3,7 @@
 V3KTOR — Mapping the Self
 An affective calibration instrument.
 
-Copyright (C) 2026 Tobie David <tobiedavid@hotmail.com>
+Copyright (C) 2026 Tobie David <hello@v3ktor.app>
 
 SPDX-License-Identifier: AGPL-3.0-or-later
 
@@ -50,7 +50,17 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 })();
 </script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;500;700&family=Cormorant+Garamond:wght@300&display=swap');
+/* Fonts are served from this site (/fonts/), not from Google, so opening the page contacts no other server. Licences: /fonts/OFL-*.txt */
+@font-face{font-family:'Bebas Neue';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/bebas-neue-latin-400-normal.woff2') format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:300;font-display:swap;src:url('/fonts/jetbrains-mono-latin-300-normal.woff2') format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:500;font-display:swap;src:url('/fonts/jetbrains-mono-latin-500-normal.woff2') format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:700;font-display:swap;src:url('/fonts/jetbrains-mono-latin-700-normal.woff2') format('woff2')}
+@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:300;font-display:swap;src:url('/fonts/cormorant-garamond-latin-300-normal.woff2') format('woff2')}
+/* Greek letters (the κ in the calibration text) */
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:300;font-display:swap;src:url('/fonts/jetbrains-mono-greek-300-normal.woff2') format('woff2');unicode-range:U+0370-03FF}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/jetbrains-mono-greek-400-normal.woff2') format('woff2');unicode-range:U+0370-03FF}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:700;font-display:swap;src:url('/fonts/jetbrains-mono-greek-700-normal.woff2') format('woff2');unicode-range:U+0370-03FF}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;user-select:none}
 html,body{width:100%;height:100%;overflow:hidden;touch-action:none;background:#050508}
 html,body,input,button,textarea{font-variant-numeric:lining-nums;-webkit-font-feature-settings:"lnum" 1;font-feature-settings:"lnum" 1}
@@ -462,7 +472,7 @@ body.in-briefing .hl{display:inline}
   <div class="inv-wrap">
     <div class="inv-offer inv-line">Trois à cinq minutes par session. La carte prend des semaines.</div>
     <div class="inv-trust inv-line">Pas de compte · Pas d’argent · Pas de données collectées</div>
-    <div class="inv-trust inv-line" style="opacity:.7;margin-top:-6px">Une seule requête extérieure : les polices, depuis Google Fonts, au premier chargement. Vos sessions ne quittent jamais l’appareil.</div>
+    <div class="inv-trust inv-line" style="opacity:.7;margin-top:-6px">Aucune requête extérieure : les polices sont servies par ce site. Vos sessions ne quittent jamais l’appareil.</div>
     <div class="inv-body inv-line">La majorité du signal que vous recevez dans une journée concerne d’autres personnes : leurs histoires, leurs agendas, leurs contenus. Sans point de référence fixe, vous dérivez avec lui, et au bout d’un moment vous prenez le bruit pour votre propre voix. V3KTOR construit le point de référence. Mesuré, pas raconté.</div>
     <div class="inv-body inv-line"><strong>Un mot à la fois.</strong> Positif, appuyez à droite. Négatif, appuyez à gauche. Votre pouce répond avant votre récit, et le temps qu’il prend est la mesure.</div>
     <div class="inv-body inv-line"><strong>Chaque mot porte les valeurs de la majorité</strong> pour ce qu’il a de positif, d’intense et de dominant (NRC VAD Lexicon, Conseil national de recherches Canada). Votre réponse est posée contre elles. Là où vous êtes d’accord, c’est le socle commun. Là où vous divergez, c’est vous.</div>
@@ -602,7 +612,7 @@ body.in-briefing .hl{display:inline}
     <div class="toggle-row"><span class="toggle-lbl">MODE PRESSION</span><button class="toggle-btn" id="pressure-toggle" onclick="togglePressure()"></button></div>
     <div id="pressure-note" style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(235,125,40,.85);margin-top:8px;line-height:1.8;display:none">Le moteur poursuit ce à quoi vous réagissez, sans espacement et avec un plafond plus lâche (sa file peut tenir jusqu’à 60 % de la session, contre 30 %) — comme le faisait la première version. Mêmes mots, même minutage. Les sessions sont étiquetées PRESSION, gardées dans le journal, et exclues de la baseline et de la calibration.</div>
     <div class="cfg-section-lbl">DONNÉES</div>
-    <div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:2px;color:rgba(255,255,255,.62);margin-bottom:14px;line-height:1.7">Vos sessions, votre baseline et vos réglages vivent sur cet appareil. <strong style="color:rgba(212,160,23,.85);font-weight:400">Exportez</strong> pour garder une copie portable. <strong style="color:rgba(212,160,23,.85);font-weight:400">Importez</strong> pour restaurer sur un autre appareil — ou après un effacement. L’app demande à votre navigateur de garder ce stockage durable, pour qu’il ne soit pas effacé quand l’espace manque ; rien n’est envoyé nulle part. La seule requête réseau que fait l’app est pour ses polices (Google Fonts), ce qui partage votre adresse IP avec Google au chargement.</div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:2px;color:rgba(255,255,255,.62);margin-bottom:14px;line-height:1.7">Vos sessions, votre baseline et vos réglages vivent sur cet appareil. <strong style="color:rgba(212,160,23,.85);font-weight:400">Exportez</strong> pour garder une copie portable. <strong style="color:rgba(212,160,23,.85);font-weight:400">Importez</strong> pour restaurer sur un autre appareil — ou après un effacement. L’app demande à votre navigateur de garder ce stockage durable, pour qu’il ne soit pas effacé quand l’espace manque ; rien n’est envoyé nulle part. L’app ne fait aucune requête vers un autre site : ses polices sont servies par v3ktor.app même.</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><button class="mbtn" onclick="exportData()">EXPORTER</button><button class="mbtn" onclick="importData()">IMPORTER</button></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px"><button class="mbtn" onclick="exportCSV()">EXPORTER CSV</button><button class="mbtn" onclick="importCSV()">IMPORTER CSV</button></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px"><button class="mbtn" onclick="exportToClipboard()">COPIER</button><button class="mbtn" onclick="importFromClipboard()">COLLER</button></div>
@@ -1468,7 +1478,7 @@ function scoreResponse(r,targetDir){
 function isConflict(dir,w){if(!dir)return false;return (dir==='pos'&&w[1]<0.35)||(dir==='neg'&&w[1]>0.65);}
 const SK='tc_settings_v3';
 // Build identity. Every export carries this line so a session can always be traced to the build and pool that made it.
-const APP_VERSION='1.1';const BUILD_DATE='2026-10-29';const LEXICON_ID='NRC VAD v2.1';const FREQ_ID='Lexique 3.83';
+const APP_VERSION='1.1';const BUILD_DATE='2026-11-13';const LEXICON_ID='NRC VAD v2.1';const FREQ_ID='Lexique 3.83';
 const DOI_METHOD='10.5281/zenodo.20277360',DOI_FORMAT='10.5281/zenodo.20277659',DOI_SOFTWARE='10.5281/zenodo.20277820';
 let _POOL_HASH=null;
 function poolHash(){if(_POOL_HASH)return _POOL_HASH;let h=2166136261;const str=POOL.map(w=>w[0]+':'+w[1]+':'+w[2]+':'+w[3]+':'+w[4]).join('|');for(let i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,16777619)>>>0;}_POOL_HASH=h.toString(16).padStart(8,'0');return _POOL_HASH;}
